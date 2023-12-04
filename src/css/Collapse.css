@@ -1,5 +1,5 @@
 .border {
-  border: 3px solid #7a4827;
+  border: 3px solid #fff;
   border-radius: 10px;
   margin: 2px 15px 25px;
   padding: 10px;
@@ -30,7 +30,7 @@
 }
 
 .name {
-  color: #7a4827;
+  color: #fff;
   font-size: 18px;
   font-weight: bold;
   margin-left: 1vw;
@@ -39,13 +39,13 @@
 }
 
 .price {
-  color: #7a4827;
+  color: #fff;
   font-weight: bold;
   font-size: 16px;
 }
 
 .sub {
-  color: #7a4827;
+  color: #fff;
   font-weight: bold;
   margin-left: 6px;
   font-size: 12px;
