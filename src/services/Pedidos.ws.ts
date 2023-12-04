@@ -1,6 +1,6 @@
 import axios from "axios";
 const api = axios.create({
-  baseURL: "https://encanto-backend.vercel.app/",
+  baseURL: "https://saimo-back.vercel.app/",
   // baseURL: "http://localhost:3000/",
 });
 const api2 = axios.create({

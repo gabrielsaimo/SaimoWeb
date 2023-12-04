@@ -7,7 +7,7 @@ interface category {
 }
 
 const api = axios.create({
-  baseURL: "https://encanto-backend.vercel.app/",
+  baseURL: "https://saimo-back.vercel.app/",
 });
 
 const handleResponse = (response: AxiosResponse) => response.data;
