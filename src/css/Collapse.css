@@ -1,9 +1,11 @@
 .border {
   border: 3px solid #7a4827;
   border-radius: 10px;
-  margin: 2px 0 25px;
-  padding: 5px;
-  width: 45%;
+  margin: 2px 15px 25px;
+  padding: 10px;
+  width: 46%;
+  min-width: 300px;
+  max-width: 300px;
 }
 .ant-collapse-content-box {
   display: flex;
