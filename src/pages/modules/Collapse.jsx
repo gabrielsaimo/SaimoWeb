@@ -180,9 +180,16 @@ const CollapseMenu = () => {
                               </p>
                             </div>
                             <div className="flex">
-                              <div className="sub">
-                                {categoria.sub} {categoria.description}
-                              </div>
+                              {categoria.description.length > 22 && (
+                                <div className="sub">
+                                  {categoria.sub} {categoria.description}
+                                </div>
+                              )}
+                              {categoria.description.length <= 22 && (
+                                <div className="sub2">
+                                  {categoria.sub} {categoria.description}
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div
