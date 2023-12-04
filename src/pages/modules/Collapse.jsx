@@ -66,8 +66,8 @@ const CollapseMenu = () => {
             effect="fade"
             dotPosition="bottom"
             style={{
-              width: "45vw",
-              maxWidth: 400,
+              width: "40vw",
+              maxWidth: 300,
               minWidth: "100px",
               color: "#fff",
             }}
@@ -76,7 +76,7 @@ const CollapseMenu = () => {
               .filter((img1) => img1.idreq && img1.idreq === id)
               .map((img1, index) => (
                 <Suspense key={index} fallback={<Spin />}>
-                  <div style={{ width: "45vw", maxWidth: 400 }}>
+                  <div style={{ width: "40vw", maxWidth: 300 }}>
                     <LazyLoadedImage
                       src={atob(img1.imagem)}
                       key={index}
@@ -155,6 +155,7 @@ const CollapseMenu = () => {
                   backgroundSize: 150,
                   backgroundPositionX: "50%",
                   backgroundPositionY: -8,
+                  flexWrap: "wrap",
                 }}
                 header={item1.name}
               >
@@ -165,7 +166,7 @@ const CollapseMenu = () => {
                   )
                   .map((categoria, idx) => (
                     <div key={idx} className="border">
-                      <div style={{ display: "flex" }}>
+                      <div style={{ display: "flex", flexWrap: "wrap" }}>
                         {categoria.ids &&
                           memoizedImgSrc.map((img1, index) =>
                             renderImageCarousel(img1, index, categoria.id)
