@@ -1,5 +1,5 @@
 .border {
-  border: 3px solid #b6c6c3;
+  border: 3px solid #3b3b3b;
   border-radius: 10px;
   margin: 2px 15px 25px;
   padding: 10px;
@@ -30,7 +30,7 @@
 }
 
 .name {
-  color: #fff;
+  color: #3b3b3b;
   font-size: 18px;
   font-weight: bold;
   margin-left: 1vw;
@@ -39,13 +39,13 @@
 }
 
 .price {
-  color: #fff;
+  color: #3b3b3b;
   font-weight: bold;
   font-size: 16px;
 }
 
 .sub {
-  color: #fff;
+  color: #3b3b3b;
   font-weight: bold;
   margin-left: 6px;
   font-size: 12px;
@@ -54,7 +54,7 @@
   height: 60px;
 }
 .sub2 {
-  color: #fff;
+  color: #3b3b3b;
   font-weight: bold;
   margin-left: 6px;
   font-size: 12px;
@@ -70,8 +70,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  outline: 1px solid #fff;
+  background-color: #254EDB;
+  outline: 1px solid #254EDB;
   border-radius: 50px;
 }
 

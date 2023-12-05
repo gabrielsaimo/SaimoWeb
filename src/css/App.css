@@ -61,9 +61,5 @@
   user-select: none;
   margin-left: auto;
   margin-right: auto;
-  background: linear-gradient(
-    90deg,
-    #0D1117 0%,
-    #0D1117 100%
-  );
+  background: linear-gradient(90deg, #adc8ff 0%, #102693 100%);
 }
