@@ -1,8 +1,4 @@
-import axios from "axios";
-//! Inativo
-const api = axios.create({
-  baseURL: "https://saimo-back.vercel.app/",
-});
+import { api } from "./api.ws";
 
 interface User {
   id: number;

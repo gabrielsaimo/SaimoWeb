@@ -1,14 +1,10 @@
-import axios, { AxiosResponse } from "axios";
-
+import { AxiosResponse } from "axios";
+import { api } from "./api.ws";
 interface category {
   id: number;
   name: string;
   active: boolean;
 }
-
-const api = axios.create({
-  baseURL: "https://saimo-back.vercel.app/",
-});
 
 const handleResponse = (response: AxiosResponse) => response.data;
 

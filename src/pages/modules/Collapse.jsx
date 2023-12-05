@@ -4,9 +4,6 @@ import { Collapse, Carousel, Spin } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import LazyLoad from "react-lazyload";
 import "../../css/Collapse.css";
-import SlidesPrincipal from "./SlidePrincipal";
-import SlidesSobemesas from "./SlideSobremesas";
-import SlidesBebidas from "./SlideBebidas";
 import { getCardapio, getImgCardapio } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
 

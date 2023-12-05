@@ -1,8 +1,4 @@
-import axios from "axios";
-const api = axios.create({
-  baseURL: "https://saimo-back.vercel.app/",
-});
-
+import { api } from "./api.ws";
 interface pagamentos {
   id: number;
   tipo: string;

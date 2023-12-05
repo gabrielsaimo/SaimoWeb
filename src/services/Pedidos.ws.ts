@@ -1,11 +1,4 @@
-import axios from "axios";
-const api = axios.create({
-  baseURL: "https://saimo-back.vercel.app/",
-  // baseURL: "http://localhost:3000/",
-});
-const api2 = axios.create({
-  baseURL: "http://192.168.12.11:3020/",
-});
+import { api, apiNotification } from "./api.ws";
 
 interface pedido {
   id: number;
@@ -52,7 +45,7 @@ export const postPedidos = async (data: pedido): Promise<pedido> => {
   return response.data;
 };
 export const postNotification = async (data: any): Promise<any> => {
-  const response = await api2.post<any>("/notifications/send", data);
+  const response = await apiNotification.post<any>("/notifications/send", data);
   return response.data;
 };
 
