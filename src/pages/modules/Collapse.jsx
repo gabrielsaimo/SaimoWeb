@@ -6,6 +6,7 @@ import LazyLoad from "react-lazyload";
 import "../../css/Collapse.css";
 import { getCardapio, getImgCardapio } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
+import { useParams } from "react-router-dom";
 
 const { Panel } = Collapse;
 const LazyLoadedImage = lazy(() =>
@@ -13,6 +14,8 @@ const LazyLoadedImage = lazy(() =>
 );
 
 const CollapseMenu = () => {
+  // get params from url
+  const { Company } = useParams();
   const [cardapio, setCardapio] = useState([]);
   const [cardapioCategory, setCardapioCategory] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
@@ -27,7 +30,7 @@ const CollapseMenu = () => {
   }, [cardapio]);
 
   const getCardapios = async () => {
-    const cardapioCollection = await getCardapio();
+    const cardapioCollection = await getCardapio(Company);
     setCardapio(cardapioCollection);
   };
 

@@ -29,7 +29,7 @@ import { useParams } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
 const MenuDashboard = () => {
-  const { idCompany } = useParams();
+  const { Company } = useParams();
   const [collapsed, setCollapsed] = useState(false);
   const [tela, setTela] = useState(1);
   const {
@@ -40,10 +40,6 @@ const MenuDashboard = () => {
   const [dateUser, setDateUser] = useState();
   const [acessable, setAcessable] = React.useState(false);
   const [userNome, setUserNome] = useState("");
-  console.log(
-    "🚀 ~ file: MenuDasboar.jsx:43 ~ MenuDashboard ~ userNome:",
-    userNome
-  );
   const [UserCategoria, setUserCategoria] = useState("");
   const [visible, setVisible] = React.useState(true);
   const [isMobile, setIsMobile] = useState(false);
@@ -67,13 +63,13 @@ const MenuDashboard = () => {
 
   const cachedContent = useMemo(
     () => ({
-      1: <Dashboard atualizar={null} user={dateUser} />,
+      1: <Dashboard atualizar={null} user={dateUser} company={Company} />,
       2: <Relatorios />,
       3: <Menssagem atualizar={true} user={dateUser} />,
       4: <Pedidos atualizar={true} user={dateUser} />,
       5: <Users atualizar={true} user={dateUser} />,
     }),
-    [dateUser]
+    [dateUser, Company]
   );
 
   const acessar = () => {
@@ -186,7 +182,7 @@ const MenuDashboard = () => {
               key: "1",
               icon: <BookOutlined />,
               disabled: false,
-              label: "Cardápio",
+              label: "Catalogo",
               // eslint-disable-next-line no-dupe-keys
               disabled:
                 UserCategoria === "Gerente"
@@ -276,7 +272,7 @@ const MenuDashboard = () => {
             }}
           >
             {tela === 1
-              ? "Cardápio"
+              ? "Catalogo"
               : tela === 2
               ? "Relatórios"
               : tela === 3

@@ -45,7 +45,7 @@ import {
 import { getCategoty } from "../../services/category.ws";
 
 const { Option } = Select;
-export default function Dashboard({ atualizar, user }) {
+export default function Dashboard({ atualizar, user, company }) {
   const userDate = user[0];
   const [fileList, setFileList] = useState([]);
   const [cardapio, setCardapio] = useState([]);
@@ -172,7 +172,7 @@ export default function Dashboard({ atualizar, user }) {
   }, [search, cardapio, filteredStatus, uptela]);
 
   const gtCardapio = async () => {
-    const cardapioCollection = await getCardapio();
+    const cardapioCollection = await getCardapio(company);
     const cardapios = cardapioCollection;
     setCardapio(cardapios.sort((a, b) => a.id - b.id));
   };

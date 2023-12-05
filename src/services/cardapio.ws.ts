@@ -9,8 +9,8 @@ interface Cardapio {
   category: string;
 }
 
-export const getCardapio = async (): Promise<Cardapio[]> => {
-  const response = await api.get<Cardapio[]>("/cardapio");
+export const getCardapio = async (Company: any): Promise<Cardapio[]> => {
+  const response = await api.get<Cardapio[]>("/cardapio/" + Company);
   return response.data;
 };
 
