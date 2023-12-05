@@ -5,12 +5,14 @@
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
+      "border_radius": "100%",
       "type": "image/x-icon",
       "purpose": "any maskable"
     },
     {
       "src": "favicon.ico",
       "type": "image/png",
+      "border_radius": "100%",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
