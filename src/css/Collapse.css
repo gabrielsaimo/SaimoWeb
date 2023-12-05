@@ -30,7 +30,7 @@
 }
 
 .name {
-  color: #3b3b3b;
+  color: #fff;
   font-size: 18px;
   font-weight: bold;
   margin-left: 1vw;
@@ -39,13 +39,13 @@
 }
 
 .price {
-  color: #3b3b3b;
+  color: #fff;
   font-weight: bold;
   font-size: 16px;
 }
 
 .sub {
-  color: #3b3b3b;
+  color: #fff;
   font-weight: bold;
   margin-left: 6px;
   font-size: 12px;
@@ -54,7 +54,7 @@
   height: 60px;
 }
 .sub2 {
-  color: #3b3b3b;
+  color: #fff;
   font-weight: bold;
   margin-left: 6px;
   font-size: 12px;
@@ -70,8 +70,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #254EDB;
-  outline: 1px solid #254EDB;
+  background-color: #254edb;
+  outline: 1px solid #254edb;
   border-radius: 50px;
 }
 
