@@ -178,7 +178,7 @@ export default function Dashboard({ atualizar, user, company }) {
   };
 
   const getCardapiocategory = async () => {
-    const cardapioCollection = await getCategoty();
+    const cardapioCollection = await getCategoty(company);
     const categoty = cardapioCollection;
 
     setCardapioCategory(categoty.sort((a, b) => a.id - b.id));
@@ -244,7 +244,7 @@ export default function Dashboard({ atualizar, user, company }) {
         category,
         update_at: new Date(),
         update_by: userDate.name,
-        company,
+        idcompany: localStorage.getItem("idcompany"),
       });
       message.success("Item atualizado com sucesso!");
     } else {
@@ -259,7 +259,7 @@ export default function Dashboard({ atualizar, user, company }) {
         category,
         update_at: new Date(),
         update_by: userDate.name,
-        company,
+        idcompany: localStorage.getItem("idcompany"),
       });
       message.success("Item salvo com sucesso!");
     }
