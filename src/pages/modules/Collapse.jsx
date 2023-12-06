@@ -21,7 +21,7 @@ const CollapseMenu = () => {
   const [imgSrc, setImgSrc] = useState([]);
 
   useEffect(() => {
-    if (cardapio.length === 0) {
+    if (cardapio.length === 0 && cardapioCategory.length === 0) {
       getCardapios();
     }
     if (cardapioCategory.length === 0) {
@@ -32,6 +32,7 @@ const CollapseMenu = () => {
   const getCardapios = async () => {
     const cardapioCollection = await getCardapio(Company);
     setCardapio(cardapioCollection);
+    
   };
 
   const getCardapioCategory = async () => {

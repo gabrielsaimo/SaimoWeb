@@ -41,6 +41,7 @@ const MenuDashboard = () => {
   const [acessable, setAcessable] = React.useState(false);
   const [userNome, setUserNome] = useState("");
   const [UserCategoria, setUserCategoria] = useState("");
+  const [Company_id, setCompany] = useState("");
   const [visible, setVisible] = React.useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -84,6 +85,7 @@ const MenuDashboard = () => {
     if (UserCollection.length > 0) {
       setUserNome(UserCollection[0].name);
       setUserCategoria(UserCollection[0].categoria);
+      setCompany(UserCollection[0].company);
       // Armazenar o valor no localStorage
       localStorage.setItem("dateUser", JSON.stringify(UserCollection));
 

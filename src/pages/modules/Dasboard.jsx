@@ -144,7 +144,7 @@ export default function Dashboard({ atualizar, user, company }) {
     },
     {
       title: "Pesquisar",
-      description: "Pesquise por um item do cardápio.",
+      description: "Pesquise por um item.",
       target: () => ref2.current,
     },
     {
@@ -201,13 +201,16 @@ export default function Dashboard({ atualizar, user, company }) {
     } else {
       const array = cardapio.filter(
         (record) =>
-          (!filteredStatus ||
+          ((!filteredStatus ||
             (record["category"] &&
               record["category"]
                 ?.toUpperCase()
                 .indexOf(filteredStatus.toUpperCase()) > -1)) &&
-          (!search ||
-            record["name"].toLowerCase().indexOf(search.toLowerCase()) > -1)
+            (!search ||
+              record["name"].toLowerCase().indexOf(search.toLowerCase()) >
+                -1)) ||
+          !search ||
+          record["description"].toLowerCase().indexOf(search.toLowerCase()) > -1
       );
       setSearchData(array);
     }
@@ -241,6 +244,7 @@ export default function Dashboard({ atualizar, user, company }) {
         category,
         update_at: new Date(),
         update_by: userDate.name,
+        company,
       });
       message.success("Item atualizado com sucesso!");
     } else {
@@ -255,6 +259,7 @@ export default function Dashboard({ atualizar, user, company }) {
         category,
         update_at: new Date(),
         update_by: userDate.name,
+        company,
       });
       message.success("Item salvo com sucesso!");
     }
