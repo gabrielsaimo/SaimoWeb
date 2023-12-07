@@ -42,6 +42,6 @@ export const postUserAdm = async (data: User): Promise<User> => {
   return response.data;
 };
 
-export const deleteUser = async (data: User): Promise<void> => {
-  await api.delete<User>(`/user/${data.id}`);
+export const deleteUser = async (id: number): Promise<void> => {
+  await api.delete<User>(`/user/${id}`);
 };
