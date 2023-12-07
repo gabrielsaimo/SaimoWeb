@@ -48,7 +48,7 @@ export default function Users(atualizar) {
     const body = {
       id: data.length + 1,
       name: name,
-      password: "123@" + name,
+      password: Company + "@" + name,
       categoria: categoria,
       active: true,
       idcompany: idcompany,
