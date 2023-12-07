@@ -89,7 +89,9 @@ export default function Category() {
           active,
           idcompany: JSON.parse(cachedData)[0].idcompany,
         });
-        message.success("Item salvo com sucesso!");
+        setTimeout(() => {
+          message.success("Item salvo com sucesso!");
+        }, 6000);
       }
       fetchData();
       setAction(!action);
