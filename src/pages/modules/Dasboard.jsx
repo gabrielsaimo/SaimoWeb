@@ -394,7 +394,11 @@ export default function Dashboard({ atualizar, user, company }) {
         return text.active ? (
           <Tag
             icon={<CheckCircleOutlined />}
-            style={{ padding: "20px 40px 20px 40px", fontSize: 25 }}
+            style={{
+              padding: "10%",
+              width: "100%",
+              textAlign: "center",
+            }}
             color="success"
           >
             Ativo
@@ -402,7 +406,11 @@ export default function Dashboard({ atualizar, user, company }) {
         ) : (
           <Tag
             icon={<MinusCircleOutlined />}
-            style={{ padding: "20px 32px 20px 32px", fontSize: 25 }}
+            style={{
+              padding: "10%",
+              width: "100%",
+              textAlign: "center",
+            }}
             color="error"
           >
             Inativo

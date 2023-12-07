@@ -7,8 +7,11 @@ export default function Users(atualizar) {
   const [categoria, setCategoria] = useState(null);
   const [name, setName] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [Company] = useState(
+    JSON.parse(localStorage.getItem("dateUser"))[0].company
+  );
   useEffect(() => {
-    getUsers().then((users) => {
+    getUsers(Company).then((users) => {
       setData(users);
     });
   }, [active, atualizar]);
