@@ -252,13 +252,13 @@ export default function Dashboard({ atualizar, user, company }) {
         imagem: imgByte,
         category,
         update_at: new Date(),
-        update_by: localStorage.getItem("name"),
-        idcompany: localStorage.getItem("idcompany"),
+        update_by: JSON.parse(cachedData)[0]?.name,
+        idcompany: JSON.parse(cachedData)[0]?.idcompany,
       });
       message.success("Item atualizado com sucesso!");
     } else {
       await putCardapio({
-        id: cardapio.length + 1,
+        id: cardapio.length + 1 + Math.floor(Math.random() * 100000000),
         name,
         price,
         description,
@@ -267,8 +267,8 @@ export default function Dashboard({ atualizar, user, company }) {
         imagem: imgByte,
         category,
         update_at: new Date(),
-        update_by: localStorage.getItem("name"),
-        idcompany: localStorage.getItem("idcompany"),
+        update_by: JSON.parse(cachedData)[0]?.name,
+        idcompany: JSON.parse(cachedData)[0]?.idcompany,
       });
       message.success("Item salvo com sucesso!");
     }

@@ -39,7 +39,9 @@ export default function Category() {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [modalNewAction, setModalNewAction] = useState(false);
-
+  const [Company] = useState(
+    JSON.parse(localStorage.getItem("dateUser"))[0].company
+  );
   useEffect(() => {
     filterTable();
   }, [search, cardapioCategory]);
@@ -59,7 +61,7 @@ export default function Category() {
     }
   }, [action]);
   async function fetchData() {
-    const cardapioCollection = await getCategoty();
+    const cardapioCollection = await getCategoty(Company);
     setCardapioCategory(cardapioCollection);
   }
 
