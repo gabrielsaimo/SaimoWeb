@@ -21,6 +21,7 @@ export default function Users(atualizar) {
       id: data.id,
       categoria: data.categoria,
       active: value,
+      company: Company,
     };
     postUserAdm(body);
     setActive(!active);
