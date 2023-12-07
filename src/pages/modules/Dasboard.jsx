@@ -44,6 +44,7 @@ import {
   putCardapio,
 } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
+import TextArea from "antd/es/input/TextArea";
 
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
@@ -204,7 +205,7 @@ export default function Dashboard({ atualizar, user, company }) {
   }
 
   async function confirmDeleteImg(record) {
-    await DeleteImg(record);
+    await DeleteImg(record, company);
     message.success("Imagem deletada com sucesso!");
     gtCardapio();
     setActionCardapio(!actionCardapio);
@@ -356,6 +357,21 @@ export default function Dashboard({ atualizar, user, company }) {
       title: "Descrição",
       dataIndex: "description",
       key: "description",
+      render: (_, text) => {
+        return (
+          <div
+            style={{
+              overflow: "auto",
+              height: 100,
+              overflowX: "hidden",
+              overflowY: "true",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {text.description}
+          </div>
+        );
+      },
     },
     {
       title: "Sub Descrição",

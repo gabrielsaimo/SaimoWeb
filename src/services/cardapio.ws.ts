@@ -42,7 +42,9 @@ export const InsertImg = async (data: any): Promise<any> => {
   return response.data;
 };
 
-export const DeleteImg = async (id: number): Promise<any> => {
-  const response = await api.delete<any>("/cardapio/deleteimagem/" + id);
+export const DeleteImg = async (id: number, Company: string): Promise<any> => {
+  const response = await api.delete<any>("/cardapio/deleteimagem/" + id, {
+    data: { Company: Company },
+  });
   return response.data;
 };
