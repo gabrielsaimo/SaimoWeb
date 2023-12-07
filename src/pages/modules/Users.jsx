@@ -10,6 +10,10 @@ export default function Users(atualizar) {
   const [Company] = useState(
     JSON.parse(localStorage.getItem("dateUser"))[0].company
   );
+  const [idcompany] = useState(
+    JSON.parse(localStorage.getItem("dateUser"))[0].idcompany
+  );
+
   useEffect(() => {
     getUsers(Company).then((users) => {
       setData(users);
@@ -21,6 +25,7 @@ export default function Users(atualizar) {
       id: data.id,
       categoria: data.categoria,
       active: value,
+      idcompany: idcompany,
       company: Company,
     };
     postUserAdm(body);
@@ -31,6 +36,7 @@ export default function Users(atualizar) {
       id: data.id,
       active: data.active,
       categoria: value,
+      idcompany: idcompany,
       company: Company,
     };
     postUserAdm(body);
@@ -45,6 +51,7 @@ export default function Users(atualizar) {
       password: "123@" + name,
       categoria: categoria,
       active: true,
+      idcompany: idcompany,
       company: Company,
     };
     putUser(body);
