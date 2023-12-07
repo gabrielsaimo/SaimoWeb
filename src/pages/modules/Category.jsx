@@ -50,7 +50,7 @@ export default function Category() {
     setTimeout(() => {
       setLoading(false);
       closeModal();
-    }, 8000);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function Category() {
         });
         setTimeout(() => {
           message.success("Item salvo com sucesso!");
-        }, 6000);
+        }, 1000);
       }
       fetchData();
       setAction(!action);
