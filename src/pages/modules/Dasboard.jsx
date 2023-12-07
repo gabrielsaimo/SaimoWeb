@@ -30,6 +30,8 @@ import {
   PlusOutlined,
   FilterOutlined,
   SearchOutlined,
+  MinusCircleOutlined,
+  CheckCircleOutlined,
 } from "@ant-design/icons";
 import Category from "./Category";
 import LazyLoad from "react-lazyload";
@@ -352,6 +354,12 @@ export default function Dashboard({ atualizar, user, company }) {
       title: "Preço",
       dataIndex: "price",
       key: "price",
+      sorter: {
+        compare: (a, b) => a.price - b.price,
+      },
+      render: (_, text) => {
+        return <p>R$ {Number(text.price).toFixed(2)}</p>;
+      },
     },
     {
       title: "Descrição",
@@ -379,11 +387,27 @@ export default function Dashboard({ atualizar, user, company }) {
       key: "sub",
     },
     {
-      title: "Ativo",
+      title: "Status",
       dataIndex: "active",
       key: "active",
       render: (_, text) => {
-        return <p>{text.active ? "Sim" : "Não"}</p>;
+        return text.active ? (
+          <Tag
+            icon={<CheckCircleOutlined />}
+            style={{ padding: "20px 40px 20px 40px", fontSize: 25 }}
+            color="success"
+          >
+            Ativo
+          </Tag>
+        ) : (
+          <Tag
+            icon={<MinusCircleOutlined />}
+            style={{ padding: "20px 32px 20px 32px", fontSize: 25 }}
+            color="error"
+          >
+            Inativo
+          </Tag>
+        );
       },
     },
     {

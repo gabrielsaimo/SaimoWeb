@@ -70,8 +70,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #254edb;
-  outline: 1px solid #254edb;
+  background-color: #808080;
+  outline: 1px solid #8c8c8c;
   border-radius: 50px;
 }
 
