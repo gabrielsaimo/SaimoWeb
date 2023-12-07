@@ -254,6 +254,7 @@ export default function Dashboard({ atualizar, user, company }) {
         update_at: new Date(),
         update_by: JSON.parse(cachedData)[0]?.name,
         idcompany: JSON.parse(cachedData)[0]?.idcompany,
+        company: company,
       });
       message.success("Item atualizado com sucesso!");
     } else {
@@ -269,6 +270,7 @@ export default function Dashboard({ atualizar, user, company }) {
         update_at: new Date(),
         update_by: JSON.parse(cachedData)[0]?.name,
         idcompany: JSON.parse(cachedData)[0]?.idcompany,
+        company: company,
       });
       message.success("Item salvo com sucesso!");
     }
