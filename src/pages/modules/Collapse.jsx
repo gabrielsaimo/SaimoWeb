@@ -184,7 +184,7 @@ const CollapseMenu = () => {
                               {categoria.description.length > 25 && (
                                 <>
                                   <div className="sub">{categoria.sub}</div>
-                                  <div className="sub">
+                                  <div className="description">
                                     {categoria.sub} {categoria.description}
                                   </div>
                                 </>
@@ -192,7 +192,7 @@ const CollapseMenu = () => {
                               {categoria.description.length <= 25 && (
                                 <>
                                   <div className="sub">{categoria.sub}</div>
-                                  <div className="sub2">
+                                  <div className="description2">
                                     {categoria.sub} {categoria.description}
                                   </div>
                                 </>
