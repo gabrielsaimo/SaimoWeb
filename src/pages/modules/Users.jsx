@@ -30,6 +30,7 @@ export default function Users(atualizar) {
       id: data.id,
       active: data.active,
       categoria: value,
+      company: Company,
     };
     postUserAdm(body);
     setActive(!active);
@@ -43,6 +44,7 @@ export default function Users(atualizar) {
       password: "123@" + name,
       categoria: categoria,
       active: true,
+      company: Company,
     };
     putUser(body);
     setName("");

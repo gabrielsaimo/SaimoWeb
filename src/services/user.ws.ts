@@ -20,9 +20,7 @@ export const getUser = async (data: User): Promise<User> => {
 
 export const getUsers = async (Company: string): Promise<User[]> => {
   try {
-    const response = await api.get<User[]>("/user/adm", {
-      params: { Company: Company },
-    });
+    const response = await api.get<User[]>("/user/adm/" + Company);
     return response.data;
   } catch (error) {
     console.error("Erro ao obter usuários:", error);
