@@ -80,14 +80,16 @@ export default function Category() {
     const cachedData = localStorage.getItem("dateUser");
     try {
       if (selectedTaskId) {
-        await postCategoty({ id, name, active });
+        await postCategoty({ id, name, active, company: Company });
         message.success("Item atualizado com sucesso!");
       } else {
         await putCategoty({
-          id: cardapioCategory.length + 1,
+          id:
+            cardapioCategory.length + 1 + Math.floor(Math.random() * 100000000),
           name,
           active,
           idcompany: JSON.parse(cachedData)[0].idcompany,
+          company: Company,
         });
         setTimeout(() => {
           message.success("Item salvo com sucesso!");
