@@ -42,6 +42,17 @@ export default function Category() {
   const [Company] = useState(
     JSON.parse(localStorage.getItem("dateUser"))[0].company
   );
+  const [loading, setLoading] = useState(false);
+
+  const handleOk = () => {
+    setLoading(true);
+    handleSave();
+    setTimeout(() => {
+      setLoading(false);
+      closeModal();
+    }, 8000);
+  };
+
   useEffect(() => {
     filterTable();
   }, [search, cardapioCategory]);
@@ -59,7 +70,7 @@ export default function Category() {
     if (!action) {
       fetchData();
     }
-  }, [action]);
+  }, [action, Company]);
   async function fetchData() {
     const cardapioCollection = await getCategoty(Company);
     setCardapioCategory(cardapioCollection);
@@ -80,9 +91,8 @@ export default function Category() {
         });
         message.success("Item salvo com sucesso!");
       }
-      getCategoty();
+      fetchData();
       setAction(!action);
-      closeModal();
     } catch (error) {
       console.error(error);
       message.error("Erro ao salvar categoria.");
@@ -102,6 +112,7 @@ export default function Category() {
       await deleteCategoty(record);
       message.success("Item deletado com sucesso!");
       setAction(!action);
+      fetchData();
     } catch (error) {
       console.error(error);
       message.error("Erro ao excluir categoria.");
@@ -125,6 +136,8 @@ export default function Category() {
 
   function closeModal() {
     setModalNewAction(false);
+    console.log("closeModal");
+    fetchData();
     clearSelecteds();
   }
 
@@ -220,10 +233,21 @@ export default function Category() {
       <Modal
         open={modalNewAction}
         okButtonProps={{ disabled: disableSave() }}
-        okText="Salvar"
-        onOk={handleSave}
         onCancel={closeModal}
         title={selectedTaskId ? "Atualizar Categoria" : "Nova Categoria"}
+        footer={[
+          <Button key="back" onClick={closeModal}>
+            Cancelar
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            loading={loading}
+            onClick={handleOk}
+          >
+            Salvar
+          </Button>,
+        ]}
       >
         <Row justify="center" gutter={20}>
           <Col span={12}>

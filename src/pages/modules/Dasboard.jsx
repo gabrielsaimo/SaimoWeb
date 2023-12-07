@@ -276,6 +276,9 @@ export default function Dashboard({ atualizar, user, company }) {
     }
     setActionCardapio(!actionCardapio);
     closeModal();
+    clearSelecteds();
+    setUptela(!uptela);
+    
     window.location.reload();
   }
 
@@ -784,7 +787,6 @@ export default function Dashboard({ atualizar, user, company }) {
               <Select
                 style={{ width: "100%", margin: "10px 0" }}
                 size="large"
-                dropdownMatchSelectWidth={false}
                 showSearch
                 placeholder="Categoria"
                 optionFilterProp="children"
