@@ -122,6 +122,10 @@ export default function Dashboard({ atualizar, user, company }) {
       idreq: selectedTaskId,
       tipo: "cardapio",
       id: random,
+      // update_at: new Date(),
+      //  update_by: JSON.parse(cachedData)[0]?.name,
+      //  idcompany: JSON.parse(cachedData)[0]?.idcompany,
+      company: company,
     };
     if (code) await InsertImg(body);
     setUptela(!uptela);
@@ -195,12 +199,14 @@ export default function Dashboard({ atualizar, user, company }) {
   async function confirmDelete(record) {
     await deleteCardapio(record);
     message.success("Item deletado com sucesso!");
+    gtCardapio();
     setActionCardapio(!actionCardapio);
   }
 
   async function confirmDeleteImg(record) {
     await DeleteImg(record);
     message.success("Imagem deletada com sucesso!");
+    gtCardapio();
     setActionCardapio(!actionCardapio);
   }
 
@@ -210,16 +216,18 @@ export default function Dashboard({ atualizar, user, company }) {
     } else {
       const array = cardapio.filter(
         (record) =>
-          ((!filteredStatus ||
+          (!filteredStatus ||
             (record["category"] &&
               record["category"]
                 ?.toUpperCase()
                 .indexOf(filteredStatus.toUpperCase()) > -1)) &&
-            (!search ||
-              record["name"].toLowerCase().indexOf(search.toLowerCase()) >
-                -1)) ||
-          !search ||
-          record["description"].toLowerCase().indexOf(search.toLowerCase()) > -1
+          (!search ||
+            record["name"].toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+            !search ||
+            record["description"].toLowerCase().indexOf(search.toLowerCase()) >
+              -1 ||
+            !search ||
+            record["id"].toString().indexOf(search.toLowerCase()) > -1)
       );
       setSearchData(array);
     }
@@ -275,10 +283,11 @@ export default function Dashboard({ atualizar, user, company }) {
       message.success("Item salvo com sucesso!");
     }
     setActionCardapio(!actionCardapio);
+    gtCardapio();
     closeModal();
     clearSelecteds();
     setUptela(!uptela);
-    
+
     window.location.reload();
   }
 
