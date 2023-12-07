@@ -77,7 +77,7 @@ export default function Users(atualizar) {
   const Novo = () => {
     setShowModal(false);
     const body = {
-      id: data.length + 1,
+      id: data.length + 1 + Math.floor(Math.random() * 100000000),
       name: name,
       password: Company + "@" + name,
       categoria: categoria,
