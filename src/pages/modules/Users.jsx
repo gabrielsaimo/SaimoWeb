@@ -1,6 +1,21 @@
-import { Button, Card, Input, Modal, Select, Space, Table } from "antd";
+import {
+  Button,
+  Card,
+  Input,
+  Modal,
+  Popconfirm,
+  Select,
+  Space,
+  Table,
+} from "antd";
 import React, { useEffect, useState } from "react";
-import { getUsers, postUserAdm, putUser } from "../../services/user.ws";
+import {
+  getUsers,
+  postUserAdm,
+  putUser,
+  deleteUser,
+} from "../../services/user.ws";
+import { DeleteOutlined } from "@ant-design/icons";
 export default function Users(atualizar) {
   const [data, setData] = useState([]);
   const [active, setActive] = useState(false);
@@ -15,10 +30,24 @@ export default function Users(atualizar) {
   );
 
   useEffect(() => {
+    gtUser();
+  }, [active, atualizar]);
+
+  const gtUser = () => {
     getUsers(Company).then((users) => {
       setData(users);
     });
-  }, [active, atualizar]);
+  };
+
+  const confirmDelete = (data) => {
+    onDelete(data);
+  };
+
+  const onDelete = (data) => {
+    deleteUser(data.id);
+    setActive(!active);
+    gtUser();
+  };
 
   const onChange = (value, data) => {
     const body = {
@@ -30,6 +59,7 @@ export default function Users(atualizar) {
     };
     postUserAdm(body);
     setActive(!active);
+    gtUser();
   };
   const onChangeCategory = (value, data) => {
     const body = {
@@ -41,6 +71,7 @@ export default function Users(atualizar) {
     };
     postUserAdm(body);
     setActive(!active);
+    gtUser();
   };
 
   const Novo = () => {
@@ -58,6 +89,7 @@ export default function Users(atualizar) {
     setName("");
     setCategoria(null);
     setActive(!active);
+    gtUser();
   };
   const cancelar = () => {
     setName("");
@@ -108,6 +140,33 @@ export default function Users(atualizar) {
             <Select.Option value={true}>Ativo</Select.Option>
             <Select.Option value={false}>Inativo</Select.Option>
           </Select>
+        </>
+      ),
+    },
+    {
+      title: "Ações",
+      dataIndex: "id",
+      key: "id",
+      render: (_, data) => (
+        <>
+          <Popconfirm
+            title="Tem certeza que deseja excluir esse Usuario?"
+            onConfirm={() => confirmDelete(data)}
+            okText="Excluir"
+            okButtonProps={{ danger: true }}
+            cancelText="Cancelar"
+          >
+            <Button style={{ backgroundColor: "red" }}>
+              <DeleteOutlined
+                size={24}
+                style={{
+                  borderRadius: 5,
+                  padding: 5,
+                  color: "#fff",
+                }}
+              />
+            </Button>
+          </Popconfirm>
         </>
       ),
     },
