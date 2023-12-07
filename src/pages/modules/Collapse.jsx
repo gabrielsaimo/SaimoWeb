@@ -182,14 +182,20 @@ const CollapseMenu = () => {
                             </div>
                             <div className="flex">
                               {categoria.description.length > 25 && (
-                                <div className="sub">
-                                  {categoria.sub} {categoria.description}
-                                </div>
+                                <>
+                                  <div className="sub">{categoria.sub}</div>
+                                  <div className="sub">
+                                    {categoria.sub} {categoria.description}
+                                  </div>
+                                </>
                               )}
                               {categoria.description.length <= 25 && (
-                                <div className="sub2">
-                                  {categoria.sub} {categoria.description}
-                                </div>
+                                <>
+                                  <div className="sub">{categoria.sub}</div>
+                                  <div className="sub2">
+                                    {categoria.sub} {categoria.description}
+                                  </div>
+                                </>
                               )}
                             </div>
                           </div>
