@@ -61,7 +61,7 @@
   margin-left: 6px;
   font-size: 12px;
   text-align: start;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 60px;
 }
 .description2 {
