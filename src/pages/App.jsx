@@ -54,7 +54,7 @@ function App() {
           offsetTop={10}
           style={{ position: "fixed", right: 10, top: 10, zIndex: 9 }}
         >
-          <Menu />
+          <Menu props={Company} />
         </Affix>
       </div>
 

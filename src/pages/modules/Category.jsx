@@ -64,12 +64,18 @@ export default function Category() {
   }
 
   async function handleSave() {
+    const cachedData = localStorage.getItem("dateUser");
     try {
       if (selectedTaskId) {
         await postCategoty({ id, name, active });
         message.success("Item atualizado com sucesso!");
       } else {
-        await putCategoty({ id: cardapioCategory.length + 1, name, active });
+        await putCategoty({
+          id: cardapioCategory.length + 1,
+          name,
+          active,
+          idcompany: JSON.parse(cachedData)[0].idcompany,
+        });
         message.success("Item salvo com sucesso!");
       }
       getCategoty();

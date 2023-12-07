@@ -139,34 +139,10 @@ const MenuDashboard = () => {
 
   const logout = () => {
     localStorage.removeItem("dateUser");
-    setAcessable(false);
     setDateUser(null);
+    window.location.href = "/Login";
   };
-  return !acessable ? (
-    <Modal
-      title="Acesso Restrito para Administradores"
-      open={visible}
-      footer={null}
-      onCancel={() => open()}
-    >
-      <div
-        style={{
-          width: "95%",
-          marginLeft: "auto",
-          marginRight: "auto",
-          display: "grid",
-          gridGap: "10px",
-        }}
-      >
-        <label>Nome</label>
-        <Input type="text" onChange={(e) => setName(e.target.value)} />
-        <label>Senha</label>
-        <Input type="password" onChange={(e) => setPassword(e.target.value)} />
-        <Divider />
-        <Button onClick={acessar}>Acessar</Button>
-      </div>
-    </Modal>
-  ) : (
+  return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div style={{ textAlign: "center" }}>
@@ -175,6 +151,7 @@ const MenuDashboard = () => {
           </div>
         </div>
         <Menu
+          props={Company}
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["0"]}
@@ -185,7 +162,6 @@ const MenuDashboard = () => {
               icon: <BookOutlined />,
               disabled: false,
               label: "Catalogo",
-              // eslint-disable-next-line no-dupe-keys
               disabled:
                 UserCategoria === "Gerente"
                   ? false

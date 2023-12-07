@@ -20,6 +20,7 @@ import {
   Carousel,
   Tag,
   Typography,
+  Alert,
 } from "antd";
 import "firebase/database";
 import ImgCrop from "antd-img-crop";
@@ -46,7 +47,15 @@ import { getCategoty } from "../../services/category.ws";
 
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
-  const userDate = user[0];
+  const cachedData = localStorage.getItem("dateUser");
+  if (cachedData === null) return (window.location.href = "/Login");
+  if (JSON.parse(cachedData)[0]?.company != company) {
+    setTimeout(() => {
+      return (window.location.href = "/Login");
+    }, 2000);
+    return message.error("Você não tem permissão para acessar essa página!");
+  }
+
   const [fileList, setFileList] = useState([]);
   const [cardapio, setCardapio] = useState([]);
   const [modalNewAction, setModalNewAction] = useState(false);
@@ -243,7 +252,7 @@ export default function Dashboard({ atualizar, user, company }) {
         imagem: imgByte,
         category,
         update_at: new Date(),
-        update_by: userDate.name,
+        update_by: localStorage.getItem("name"),
         idcompany: localStorage.getItem("idcompany"),
       });
       message.success("Item atualizado com sucesso!");
@@ -258,7 +267,7 @@ export default function Dashboard({ atualizar, user, company }) {
         imagem: imgByte,
         category,
         update_at: new Date(),
-        update_by: userDate.name,
+        update_by: localStorage.getItem("name"),
         idcompany: localStorage.getItem("idcompany"),
       });
       message.success("Item salvo com sucesso!");

@@ -16,6 +16,7 @@ const LazyLoadedImage = lazy(() =>
 const CollapseMenu = () => {
   // get params from url
   const { Company } = useParams();
+
   const [cardapio, setCardapio] = useState([]);
   const [cardapioCategory, setCardapioCategory] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
@@ -32,11 +33,10 @@ const CollapseMenu = () => {
   const getCardapios = async () => {
     const cardapioCollection = await getCardapio(Company);
     setCardapio(cardapioCollection);
-    
   };
 
   const getCardapioCategory = async () => {
-    const cardapioCollection = await getCategoty();
+    const cardapioCollection = await getCategoty(Company);
     setCardapioCategory(cardapioCollection);
   };
 
