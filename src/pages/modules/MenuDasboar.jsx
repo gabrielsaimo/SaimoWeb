@@ -86,9 +86,6 @@ const MenuDashboard = () => {
       setUserNome(UserCollection.name);
       setUserCategoria(UserCollection.categoria);
       setCompany(UserCollection.company);
-      // Armazenar o valor no localStorage
-      localStorage.setItem("dateUser", JSON.stringify(UserCollection));
-
       setDateUser(UserCollection);
       if (UserCollection.active === false) {
         alert("Usuário desativado");
@@ -138,9 +135,7 @@ const MenuDashboard = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem("dateUser");
-    setDateUser(null);
-    window.location.href = "/Login";
+    window.location.href = window.location.origin + "/login/logout";
   };
   return (
     <Layout>

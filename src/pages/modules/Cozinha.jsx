@@ -237,16 +237,16 @@ export default function Cozinha() {
     const UserCollection = await getUser(data);
 
     if (UserCollection.length > 0) {
-      setUserNome(UserCollection[0].name);
+      setUserNome(UserCollection.name);
       localStorage.setItem("dateUser", JSON.stringify(UserCollection));
 
       setDateUser(UserCollection);
-      if (UserCollection[0].active === false) {
+      if (UserCollection.active === false) {
         alert("Usuário desativado");
         setAcessable(false);
       } else if (
-        UserCollection[0].categoria === "ADM" ||
-        UserCollection[0].categoria === "Cozinha"
+        UserCollection.categoria === "ADM" ||
+        UserCollection.categoria === "Cozinha"
       ) {
         setAcessable(true);
       } else {
@@ -279,9 +279,7 @@ export default function Cozinha() {
   };
 
   const logout = () => {
-    localStorage.removeItem("dateUser");
-    setAcessable(false);
-    setDateUser(null);
+    window.location.href = window.location.origin + "/login/logout";
   };
 
   const confirmarCancelamento = () => {

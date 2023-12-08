@@ -54,18 +54,16 @@ export default function Config() {
     const UserCollection = await getUser(data);
 
     if (UserCollection.length > 0) {
-      setUserNome(UserCollection[0].name);
-      setUserCategoria(UserCollection[0].categoria);
-      // Armazenar o valor no localStorage
-      localStorage.setItem("dateUser", JSON.stringify(UserCollection));
+      setUserNome(UserCollection.name);
+      setUserCategoria(UserCollection.categoria);
 
       setDateUser(UserCollection);
-      if (UserCollection[0].active === false) {
+      if (UserCollection.active === false) {
         alert("Usuário desativado");
         setAcessable(false);
       } else if (
-        UserCollection[0].categoria === "ADM" ||
-        UserCollection[0].categoria === "Gerência"
+        UserCollection.categoria === "ADM" ||
+        UserCollection.categoria === "Gerência"
       ) {
         setAcessable(true);
       } else {
@@ -120,9 +118,7 @@ export default function Config() {
   };
 
   const logout = () => {
-    localStorage.removeItem("dateUser");
-    setAcessable(false);
-    setDateUser(null);
+    window.location.href = window.location.origin + "/login/logout";
   };
 
   const items = [

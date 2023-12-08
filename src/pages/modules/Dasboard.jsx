@@ -20,7 +20,6 @@ import {
   Carousel,
   Tag,
   Typography,
-  Alert,
 } from "antd";
 import "firebase/database";
 import ImgCrop from "antd-img-crop";
@@ -40,13 +39,11 @@ import {
   DeleteImg,
   getCardapio,
   getImgCardapio,
-  imgCardapio,
   InsertImg,
   postCardapio,
   putCardapio,
 } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
-import TextArea from "antd/es/input/TextArea";
 
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
@@ -54,10 +51,7 @@ export default function Dashboard({ atualizar, user, company }) {
   if (cachedData === null) return (window.location.href = "/Login");
   console.log(JSON.parse(cachedData).company, company);
   if (JSON.parse(cachedData).company != company) {
-    setTimeout(() => {
-    //  return (window.location.href = "/Login");
-    }, 2000);
-    return message.error("Você não tem permissão para acessar essa página!");
+    return (window.location.href = "/Login/error");
   }
 
   const [fileList, setFileList] = useState([]);

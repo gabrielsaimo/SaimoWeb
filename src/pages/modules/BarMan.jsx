@@ -356,17 +356,17 @@ export default function Bar() {
     const UserCollection = await getUser(data);
 
     if (UserCollection.length > 0) {
-      setUserNome(UserCollection[0].name);
+      setUserNome(UserCollection.name);
       // Armazenar o valor no localStorage
       localStorage.setItem("dateUser", JSON.stringify(UserCollection));
 
       setDateUser(UserCollection);
-      if (UserCollection[0].active === false) {
+      if (UserCollection.active === false) {
         alert("Usuário desativado");
         setAcessable(false);
       } else if (
-        UserCollection[0].categoria === "ADM" ||
-        UserCollection[0].categoria === "BarMan"
+        UserCollection.categoria === "ADM" ||
+        UserCollection.categoria === "BarMan"
       ) {
         setAcessable(true);
       } else {
@@ -398,9 +398,7 @@ export default function Bar() {
     return cachedData ? JSON.parse(cachedData) : null;
   };
   const logout = () => {
-    localStorage.removeItem("dateUser");
-    setAcessable(false);
-    setDateUser(null);
+    window.location.href = window.location.origin + "/login/logout";
   };
 
   const confirmarCancelamento = () => {
@@ -412,8 +410,7 @@ export default function Bar() {
   return (
     <Card
       style={{
-        backgroundImage:
-          "url(https://images2.alphacoders.com/553/553717.jpg)",
+        backgroundImage: "url(https://images2.alphacoders.com/553/553717.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -448,8 +445,7 @@ export default function Bar() {
           </div>
         </Modal>
       ) : (
-        <Card style={{ backgroundColor: "rgba(255,255,255,0.8)" }}
-        >
+        <Card style={{ backgroundColor: "rgba(255,255,255,0.8)" }}>
           {userNome}
           {contextHolder}
           <div style={{ float: "right" }}>

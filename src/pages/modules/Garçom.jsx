@@ -238,15 +238,15 @@ export default function Garçom() {
     const UserCollection = await getUser(data);
 
     if (UserCollection.length > 0) {
-      setUserNome(UserCollection[0].name);
+      setUserNome(UserCollection.name);
       localStorage.setItem("dateUser", JSON.stringify(UserCollection));
-      if (UserCollection[0].active === false) {
+      if (UserCollection.active === false) {
         alert("Usuário desativado");
         setAcessable(false);
       } else if (
-        UserCollection[0].categoria === "ADM" ||
-        UserCollection[0].categoria === "Gerência" ||
-        UserCollection[0].categoria === "Garçom"
+        UserCollection.categoria === "ADM" ||
+        UserCollection.categoria === "Gerência" ||
+        UserCollection.categoria === "Garçom"
       ) {
         setAcessable(true);
       } else {
@@ -294,9 +294,7 @@ export default function Garçom() {
   };
 
   const logout = () => {
-    localStorage.removeItem("dateUser");
-    setAcessable(false);
-    //   setDateUser(null);
+    window.location.href = window.location.origin + "/login/logout";
   };
 
   const showModal = () => {
