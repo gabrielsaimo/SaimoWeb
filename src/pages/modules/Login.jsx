@@ -45,7 +45,8 @@ const Login = () => {
         UserCollection.user[0].categoria === "Gerência"
       ) {
         window.location.href = "/dashboard/" + UserCollection.user[0].company;
-      } else {
+      } else if (UserCollection.user[0].categoria === "Garçom") {
+        window.location.href = "/Garçom/" + UserCollection.user[0].company;
       }
     } else {
       alert("Senha incorreta");
