@@ -20,24 +20,28 @@ const Login = () => {
     const data = { name: name, password: password };
 
     const UserCollection = await getUser(data);
+ 
 
-    if (UserCollection.length > 0) {
-      setUserNome(UserCollection[0].name);
-      setUserCategoria(UserCollection[0].categoria);
-      setCompany(UserCollection[0].company);
+    if (UserCollection.user.length > 0) {
+      setUserNome(UserCollection.user[0].name);
+      setUserCategoria(UserCollection.user[0].categoria);
+      setCompany(UserCollection.user[0].company);
       // Armazenar o valor no localStorage
-      localStorage.setItem("dateUser", JSON.stringify(UserCollection));
-
+      localStorage.setItem("dateUser", JSON.stringify(UserCollection.user[0]));
+      localStorage.setItem(
+        "access_token",
+        JSON.stringify(UserCollection.access_token)
+      );
       setDateUser(UserCollection);
-      if (UserCollection[0].active === false) {
+      if (UserCollection.user[0].active === false) {
         alert("Usuário desativado");
         setAcessable(false);
       } else if (
-        UserCollection[0].categoria === "ADM" ||
-        UserCollection[0].categoria === "Gerência"
+        UserCollection.user[0].categoria === "ADM" ||
+        UserCollection.user[0].categoria === "Gerência"
       ) {
         setAcessable(true);
-        window.location.href = "/dashboard/" + UserCollection[0].company;
+        window.location.href = "/dashboard/" + UserCollection.user[0].company;
       } else {
         alert("Usuário não tem permissão");
         setAcessable(false);
@@ -49,19 +53,20 @@ const Login = () => {
   const getCachedDateUser = () => {
     const cachedData = localStorage.getItem("dateUser");
     if (cachedData) {
+      console.log(JSON.parse(cachedData),'teste');
       setDateUser(JSON.parse(cachedData));
-      setUserNome(JSON.parse(cachedData)[0].name);
-      setUserCategoria(JSON.parse(cachedData)[0].categoria);
-      if (JSON.parse(cachedData)[0].active === false) {
+      setUserNome(JSON.parse(cachedData).name);
+      setUserCategoria(JSON.parse(cachedData).categoria);
+      if (JSON.parse(cachedData).active === false) {
         alert("Usuário desativado");
         setAcessable(false);
       } else if (
-        JSON.parse(cachedData)[0].categoria === "ADM" ||
-        JSON.parse(cachedData)[0].categoria === "Gerência"
+        JSON.parse(cachedData).categoria === "ADM" ||
+        JSON.parse(cachedData).categoria === "Gerência"
       ) {
         setAcessable(true);
         window.location.href =
-          "/dashboard/" + JSON.parse(cachedData)[0].company;
+          "/dashboard/" + JSON.parse(cachedData).company;
       } else {
         alert("Usuário não tem permissão");
         setAcessable(false);

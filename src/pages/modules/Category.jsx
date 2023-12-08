@@ -40,7 +40,7 @@ export default function Category() {
   const [searchData, setSearchData] = useState([]);
   const [modalNewAction, setModalNewAction] = useState(false);
   const [Company] = useState(
-    JSON.parse(localStorage.getItem("dateUser"))[0].company
+    JSON.parse(localStorage.getItem("dateUser")).company
   );
   const [loading, setLoading] = useState(false);
 

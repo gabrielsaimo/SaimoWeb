@@ -23,10 +23,10 @@ export default function Users(atualizar) {
   const [name, setName] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [Company] = useState(
-    JSON.parse(localStorage.getItem("dateUser"))[0].company
+    JSON.parse(localStorage.getItem("dateUser")).company
   );
   const [idcompany] = useState(
-    JSON.parse(localStorage.getItem("dateUser"))[0].idcompany
+    JSON.parse(localStorage.getItem("dateUser")).idcompany
   );
 
   useEffect(() => {

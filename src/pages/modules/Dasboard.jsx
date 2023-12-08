@@ -52,9 +52,10 @@ const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
   const cachedData = localStorage.getItem("dateUser");
   if (cachedData === null) return (window.location.href = "/Login");
-  if (JSON.parse(cachedData)[0]?.company != company) {
+  console.log(JSON.parse(cachedData).company, company);
+  if (JSON.parse(cachedData).company != company) {
     setTimeout(() => {
-      return (window.location.href = "/Login");
+    //  return (window.location.href = "/Login");
     }, 2000);
     return message.error("Você não tem permissão para acessar essa página!");
   }
@@ -263,8 +264,8 @@ export default function Dashboard({ atualizar, user, company }) {
         imagem: imgByte,
         category,
         update_at: new Date(),
-        update_by: JSON.parse(cachedData)[0]?.name,
-        idcompany: JSON.parse(cachedData)[0]?.idcompany,
+        update_by: JSON.parse(cachedData).name,
+        idcompany: JSON.parse(cachedData).idcompany,
         company: company,
       });
       message.success("Item atualizado com sucesso!");
@@ -279,8 +280,8 @@ export default function Dashboard({ atualizar, user, company }) {
         imagem: imgByte,
         category,
         update_at: new Date(),
-        update_by: JSON.parse(cachedData)[0]?.name,
-        idcompany: JSON.parse(cachedData)[0]?.idcompany,
+        update_by: JSON.parse(cachedData).name,
+        idcompany: JSON.parse(cachedData).idcompany,
         company: company,
       });
       message.success("Item salvo com sucesso!");
