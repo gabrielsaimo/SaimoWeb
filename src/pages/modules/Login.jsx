@@ -4,6 +4,7 @@ import { getUser } from "../../services/user.ws";
 import { useParams } from "react-router-dom";
 
 const Login = () => {
+  const [visible, setVisible] = useState(false);
   const { msn } = useParams();
   useEffect(() => {
     if (msn === "error") {
@@ -27,6 +28,7 @@ const Login = () => {
     getCachedDateUser();
   }, []);
   const GetUsuario = async () => {
+    setVisible(true);
     const data = { name: name, password: password };
 
     const UserCollection = await getUser(data);
@@ -50,6 +52,7 @@ const Login = () => {
       }
     } else {
       alert("Senha incorreta");
+      setVisible(false);
     }
   };
   const getCachedDateUser = () => {
@@ -97,7 +100,14 @@ const Login = () => {
         <label>Senha</label>
         <Input type="password" onChange={(e) => setPassword(e.target.value)} />
         <Divider />
-        <Button onClick={acessar}>Acessar</Button>
+        <Button
+          onClick={acessar}
+          type="primary"
+          disabled={name === "" || password === "" ? true : false}
+          loading={visible}
+        >
+          Acessar
+        </Button>
       </div>
     </div>
   );
