@@ -8,6 +8,7 @@ import Bar from "../pages/modules/BarMan";
 import MenuDashboard from "../pages/modules/MenuDasboar";
 import Login from "../pages/modules/Login";
 import Home from "../pages/modules/Home";
+import VideoChatComponent from "../pages/modules/VideoChat";
 
 export default function Rotas() {
   return (
@@ -20,6 +21,9 @@ export default function Rotas() {
       <Route parh="*">"404 - Not Found"</Route>
       <Route path="/Cozinha/:idCompany?" element={<Cozinha />}>
         "Cozinha"
+      </Route>
+      <Route path="videoChat" element={<VideoChatComponent />}>
+        "videoChat"
       </Route>
       <Route path="/Bar" element={<Bar />}>
         "Bar"
