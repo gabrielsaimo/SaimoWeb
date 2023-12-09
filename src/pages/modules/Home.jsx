@@ -70,16 +70,18 @@ const Home = () => {
             <Button
               type="primary"
               style={{ marginRight: "10px", width: 150, marginBottom: 20 }}
+              onClick={() => (window.location.href = "/login")}
             >
-              <Link to="/login">Login</Link>
+              Login
             </Button>
           </div>
           <div>
             <Button
               type="primary"
               style={{ marginRight: "10px", width: 150, marginBottom: 20 }}
+              onClick={() => (window.location.href = "/register")}
             >
-              <Link to="/register">Registro</Link>
+              Registrar
             </Button>
           </div>
         </Drawer>
