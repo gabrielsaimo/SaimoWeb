@@ -84,7 +84,7 @@ const Home = () => {
           </div>
         </Drawer>
       </Header>
-      <Content style={{ padding: "0 50px", marginTop: 64 }}>
+      <Content style={{ padding: "0 0px", marginTop: 164 }}>
         <div style={{ background: "#fff", padding: 24, minHeight: 380 }}>
           <Title>Bem-vindo à SaimoWeb</Title>
           <Paragraph>
