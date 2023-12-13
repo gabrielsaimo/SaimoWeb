@@ -71,6 +71,12 @@ export default function Cozinha() {
   const beforeStatus = text.slice(0, statusIndex).trim();
   const afterStatus = text.slice(statusIndex).trim();
   const [api, contextHolder] = notification.useNotification();
+  const [Company] = useState(
+    JSON.parse(localStorage.getItem("dateUser")).company
+  );
+  const [idCompany] = useState(
+    JSON.parse(localStorage.getItem("dateUser")).idcompany
+  );
   const [pedidoss, setPedidos] = useState([]);
   const openNotification = (placement, title, notifi, type) => {
     if (type === "success") {
@@ -88,7 +94,6 @@ export default function Cozinha() {
     }
   };
   useEffect(() => {
-    getCachedDateUser();
     onValue(mensagensRef, (snapshot) => {
       const mensagens = snapshot.val();
       openNotification(
@@ -142,7 +147,7 @@ export default function Cozinha() {
     getPedido();
   }, [modalCancelamento, dateUser]);
   const getPedido = async () => {
-    const pedidos = await getPedidos();
+    const pedidos = await getPedidos(idCompany);
     setPedido(pedidos);
   };
 
@@ -150,19 +155,13 @@ export default function Cozinha() {
     getCardapios();
   }, []);
   const getCardapios = async () => {
-    const cardapio = await getCardapio();
+    const cardapio = await getCardapio(Company);
     setCardapio(cardapio);
   };
   async function getPedidoss() {
-    const pedidos = await getPedidoId();
+    const pedidos = await getPedidoId(idCompany);
     setPedidos(pedidos);
   }
-  const open = () => {
-    setVisible(true);
-  };
-  const acessar = () => {
-    GetUsuario();
-  };
 
   const StatusPedido = async (data, status, pedido) => {
     const dataPedido = {
@@ -231,53 +230,6 @@ export default function Cozinha() {
     getPedido();
   };
 
-  const GetUsuario = async () => {
-    const data = { name: name, password: password };
-
-    const UserCollection = await getUser(data);
-
-    if (UserCollection.length > 0) {
-      setUserNome(UserCollection.name);
-      localStorage.setItem("dateUser", JSON.stringify(UserCollection));
-
-      setDateUser(UserCollection);
-      if (UserCollection.active === false) {
-        alert("Usuário desativado");
-        setAcessable(false);
-      } else if (
-        UserCollection.categoria === "ADM" ||
-        UserCollection.categoria === "Cozinha"
-      ) {
-        setAcessable(true);
-      } else {
-        alert("Usuário não tem permissão");
-        setAcessable(false);
-      }
-    } else {
-      alert("Senha incorreta");
-    }
-  };
-
-  const getCachedDateUser = () => {
-    const cachedData = localStorage.getItem("dateUser");
-    if (cachedData) {
-      setUserNome(JSON.parse(cachedData)[0].name);
-      if (JSON.parse(cachedData)[0].active === false) {
-        alert("Usuário desativado");
-        setAcessable(false);
-      } else if (
-        JSON.parse(cachedData)[0].categoria === "ADM" ||
-        JSON.parse(cachedData)[0].categoria === "Cozinha"
-      ) {
-        setAcessable(true);
-      } else {
-        alert("Usuário não tem permissão");
-        setAcessable(false);
-      }
-    }
-    return cachedData ? JSON.parse(cachedData) : null;
-  };
-
   const logout = () => {
     window.location.href = window.location.origin + "/login/logout";
   };
@@ -299,184 +251,153 @@ export default function Cozinha() {
         height: "100vh",
       }}
     >
-      {!acessable ? (
-        <Modal
-          title="Acesso Restrito para Administradores"
-          open={visible}
-          footer={null}
-          onCancel={() => open()}
-        >
-          <div
-            style={{
-              width: "95%",
-              marginLeft: "auto",
-              marginRight: "auto",
-              display: "grid",
-              gridGap: "10px",
-            }}
-          >
-            <label>Nome</label>
-            <Input type="text" onChange={(e) => setName(e.target.value)} />
-            <label>Senha</label>
-            <Input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Divider />
-            <Button onClick={acessar}>Acessar</Button>
-          </div>
-        </Modal>
-      ) : (
-        <Card style={{ backgroundColor: "rgba(255,255,255,0.8)" }}>
-          {userNome}
-          {contextHolder}
-          <div style={{ float: "right" }}>
-            <Button onClick={() => logout()}>Sair</Button>
-          </div>
+      <Card style={{ backgroundColor: "rgba(255,255,255,0.8)" }}>
+        {userNome}
+        {contextHolder}
+        <div style={{ float: "right" }}>
+          <Button onClick={() => logout()}>Sair</Button>
+        </div>
 
-          <h1>Atualizado as {dataFormatada}</h1>
-          {pedidos.map((pedido) => (
-            <div style={{ marginBottom: 10 }}>
-              <Descriptions
-                bordered
-                style={{
-                  backgroundColor: "rgb(255, 255, 255)",
-                  borderRadius: 10,
-                }}
-                column={{
-                  xxl: 4,
-                  xl: 3,
-                  lg: 3,
-                  md: 3,
-                  sm: 2,
-                  xs: 1,
-                }}
-              >
-                <Descriptions.Item label="N° Pedido">
-                  {pedido.id}
-                </Descriptions.Item>
-                <Descriptions.Item label="Mesa">
-                  {pedido.mesa}
-                </Descriptions.Item>
-                <Descriptions.Item label="Hora do pedido">
-                  {moment(pedido.created_at).format("HH:mm:ss")}
-                </Descriptions.Item>
-                <Descriptions.Item label="Status">
-                  <Badge
-                    status={
-                      pedido.status === "Em Analize"
-                        ? "warning"
-                        : pedido.status === "Cancelado"
-                        ? "error"
-                        : pedido.status === "Em Cancelamento"
-                        ? "error"
-                        : pedido.status === "Pronto"
-                        ? "success"
-                        : pedido.status === "Em Preparo"
-                        ? "processing"
-                        : "default"
-                    }
-                    text={pedido.status}
-                  />
-                </Descriptions.Item>
-                <Descriptions.Item label="Pedido" span={2}>
-                  {cardapio.length > 0 && pedidoss.length > 0 ? (
-                    pedidoss.map((pedidoss) => (
-                      <>
-                        {pedido.pedidos === pedidoss.idpedido ? (
-                          <>
-                            {pedidoss.qdt > 0 ? (
-                              <p>
-                                x{pedidoss.qdt} {pedidoss.item}
-                                {pedidoss.categoria !== "Bebidas" &&
-                                pedidoss.categoria !== "Sucos exóticos" &&
-                                pedidoss.categoria !== "Drinks" &&
-                                pedidoss.categoria !== "Cerveja" ? (
-                                  pedidoss.status !== "Cancelado" &&
-                                  pedidoss.status !== "Finalizado" &&
-                                  pedidoss.status !== "Em Cancelamento" &&
-                                  pedidoss.status !== "Pronto" ? (
-                                    <Button
-                                      onClick={() => {
-                                        StatusPedido(
-                                          pedidoss,
-                                          pedidoss.status === "Em Analize"
-                                            ? "Em Preparo"
-                                            : pedido.status === "Em Preparo"
-                                            ? "Pronto"
-                                            : "Finalizado",
-                                          pedido
-                                        );
-                                      }}
-                                      type="primary"
-                                      style={{
-                                        marginLeft: 10,
-                                        backgroundColor:
-                                          pedidoss.status === "Em Analize"
-                                            ? "orange"
-                                            : pedidoss.status === "Em Preparo"
-                                            ? "green"
-                                            : "purple",
-                                      }}
-                                    >
-                                      {pedidoss.status === "Em Analize"
-                                        ? "Em Preparo"
-                                        : pedidoss.status === "Em Preparo"
-                                        ? "Pronto"
-                                        : null}
-                                    </Button>
-                                  ) : null
-                                ) : null}
-                                {pedidoss.status === "Em Cancelamento" ? (
+        <h1>Atualizado as {dataFormatada}</h1>
+        {pedidos.map((pedido) => (
+          <div style={{ marginBottom: 10 }}>
+            <Descriptions
+              bordered
+              style={{
+                backgroundColor: "rgb(255, 255, 255)",
+                borderRadius: 10,
+              }}
+              column={{
+                xxl: 4,
+                xl: 3,
+                lg: 3,
+                md: 3,
+                sm: 2,
+                xs: 1,
+              }}
+            >
+              <Descriptions.Item label="N° Pedido">
+                {pedido.id}
+              </Descriptions.Item>
+              <Descriptions.Item label="Mesa">{pedido.mesa}</Descriptions.Item>
+              <Descriptions.Item label="Hora do pedido">
+                {moment(pedido.created_at).format("HH:mm:ss")}
+              </Descriptions.Item>
+              <Descriptions.Item label="Status">
+                <Badge
+                  status={
+                    pedido.status === "Em Analize"
+                      ? "warning"
+                      : pedido.status === "Cancelado"
+                      ? "error"
+                      : pedido.status === "Em Cancelamento"
+                      ? "error"
+                      : pedido.status === "Pronto"
+                      ? "success"
+                      : pedido.status === "Em Preparo"
+                      ? "processing"
+                      : "default"
+                  }
+                  text={pedido.status}
+                />
+              </Descriptions.Item>
+              <Descriptions.Item label="Pedido" span={2}>
+                {cardapio.length > 0 && pedidoss.length > 0 ? (
+                  pedidoss.map((pedidoss) => (
+                    <>
+                      {pedido.pedidos === pedidoss.idpedido ? (
+                        <>
+                          {pedidoss.qdt > 0 ? (
+                            <p>
+                              x{pedidoss.qdt} {pedidoss.item}
+                              {pedidoss.categoria !== "Bebidas" &&
+                              pedidoss.categoria !== "Sucos exóticos" &&
+                              pedidoss.categoria !== "Drinks" &&
+                              pedidoss.categoria !== "Cerveja" ? (
+                                pedidoss.status !== "Cancelado" &&
+                                pedidoss.status !== "Finalizado" &&
+                                pedidoss.status !== "Em Cancelamento" &&
+                                pedidoss.status !== "Pronto" ? (
                                   <Button
-                                    style={{
-                                      marginLeft: 10,
-                                      backgroundColor: "red",
+                                    onClick={() => {
+                                      StatusPedido(
+                                        pedidoss,
+                                        pedidoss.status === "Em Analize"
+                                          ? "Em Preparo"
+                                          : pedido.status === "Em Preparo"
+                                          ? "Pronto"
+                                          : "Finalizado",
+                                        pedido
+                                      );
                                     }}
                                     type="primary"
-                                    onClick={() => {
-                                      setIdPedido(pedido.id);
-                                      setObsCancelamento(pedido.obs_cancel);
-                                      setModalCancelamento(true);
-                                      //  StatusPedidoFinal(pedido.id, "Cancelado");
+                                    style={{
+                                      marginLeft: 10,
+                                      backgroundColor:
+                                        pedidoss.status === "Em Analize"
+                                          ? "orange"
+                                          : pedidoss.status === "Em Preparo"
+                                          ? "green"
+                                          : "purple",
                                     }}
                                   >
-                                    Confimar?
+                                    {pedidoss.status === "Em Analize"
+                                      ? "Em Preparo"
+                                      : pedidoss.status === "Em Preparo"
+                                      ? "Pronto"
+                                      : null}
                                   </Button>
-                                ) : null}
-                              </p>
-                            ) : null}
-                          </>
-                        ) : null}
-                      </>
-                    ))
-                  ) : (
-                    <p>Carregando...</p>
-                  )}
-                </Descriptions.Item>
+                                ) : null
+                              ) : null}
+                              {pedidoss.status === "Em Cancelamento" ? (
+                                <Button
+                                  style={{
+                                    marginLeft: 10,
+                                    backgroundColor: "red",
+                                  }}
+                                  type="primary"
+                                  onClick={() => {
+                                    setIdPedido(pedido.id);
+                                    setObsCancelamento(pedido.obs_cancel);
+                                    setModalCancelamento(true);
+                                    //  StatusPedidoFinal(pedido.id, "Cancelado");
+                                  }}
+                                >
+                                  Confimar?
+                                </Button>
+                              ) : null}
+                            </p>
+                          ) : null}
+                        </>
+                      ) : null}
+                    </>
+                  ))
+                ) : (
+                  <p>Carregando...</p>
+                )}
+              </Descriptions.Item>
 
-                <Descriptions.Item label="Oberservação" span={1}>
-                  {pedido.obs}
-                </Descriptions.Item>
-              </Descriptions>
-            </div>
-          ))}
-          <Modal
-            title="Motivo do Cancelamento"
-            open={modalCancelamento}
-            okType="danger"
-            okText="Cancelar Pedido"
-            onOk={() => {
-              confirmarCancelamento();
-            }}
-            cancelButtonProps={{ style: { display: "none" } }}
-            onCancel={() => setModalCancelamento(false)}
-          >
-            <h2>{beforeStatus}</h2>
-            <h3>{afterStatus}</h3>
-          </Modal>
-        </Card>
-      )}
+              <Descriptions.Item label="Oberservação" span={1}>
+                {pedido.obs}
+              </Descriptions.Item>
+            </Descriptions>
+          </div>
+        ))}
+        <Modal
+          title="Motivo do Cancelamento"
+          open={modalCancelamento}
+          okType="danger"
+          okText="Cancelar Pedido"
+          onOk={() => {
+            confirmarCancelamento();
+          }}
+          cancelButtonProps={{ style: { display: "none" } }}
+          onCancel={() => setModalCancelamento(false)}
+        >
+          <h2>{beforeStatus}</h2>
+          <h3>{afterStatus}</h3>
+        </Modal>
+      </Card>
     </Card>
   );
 }
