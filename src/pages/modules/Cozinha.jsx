@@ -1,15 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Badge,
-  Button,
-  Card,
-  Descriptions,
-  Divider,
-  Input,
-  Modal,
-  notification,
-} from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import { Badge, Button, Card, Descriptions, Modal, notification } from "antd";
+import React, { useEffect, useState } from "react";
 import {
   getPedidoId,
   getPedidos,
@@ -18,7 +9,6 @@ import {
   veryfyStatusPedidos,
 } from "../../services/Pedidos.ws";
 import { getCardapio } from "../../services/cardapio.ws";
-import { getUser } from "../../services/user.ws";
 import { postEmail } from "../../services/email.ws";
 import io from "socket.io-client";
 import moment from "moment/moment";
@@ -26,9 +16,10 @@ import { initializeApp } from "firebase/app";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import "firebase/compat/storage";
-import { get, getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref, set } from "firebase/database";
 import sound from "../../assets/notification.wav";
 import soundError from "../../assets/error.wav";
+import { useParams } from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHuslm5iZZGtOk3ChXKXoIGpQQQI4UaUQ",
@@ -49,6 +40,7 @@ const database = getDatabase(service);
 const mensagensRef = ref(database, "data");
 
 export default function Cozinha() {
+  const { Company } = useParams();
   const data = new Date();
 
   const hora = data.getHours();
@@ -57,12 +49,6 @@ export default function Cozinha() {
 
   const [pedidos, setPedido] = useState([]);
   const [cardapio, setCardapio] = useState([]);
-  const [acessable, setAcessable] = React.useState(false);
-  const [visible, setVisible] = React.useState(true);
-  const [name, setName] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [dateUser, setDateUser] = React.useState();
-  const [userNome, setUserNome] = React.useState("");
   const [modalCancelamento, setModalCancelamento] = React.useState(false);
   const [idPedido, setIdPedido] = React.useState("");
   const [obsCancelamento, setObsCancelamento] = React.useState("");
@@ -71,12 +57,10 @@ export default function Cozinha() {
   const beforeStatus = text.slice(0, statusIndex).trim();
   const afterStatus = text.slice(statusIndex).trim();
   const [api, contextHolder] = notification.useNotification();
-  const [Company] = useState(
-    JSON.parse(localStorage.getItem("dateUser")).company
-  );
   const [idCompany] = useState(
     JSON.parse(localStorage.getItem("dateUser")).idcompany
   );
+
   const [pedidoss, setPedidos] = useState([]);
   const openNotification = (placement, title, notifi, type) => {
     if (type === "success") {
@@ -145,7 +129,7 @@ export default function Cozinha() {
   }, [pedidos]);
   useEffect(() => {
     getPedido();
-  }, [modalCancelamento, dateUser]);
+  }, [modalCancelamento]);
   const getPedido = async () => {
     const pedidos = await getPedidos(idCompany);
     setPedido(pedidos);
@@ -167,19 +151,15 @@ export default function Cozinha() {
     const dataPedido = {
       id: data.id,
       status: status,
-      acepted_by: userNome,
+      acepted_by: JSON.parse(localStorage.getItem("dateUser")).name,
       acepted_at: new Date(),
       update_at: new Date(),
-      update_by: userNome,
+      update_by: JSON.parse(localStorage.getItem("dateUser")).name,
     };
 
     await postPedidostatus(dataPedido);
 
     const returnVerify = await veryfyStatusPedidos(pedido.pedidos);
-    console.log(
-      "🚀 ~ file: Cozinha.jsx:180 ~ StatusPedido ~ returnVerify:",
-      returnVerify.length
-    );
     if (returnVerify.length === 1) {
       StatusPedidoFinal(pedido.id, status);
     }
@@ -196,7 +176,9 @@ export default function Cozinha() {
       const email = {
         destinatario: destinararios,
         assunto: "Pedido Cancelado",
-        corpo: `<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Email de Cancelamento</title><style>body{font-family:Arial,sans-serif;margin:0;padding:20px;background-color:#f5f5f5;}.container{max-width:600px;margin:0 auto;background-color:#fff;padding:20px;border-radius:4px;box-shadow:0 2px 4px rgba(0,0,0,0.1);}h1{color:#333;margin-top:0;}p{margin-bottom:20px;}.signature{margin-top:40px;font-style:italic;color:#888;}</style></head><body><div class='container'><h1>Pedido Cancelado</h1><p>Cancelado por: ${userNome},</p><p>Pedido N° ${id} foi cancelado.</p><p>Motivo do cancelamento:</p><p>${obsCancelamento}</p><br><br/><p>Atenciosamente,</p><p><em>Encando Amapaense</em></p></div></body></html>`,
+        corpo: `<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Email de Cancelamento</title><style>body{font-family:Arial,sans-serif;margin:0;padding:20px;background-color:#f5f5f5;}.container{max-width:600px;margin:0 auto;background-color:#fff;padding:20px;border-radius:4px;box-shadow:0 2px 4px rgba(0,0,0,0.1);}h1{color:#333;margin-top:0;}p{margin-bottom:20px;}.signature{margin-top:40px;font-style:italic;color:#888;}</style></head><body><div class='container'><h1>Pedido Cancelado</h1><p>Cancelado por: ${
+          JSON.parse(localStorage.getItem("dateUser")).name
+        },</p><p>Pedido N° ${id} foi cancelado.</p><p>Motivo do cancelamento:</p><p>${obsCancelamento}</p><br><br/><p>Atenciosamente,</p><p><em>Encando Amapaense</em></p></div></body></html>`,
       };
       await postEmail(email).catch((err) => {
         console.log(err);
@@ -207,10 +189,10 @@ export default function Cozinha() {
       const data = {
         id: id,
         status: status,
-        acepted_by: userNome,
+        acepted_by: JSON.parse(localStorage.getItem("dateUser")).name,
         acepted_at: new Date(),
         update_at: new Date(),
-        update_by: userNome,
+        update_by: JSON.parse(localStorage.getItem("dateUser")).name,
       };
       await postPedidosStatus(data);
     } else {
@@ -218,11 +200,13 @@ export default function Cozinha() {
         id: id,
         status: status,
         finished_by:
-          status === "Pronto" || status === "Cancelado" ? userNome : null,
+          status === "Pronto" || status === "Cancelado"
+            ? JSON.parse(localStorage.getItem("dateUser")).name
+            : null,
         finished_at:
           status === "Pronto" || status === "Cancelado" ? new Date() : null,
         update_at: new Date(),
-        update_by: userNome,
+        update_by: JSON.parse(localStorage.getItem("dateUser")).name,
         taxa: 0,
       };
       await postPedidosStatus(data);
@@ -239,6 +223,14 @@ export default function Cozinha() {
     StatusPedidoFinal(idPedido, "Cancelado");
     setObsCancelamento("");
   };
+  const cachedData = localStorage.getItem("dateUser");
+  if (cachedData === null) {
+    return (window.location.href = "/Login");
+  }
+  console.log(JSON.parse(cachedData).company, Company);
+  if (JSON.parse(cachedData).company !== Company) {
+    return (window.location.href = "/Login/error");
+  }
 
   return (
     <Card
@@ -252,7 +244,7 @@ export default function Cozinha() {
       }}
     >
       <Card style={{ backgroundColor: "rgba(255,255,255,0.8)" }}>
-        {userNome}
+        {JSON.parse(localStorage.getItem("dateUser")).name}
         {contextHolder}
         <div style={{ float: "right" }}>
           <Button onClick={() => logout()}>Sair</Button>

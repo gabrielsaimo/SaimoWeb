@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import {
@@ -47,6 +48,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import "firebase/compat/storage";
 import { getDatabase, ref, set } from "firebase/database";
+import { useParams } from "react-router-dom";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHuslm5iZZGtOk3ChXKXoIGpQQQI4UaUQ",
@@ -68,10 +70,9 @@ const mensagensRef = ref(database, "data");
 
 const { Option } = Select;
 const { Panel } = Collapse;
+
 export default function Garçom() {
-  const [Company] = useState(
-    JSON.parse(localStorage.getItem("dateUser")).company
-  );
+  const { Company } = useParams();
   const [idCompany] = useState(
     JSON.parse(localStorage.getItem("dateUser")).idcompany
   );
@@ -80,6 +81,16 @@ export default function Garçom() {
   const [userNome] = useState(
     JSON.parse(localStorage.getItem("dateUser")).name
   );
+
+  const cachedData = localStorage.getItem("dateUser");
+  if (cachedData === null) {
+    return (window.location.href = "/Login");
+  }
+  console.log(JSON.parse(cachedData).company, Company);
+  if (JSON.parse(cachedData).company !== Company) {
+    return (window.location.href = "/Login/error");
+  }
+
   const [mesa, setMesa] = useState(null);
   const [dateMesa, setDateMesa] = useState([]);
   const [obs, setObs] = useState("");
@@ -108,6 +119,7 @@ export default function Garçom() {
   const [itensMesa, setItensMesa] = useState([]);
   const [pedidos_uni, setPedidos] = useState([]);
   const random = Math.floor(Math.random() * 100000000);
+
   useEffect(() => {
     if (Company === undefined || Company === null) {
       window.location.href = window.location.origin + "/login/logout";

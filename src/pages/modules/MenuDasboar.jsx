@@ -9,20 +9,10 @@ import {
   TagOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import {
-  Layout,
-  Menu,
-  Button,
-  theme,
-  Input,
-  Divider,
-  Modal,
-  Typography,
-} from "antd";
+import { Layout, Menu, Button, theme, Typography } from "antd";
 import Relatorios from "./Realatorios";
 import Menssagem from "./Menssagem";
 import Dashboard from "./Dasboard";
-import { getUser } from "../../services/user.ws";
 import Pedidos from "./Pedidos";
 import Users from "./Users";
 import { useParams } from "react-router-dom";
@@ -35,14 +25,10 @@ const MenuDashboard = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
   const [dateUser, setDateUser] = useState();
   const [acessable, setAcessable] = React.useState(false);
   const [userNome, setUserNome] = useState("");
   const [UserCategoria, setUserCategoria] = useState("");
-  const [Company_id, setCompany] = useState("");
-  const [visible, setVisible] = React.useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -73,38 +59,6 @@ const MenuDashboard = () => {
     [dateUser, Company]
   );
 
-  const acessar = () => {
-    GetUsuario();
-  };
-
-  const GetUsuario = async () => {
-    const data = { name: name, password: password };
-
-    const UserCollection = await getUser(data);
-
-    if (UserCollection.length > 0) {
-      setUserNome(UserCollection.name);
-      setUserCategoria(UserCollection.categoria);
-      setCompany(UserCollection.company);
-      setDateUser(UserCollection);
-      if (UserCollection.active === false) {
-        alert("Usuário desativado");
-        setAcessable(false);
-      } else if (
-        UserCollection.categoria === "ADM" ||
-        UserCollection.categoria === "Gerência"
-      ) {
-        setAcessable(true);
-      } else {
-        alert("Usuário não tem permissão");
-        setAcessable(false);
-      }
-
-      close();
-    } else {
-      alert("Senha incorreta");
-    }
-  };
   const getCachedDateUser = () => {
     const cachedData = localStorage.getItem("dateUser");
     if (cachedData) {
@@ -125,13 +79,6 @@ const MenuDashboard = () => {
       }
     }
     return cachedData ? JSON.parse(cachedData) : null;
-  };
-
-  const close = () => {
-    setVisible(false);
-  };
-  const open = () => {
-    setVisible(true);
   };
 
   const logout = () => {
