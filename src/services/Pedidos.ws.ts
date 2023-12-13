@@ -16,8 +16,8 @@ interface pedido {
   finished_at: string;
 }
 
-export const getPedidos = async (): Promise<pedido[]> => {
-  const response = await api.get<pedido[]>("/pedido");
+export const getPedidos = async (Company: any): Promise<pedido[]> => {
+  const response = await api.get<pedido[]>("/pedido/" + Company);
   return response.data;
 };
 export const getPedidosAdm = async (): Promise<pedido[]> => {
@@ -25,8 +25,8 @@ export const getPedidosAdm = async (): Promise<pedido[]> => {
   return response.data;
 };
 
-export const getMesas = async (): Promise<any[]> => {
-  const response = await api.get<pedido[]>("/pedido/mesa");
+export const getMesas = async (Company: any): Promise<any[]> => {
+  const response = await api.get<pedido[]>("/pedido/mesa/" + Company);
   return response.data;
 };
 
@@ -74,8 +74,8 @@ export const putPedido = async (data: any): Promise<any> => {
   return response.data;
 };
 
-export const getPedidoId = async (): Promise<pedido> => {
-  const response = await api.get<pedido>(`/pedido/pedidos`);
+export const getPedidoId = async (company: any): Promise<pedido> => {
+  const response = await api.get<pedido>(`/pedido/pedidos/${company}`);
   if (response.data === null) {
     alert("Pedido não encontrado");
     return response.data;
@@ -93,7 +93,7 @@ export const postPedidostatus = async (data: any): Promise<pedido> => {
   }
 };
 
-export const getPedidosBar = async (): Promise<any[]> => {
+export const getPedidosBar = async (Company: any): Promise<any[]> => {
   const response = await api.get<pedido[]>("/pedido/bar");
   return response.data;
 };

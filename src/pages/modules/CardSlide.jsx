@@ -12,7 +12,7 @@ const CardSlide = () => {
       }
     }, 4000);
     return () => clearInterval(interval);
-  }, [currentIndex, card]);
+  }, [currentIndex]);
 
   return (
     <div style={{ height: 250 }}>
