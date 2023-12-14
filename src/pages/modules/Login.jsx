@@ -49,6 +49,10 @@ const Login = () => {
         window.location.href = "/dashboard/" + UserCollection.user[0].company;
       } else if (UserCollection.user[0].categoria === "Garçom") {
         window.location.href = "/Garçom/" + UserCollection.user[0].company;
+      } else if (UserCollection.user[0].categoria === "Cozinha") {
+        window.location.href = "/Cozinha/" + UserCollection.user[0].company;
+      } else {
+        alert("Usuário não tem permissão");
       }
     } else {
       alert("Senha incorreta");
