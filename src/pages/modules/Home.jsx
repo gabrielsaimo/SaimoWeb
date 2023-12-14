@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Layout, Menu, Typography, Button, Drawer } from "antd";
-
+import React, { useState, useEffect } from "react";
+import { Layout, Menu, Typography, Button, Drawer, Modal } from "antd";
+import Cookies from "js-cookie";
 import { MenuOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../../assets/saimo.webp";
@@ -9,6 +9,24 @@ const { Title, Paragraph } = Typography;
 
 const Home = () => {
   const [visible, setVisible] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    const cookie = Cookies.get("acceptsCookies");
+    if (!cookie) {
+      setModal(true);
+    }
+  }, []);
+
+  const handleOk = () => {
+    Cookies.set("acceptsCookies", "true");
+    setModal(false);
+  };
+
+  const handleCancel = () => {
+    setModal(false);
+  };
+
   const showDrawer = () => {
     setVisible(true);
   };
@@ -16,6 +34,7 @@ const Home = () => {
   const onClose = () => {
     setVisible(false);
   };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header
@@ -45,7 +64,6 @@ const Home = () => {
               right: 10,
               top: 5,
               width: 80,
-
               paddingRight: 10,
               paddingTop: 10,
               textAlign: "center",
@@ -86,6 +104,19 @@ const Home = () => {
           </div>
         </Drawer>
       </Header>
+      <Modal
+        title="Política de Privacidade"
+        open={modal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="Aceitar"
+        cancelText="Recusar"
+      >
+        <p>Aceita os nossos termos e condições?</p>
+        <Button type="link" href="/privacy-policy">
+          Ver Política de Privacidade
+        </Button>
+      </Modal>
       <Content style={{ padding: "0 0px", marginTop: 164 }}>
         <div style={{ background: "#fff", padding: 24, minHeight: 380 }}>
           <Title>Bem-vindo à SaimoWeb</Title>

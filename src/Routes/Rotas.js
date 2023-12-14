@@ -8,7 +8,7 @@ import Bar from "../pages/modules/BarMan";
 import MenuDashboard from "../pages/modules/MenuDasboar";
 import Login from "../pages/modules/Login";
 import Home from "../pages/modules/Home";
-import { Button, Result } from "antd";
+import Error404 from "../pages/modules/Error404";
 
 export default function Rotas() {
   return (
@@ -19,36 +19,8 @@ export default function Rotas() {
       <Route path="/Garçom/:Company" element={<Garçom />} />
       <Route path="/Catalogo/:Company" element={<App />} />
       <Route path="/Cardapio/:Company" element={<App />} />
-      <Route
-        path="/*"
-        element={
-          <Result
-            status="404"
-            title="404"
-            subTitle="Desculpe, a página que você visitou não existe."
-            extra={
-              <Button type="primary" href="/">
-                Voltar para o inicio
-              </Button>
-            }
-          />
-        }
-      ></Route>
-      <Route
-        path="*"
-        element={
-          <Result
-            status="404"
-            title="404"
-            subTitle="Desculpe, a página que você visitou não existe."
-            extra={
-              <Button type="primary" href="/">
-                Voltar para o inicio
-              </Button>
-            }
-          />
-        }
-      ></Route>
+      <Route path="/*" element={<Error404 />}></Route>
+      <Route path="*" element={<Error404 />}></Route>
       <Route path="/Cozinha/:Company" element={<Cozinha />}>
         "Cozinha"
       </Route>
