@@ -9,6 +9,7 @@ import MenuDashboard from "../pages/modules/MenuDasboar";
 import Login from "../pages/modules/Login";
 import Home from "../pages/modules/Home";
 import Error404 from "../pages/modules/Error404";
+import Polices from "../pages/modules/Polices";
 
 export default function Rotas() {
   return (
@@ -19,6 +20,7 @@ export default function Rotas() {
       <Route path="/Garçom/:Company" element={<Garçom />} />
       <Route path="/Catalogo/:Company" element={<App />} />
       <Route path="/Cardapio/:Company" element={<App />} />
+      <Route path="/privacy-policy" element={<Polices />} />
       <Route path="/*" element={<Error404 />}></Route>
       <Route path="*" element={<Error404 />}></Route>
       <Route path="/Cozinha/:Company" element={<Cozinha />}>
