@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-undef */
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import Routes from "../src/Routes/Rotas";
+import Routes from "./Routes/Rotas";
 import ReactDOM from "react-dom/client";
 import "../src/css/index.css";
 import reportWebVitals from "./reportWebVitals";
