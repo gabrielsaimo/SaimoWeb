@@ -26,7 +26,6 @@ const MenuDashboard = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const [dateUser, setDateUser] = useState();
-  const [acessable, setAcessable] = React.useState(false);
   const [userNome, setUserNome] = useState("");
   const [UserCategoria, setUserCategoria] = useState("");
   const [isMobile, setIsMobile] = useState(false);
@@ -67,15 +66,12 @@ const MenuDashboard = () => {
       setUserCategoria(JSON.parse(cachedData).categoria);
       if (JSON.parse(cachedData).active === false) {
         alert("Usuário desativado");
-        setAcessable(false);
       } else if (
         JSON.parse(cachedData).categoria === "ADM" ||
         JSON.parse(cachedData).categoria === "Gerência"
       ) {
-        setAcessable(true);
       } else {
         alert("Usuário não tem permissão");
-        setAcessable(false);
       }
     }
     return cachedData ? JSON.parse(cachedData) : null;

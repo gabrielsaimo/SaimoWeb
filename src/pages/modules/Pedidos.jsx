@@ -12,7 +12,6 @@ export default function Pedidos(atualizar) {
     hora + ":" + data.getMinutes() + ":" + data.getSeconds();
 
   const [pedidos, setPedido] = useState([]);
-  const [count, setCount] = useState(0);
   const [cardapio, setCardapio] = useState([]);
   const [api, contextHolder] = notification.useNotification();
   const [pedidoss, setPedidos] = useState([]);

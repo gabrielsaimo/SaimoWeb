@@ -16,7 +16,6 @@ import {
   Switch,
 } from "antd";
 import "firebase/database";
-import { getUser } from "../../services/user.ws";
 import { getCardapio } from "../../services/cardapio.ws";
 import {
   deletePedidos,
@@ -76,7 +75,6 @@ export default function Garçom() {
   const [idCompany] = useState(
     JSON.parse(localStorage.getItem("dateUser")).idcompany
   );
-  const [visible, setVisible] = React.useState(true);
   const [showModall, setShowModall] = React.useState(false);
   const [userNome] = useState(
     JSON.parse(localStorage.getItem("dateUser")).name
@@ -251,9 +249,6 @@ export default function Garçom() {
     Modal.destroyAll();
     setShowModall(false);
     clear();
-  };
-  const open = () => {
-    setVisible(true);
   };
 
   const logout = () => {

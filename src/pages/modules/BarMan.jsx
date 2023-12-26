@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  Badge,
   Button,
   Card,
-  Descriptions,
   Divider,
   Input,
   Modal,
@@ -28,7 +26,7 @@ import { initializeApp } from "firebase/app";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import "firebase/compat/storage";
-import { get, getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref, set } from "firebase/database";
 import sound from "../../assets/notification.wav";
 import soundError from "../../assets/error.wav";
 

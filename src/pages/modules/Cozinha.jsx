@@ -16,7 +16,7 @@ import { initializeApp } from "firebase/app";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import "firebase/compat/storage";
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref } from "firebase/database";
 import sound from "../../assets/notification.wav";
 import soundError from "../../assets/error.wav";
 import { useParams } from "react-router-dom";
@@ -96,20 +96,6 @@ export default function Cozinha() {
     });
   }, []);
 
-  function atualizarMensagens(title, notification) {
-    const mensagens = {
-      title,
-      notification,
-    };
-
-    set(mensagensRef, mensagens)
-      .then(() => {
-        console.log("Mensagens atualizadas com sucesso.");
-      })
-      .catch((error) => {
-        console.error("Erro ao atualizar as mensagens:", error);
-      });
-  }
 
   useEffect(() => {
     const socket = io("http://192.168.12.11:3020"); // Substitua 'http://localhost:3000' pela URL correta do seu servidor
