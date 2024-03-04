@@ -20,6 +20,7 @@ import {
   Carousel,
   Tag,
   Typography,
+  Switch,
 } from "antd";
 import "firebase/database";
 import ImgCrop from "antd-img-crop";
@@ -31,6 +32,8 @@ import {
   SearchOutlined,
   MinusCircleOutlined,
   CheckCircleOutlined,
+  StarFilled,
+  StarOutlined,
 } from "@ant-design/icons";
 import Category from "./Category";
 import LazyLoad from "react-lazyload";
@@ -65,6 +68,7 @@ export default function Dashboard({ atualizar, user, company }) {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [sub, setSub] = useState("");
+  const [highlight, setHighlight] = useState(false);
   const [imgByte, setImgByte] = useState("");
   const [active, setActive] = useState(true);
   const [category, setCategory] = useState(null);
@@ -237,6 +241,7 @@ export default function Dashboard({ atualizar, user, company }) {
     setPrice(task.price);
     setDescription(task.description);
     setSub(task.sub);
+    setHighlight(task.highlight);
     setActive(task.active);
     setImgByte(task.img);
     setCategory(task.category);
@@ -256,6 +261,7 @@ export default function Dashboard({ atualizar, user, company }) {
         sub,
         active,
         imagem: imgByte,
+        highlight,
         category,
         update_at: new Date(),
         update_by: JSON.parse(cachedData).name,
@@ -272,6 +278,7 @@ export default function Dashboard({ atualizar, user, company }) {
         sub,
         active,
         imagem: imgByte,
+        highlight,
         category,
         update_at: new Date(),
         update_by: JSON.parse(cachedData).name,
@@ -300,6 +307,7 @@ export default function Dashboard({ atualizar, user, company }) {
     setDescription("");
     setTotalImg(0);
     setSub("");
+    setHighlight(false);
     setActive(true);
     setCategory(null);
     setImgModal(null);
@@ -424,6 +432,19 @@ export default function Dashboard({ atualizar, user, company }) {
             {img1.map((img, index) => renderImageCarousel(img, index, text.id))}
           </div>
         ));
+      },
+    },
+    {
+      title: "Destaque",
+      dataIndex: "highlight",
+      key: "highlight",
+      sorter: { compare: (a, b) => a.highlight - b.highlight },
+      render: (_, text) => {
+        return (
+          <Tag color={text.highlight ? "gold" : "grey"}>
+            {text.highlight ? <StarFilled /> : <StarOutlined />}
+          </Tag>
+        );
       },
     },
     {
@@ -830,6 +851,17 @@ export default function Dashboard({ atualizar, user, company }) {
                   Não
                 </Option>
               </Select>
+            </div>
+            <div style={{ display: "flex", alignItems: "baseline" }}>
+              <Typography.Title level={5} style={{ width: 100 }}>
+                Destaque
+              </Typography.Title>
+              <Switch
+                value={highlight}
+                checkedChildren="Sim"
+                unCheckedChildren="Não"
+                onChange={(value) => setHighlight(value)}
+              />
             </div>
 
             <div style={{ display: "flex", alignItems: "baseline" }}>

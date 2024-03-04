@@ -28,7 +28,7 @@ const CollapseMenu = () => {
     if (cardapioCategory.length === 0) {
       getCardapioCategory();
     }
-  }, [cardapio]);
+  }, []);
 
   const getCardapios = async () => {
     const cardapioCollection = await getCardapio(Company);
