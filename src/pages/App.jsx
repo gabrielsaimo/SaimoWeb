@@ -6,6 +6,7 @@ import "../css/App.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Menu from "./modules/BottonMenu";
 import Footer from "./modules/footer";
+import SlideRenderer from "./Components/slide";
 const CollapseMenu = lazy(() => import("./modules/Collapse"));
 function App() {
   const { Company } = useParams();
@@ -36,6 +37,7 @@ function App() {
       </div>
 
       <Suspense fallback={<Spin />}>
+        <SlideRenderer index={contar} />
         <CollapseMenu props={Company} />
       </Suspense>
 
