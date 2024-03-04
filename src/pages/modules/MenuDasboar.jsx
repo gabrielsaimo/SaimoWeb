@@ -9,12 +9,13 @@ import {
   TagOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Button, theme, Typography } from "antd";
+import { Menu, Button, theme, Typography, Layout } from "antd";
 import Relatorios from "./Realatorios";
 import Menssagem from "./Menssagem";
 import Dashboard from "./Dasboard";
 import Pedidos from "./Pedidos";
 import Users from "./Users";
+import LayoutSite from "./LayoutSite";
 import { useParams } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
@@ -54,6 +55,7 @@ const MenuDashboard = () => {
       3: <Menssagem atualizar={true} user={dateUser} />,
       4: <Pedidos atualizar={true} user={dateUser} />,
       5: <Users atualizar={true} user={dateUser} />,
+      6: <LayoutSite atualizar={true} user={dateUser} />,
     }),
     [dateUser, Company]
   );
@@ -152,6 +154,16 @@ const MenuDashboard = () => {
             {
               key: "6",
               icon: <LogoutOutlined />,
+              label: "Layout",
+              onClick: () => {
+                setTela(6);
+                setCollapsed(true);
+              },
+            },
+
+            {
+              key: "7",
+              icon: <LogoutOutlined />,
               label: "Sair",
               onClick: () => {
                 logout();
@@ -195,7 +207,11 @@ const MenuDashboard = () => {
               ? "Mensagens"
               : tela === 4
               ? "Pedidos"
-              : "Usuários"}
+              : tela === 5
+              ? "Usuários"
+              : tela === 6
+              ? "Layout"
+              : "Sair"}
           </Typography.Title>
         </Header>
         <Content
