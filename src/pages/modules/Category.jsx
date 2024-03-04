@@ -77,7 +77,6 @@ export default function Category() {
   }
 
   async function handleSave() {
-    const cachedData = localStorage.getItem("dateUser");
     try {
       if (selectedTaskId) {
         await postCategoty({ id, name, active, company: Company });
@@ -88,7 +87,7 @@ export default function Category() {
             cardapioCategory.length + 1 + Math.floor(Math.random() * 100000000),
           name,
           active,
-          idcompany: JSON.parse(cachedData)[0].idcompany,
+          idcompany: JSON.parse(localStorage.getItem("dateUser")).idcompany,
           company: Company,
         });
         setTimeout(() => {

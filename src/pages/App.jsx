@@ -1,4 +1,4 @@
-import React, { useState, Suspense, lazy } from "react";
+import React, { useState, Suspense, lazy, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Affix, FloatButton, Space, Spin } from "antd";
 import { useParams } from "react-router-dom";
@@ -7,22 +7,32 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Menu from "./modules/BottonMenu";
 import Footer from "./modules/footer";
 import SlideRenderer from "./Components/slide";
+import { getImgLogo } from "../services/config";
 const CollapseMenu = lazy(() => import("./modules/Collapse"));
+const idcompany = JSON.parse(localStorage.getItem("dateUser")).idcompany;
 function App() {
   const { Company } = useParams();
   const [contar, setContar] = useState(0);
+  const [logo, setLogo] = useState(null);
+
+  useEffect(() => {
+    getImgLogos(idcompany);
+  }, []);
 
   const handleLogoClick = async () => {
     setContar(contar + 1);
   };
-
+  const getImgLogos = async (idcompany) => {
+    const img = await getImgLogo(idcompany);
+    setLogo(img[0].imagem);
+  };
   return (
     <div className="App background_fundo">
       <LazyLoadImage
-        src={require("../assets/saimo.webp")}
+        src={atob(logo)}
         className="logo"
         alt="logo-principal"
-        style={{ width: "300px", borderRadius: "100%", marginTop: "50px" }}
+        style={{ width: "400px", borderRadius: "100%", marginTop: "50px" }}
         loading="eager"
         decoding="async"
         onClick={() => handleLogoClick()}

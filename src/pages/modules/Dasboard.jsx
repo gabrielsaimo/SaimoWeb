@@ -52,7 +52,6 @@ const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
   const cachedData = localStorage.getItem("dateUser");
   if (cachedData === null) return (window.location.href = "/Login");
-  console.log(JSON.parse(cachedData).company, company);
   if (JSON.parse(cachedData).company != company) {
     return (window.location.href = "/Login/error");
   }

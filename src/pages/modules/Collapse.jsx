@@ -99,7 +99,6 @@ const CollapseMenu = () => {
       </div>
     );
 
-
   const renderCardapioItems = () => {
     return cardapioCategory.map((item1, index) => {
       const key = item1.name;
@@ -160,7 +159,7 @@ const CollapseMenu = () => {
                                 <>
                                   <div className="sub">{categoria.sub}</div>
                                   <div className="description">
-                                    {categoria.sub} {categoria.description}
+                                    {categoria.description}
                                   </div>
                                 </>
                               )}
@@ -168,7 +167,7 @@ const CollapseMenu = () => {
                                 <>
                                   <div className="sub">{categoria.sub}</div>
                                   <div className="description2">
-                                    {categoria.sub} {categoria.description}
+                                    {categoria.description}
                                   </div>
                                 </>
                               )}
