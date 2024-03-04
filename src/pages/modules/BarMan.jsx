@@ -288,7 +288,6 @@ export default function Bar() {
   };
 
   const StatusPedido = async (data, status) => {
-    console.log("🚀 ~ file: BarMan.jsx:293 ~ StatusPedido ~ data:", data);
     const dataPedido = {
       id: data.id,
       status: status,
