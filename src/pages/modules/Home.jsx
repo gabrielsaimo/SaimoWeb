@@ -3,15 +3,15 @@ import { Layout, Menu, Typography, Button, Drawer, Modal } from "antd";
 import Cookies from "js-cookie";
 import { MenuOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import logo from "../../assets/saimo.webp";
 const { Header, Footer, Content } = Layout;
 const { Title, Paragraph } = Typography;
-const idcompany = JSON.parse(localStorage.getItem("dateUser")).idcompany;
+
 const Home = () => {
   const [visible, setVisible] = useState(false);
   const [modal, setModal] = useState(false);
-  const [logo, setLogo] = useState(null);
+
   useEffect(() => {
-    getImgLogo(idcompany);
     const cookie = Cookies.get("acceptsCookies");
     if (!cookie) {
       setModal(true);
@@ -35,11 +35,6 @@ const Home = () => {
     setVisible(false);
   };
 
-  const getImgLogo = async (idcompany) => {
-    const img = await getImgLogo(idcompany);
-    setLogo(img[0]);
-  };
-
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header
@@ -48,7 +43,7 @@ const Home = () => {
         <div style={{ float: "left" }}>
           <Link to="/">
             <img
-              src={atob(logo)}
+              src={logo}
               style={{ borderRadius: "100%", margin: "5px 30px 5px 10px" }}
               alt="SaimoWeb"
               height="64"

@@ -28,15 +28,17 @@ function App() {
   };
   return (
     <div className="App background_fundo">
-      <LazyLoadImage
-        src={atob(logo)}
-        className="logo"
-        alt="logo-principal"
-        style={{ width: "400px", borderRadius: "100%", marginTop: "50px" }}
-        loading="eager"
-        decoding="async"
-        onClick={() => handleLogoClick()}
-      />
+      {logo && (
+        <LazyLoadImage
+          src={atob(logo)}
+          className="logo"
+          alt="logo-principal"
+          style={{ width: "400px", borderRadius: "100%", marginTop: "50px" }}
+          loading="eager"
+          decoding="async"
+          onClick={() => handleLogoClick()}
+        />
+      )}
       <div style={{ display: "flex" }}>
         <Affix
           offsetTop={10}
