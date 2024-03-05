@@ -15,17 +15,16 @@ const Destaque = () => {
   const scrollIntervalRef = useRef();
   const scrollDirectionRef = useRef(1);
   const [isLoading, setIsLoading] = useState(true);
-  const CompanyName = window.location.href.split("/").pop();
-  const [styles, setStyles] = useState("");
-  const getStylesUser = async () => {
-    const resp = await getStyles(CompanyName);
-    setStyles(JSON.parse(resp[0].styles));
-  };
+
   const fetchCardapios = useCallback(async () => {
     const company = window.location.href.split("/")[4];
     const destaques = await destaq(company);
     setDestaques(destaques);
   }, []);
+
+  useEffect(() => {
+    fetchCardapios();
+  }, [fetchCardapios]);
 
   const fetchImages = useCallback(async () => {
     if (destaques.length > 0 && imgSrc.length === 0) {
@@ -41,13 +40,10 @@ const Destaque = () => {
   }, [destaques, imgSrc]);
 
   useEffect(() => {
-    getStylesUser();
-    handleScroll();
     fetchImages();
-    fetchCardapios();
-  }, []);
+  }, [fetchImages]);
 
-  const handleScroll = () => {
+  useEffect(() => {
     scrollIntervalRef.current = setInterval(() => {
       if (scrollRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
@@ -61,8 +57,7 @@ const Destaque = () => {
     return () => {
       clearInterval(scrollIntervalRef.current);
     };
-  };
-
+  }, []);
   if (isLoading) {
     return <Spin />;
   }
