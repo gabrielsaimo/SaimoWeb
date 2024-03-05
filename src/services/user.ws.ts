@@ -45,3 +45,13 @@ export const postUserAdm = async (data: User): Promise<User> => {
 export const deleteUser = async (id: number): Promise<void> => {
   await api.delete<User>(`/user/${id}`);
 };
+
+export const postStyles = async (data: any): Promise<any> => {
+  const response = await api.post<User>("/user/styles", data);
+  return response.data;
+};
+
+export const getStyles = async (company: string): Promise<any[]> => {
+  const response = await api.get<User[]>(`/user/styles/${company}`);
+  return response.data;
+};

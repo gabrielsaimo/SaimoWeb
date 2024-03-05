@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import card from "../../json/cardSlide.json";
+import postStyles from "./../../services/user.ws";
 const CardSlide = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 

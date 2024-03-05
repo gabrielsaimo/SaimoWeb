@@ -7,6 +7,7 @@ import RenderImageDestaque from "./RenderImageDestaque";
 import currency_BRL from "./CurrencyBRL";
 
 import { Spin } from "antd";
+import { getStyles } from "../../services/user.ws";
 const Destaque = () => {
   const [destaques, setDestaques] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
@@ -14,7 +15,12 @@ const Destaque = () => {
   const scrollIntervalRef = useRef();
   const scrollDirectionRef = useRef(1);
   const [isLoading, setIsLoading] = useState(true);
-
+  const CompanyName = window.location.href.split("/").pop();
+  const [styles, setStyles] = useState("");
+  const getStylesUser = async () => {
+    const resp = await getStyles(CompanyName);
+    setStyles(JSON.parse(resp[0].styles));
+  };
   const fetchCardapios = useCallback(async () => {
     const company = window.location.href.split("/")[4];
     const destaques = await destaq(company);
@@ -22,6 +28,7 @@ const Destaque = () => {
   }, []);
 
   useEffect(() => {
+    getStylesUser();
     fetchCardapios();
   }, [fetchCardapios]);
 
@@ -117,10 +124,18 @@ const Destaque = () => {
                       borderRadius: "0px 0px 10px 10px",
                     }}
                   >
-                    <div style={{ fontSize: "1em", fontWeight: "bold" }}>
+                    <div
+                      style={{
+                        fontSize: "1em",
+                        fontWeight: "bold",
+                        color: styles.colorText,
+                      }}
+                    >
                       {item.name}
                     </div>
-                    <div>{currency_BRL(item.price)}</div>
+                    <div style={{ color: styles.colorText }}>
+                      {currency_BRL(item.price)}
+                    </div>
                   </div>
                 </div>
               );

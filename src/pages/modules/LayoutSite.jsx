@@ -4,8 +4,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { DeleteImg, InsertImg } from "../../services/cardapio.ws";
 import { getImgLogo } from "../../services/config";
 import { DeleteOutlined } from "@ant-design/icons";
+import { postStyles } from "../../services/user.ws";
 const SlideRenderer = () => {
-  const [fundoColor, setFundoColor] = useState("#1677ff");
+  const [fundoColor1, setFundoColor1] = useState("#1677ff");
+  const [fundoColor2, setFundoColor2] = useState("#1677ff");
   const [textColor, setTextColor] = useState("#1677ff");
   const [fileList, setFileList] = useState([]);
   const [totalImg, setTotalImg] = useState(0);
@@ -13,16 +15,57 @@ const SlideRenderer = () => {
   const random = Math.floor(Math.random() * 100000000);
   const company = JSON.parse(localStorage.getItem("dateUser")).company;
   const idcompany = JSON.parse(localStorage.getItem("dateUser")).idcompany;
+  const styles = JSON.parse(localStorage.getItem("dateUser")).styles;
+
   const [imgSrc, setImgSrc] = useState(null);
   const [idImg, setIdImg] = useState(null);
+
+  const CompanyName = window.location.href.split("/").pop();
+  useEffect(() => {
+    if (styles) {
+      const stylesObj = JSON.parse(styles);
+      setFundoColor1(stylesObj.backgrondColor.split(",")[1].replace("0%", ""));
+      setFundoColor2(
+        stylesObj.backgrondColor.split(",")[2].replace("100%)", "")
+      );
+      setTextColor(stylesObj.colorText);
+    }
+  }, [styles]);
+
+  const fetchData = async () => {
+    const styles = `{"backgrondColor":"linear-gradient(90deg, ${fundobgColor1} 0%, ${fundobgColor2} 100%)","colorText":"${textbgColor}"}`;
+    const data = {
+      company: CompanyName.replace(/%20/g, " "),
+      styles: styles.toString().replace(/\\/g, ""),
+    };
+
+    const response = await postStyles(data);
+    const newDataUSer = {
+      id: JSON.parse(localStorage.getItem("dateUser")).id,
+      name: JSON.parse(localStorage.getItem("dateUser")).name,
+      categoria: JSON.parse(localStorage.getItem("dateUser")).categoria,
+      active: JSON.parse(localStorage.getItem("dateUser")).active,
+      idcompany: JSON.parse(localStorage.getItem("dateUser")).idcompany,
+      company: JSON.parse(localStorage.getItem("dateUser")).company,
+      styles: styles.toString().replace(/\\/g, ""),
+    };
+    localStorage.setItem("dateUser", JSON.stringify(newDataUSer));
+    console.log(response.data);
+  };
+
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     setCoint(coint + 1);
   };
-  const fundobgColor = useMemo(
+  const fundobgColor1 = useMemo(
     () =>
-      typeof fundoColor === "string" ? fundoColor : fundoColor.toHexString(),
-    [fundoColor]
+      typeof fundoColor1 === "string" ? fundoColor1 : fundoColor1.toHexString(),
+    [fundoColor1]
+  );
+  const fundobgColor2 = useMemo(
+    () =>
+      typeof fundoColor2 === "string" ? fundoColor2 : fundoColor2.toHexString(),
+    [fundoColor2]
   );
 
   const textbgColor = useMemo(
@@ -59,9 +102,6 @@ const SlideRenderer = () => {
       idreq: idcompany,
       tipo: "Logo",
       id: random,
-      // update_at: new Date(),
-      //  update_by: JSON.parse(cachedData)[0]?.name,
-      //  idcompany: JSON.parse(cachedData)[0]?.idcompany,
       company: company,
     };
     if (code) await InsertImg(body);
@@ -69,7 +109,12 @@ const SlideRenderer = () => {
 
   const FundoStyle = {
     marginTop: 16,
-    backgroundColor: fundobgColor,
+    background:
+      "linear-gradient(90deg, " +
+      fundobgColor1 +
+      " 0%, " +
+      fundobgColor2 +
+      " 100%)",
     width: 300,
     height: 300,
     borderRadius: 10,
@@ -78,17 +123,22 @@ const SlideRenderer = () => {
     alignItems: "center",
     fontSize: 20,
     cursor: "pointer",
-    color: fundobgColor === "#ffffff" ? "#000000" : "#ffffff",
-    border: fundobgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
+    color: textbgColor,
+    border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
   };
 
   const TextStyle = {
     marginTop: 16,
+    background:
+      "linear-gradient(90deg, " +
+      fundobgColor1 +
+      " 0%, " +
+      fundobgColor2 +
+      " 100%)",
     display: "flex",
     alignItems: "center",
     fontSize: 50,
     cursor: "pointer",
-    marginLeft: 16,
     color: textbgColor,
     border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
     borderRadius: 10,
@@ -113,13 +163,25 @@ const SlideRenderer = () => {
     message.success("Imagem deletada com sucesso!");
   }
   return (
-    <div style={{ display: "flex" }}>
-      <ColorPicker value={fundoColor} onChange={setFundoColor}>
-        <div style={FundoStyle}>Fundo do Site</div>
-      </ColorPicker>
-      <ColorPicker value={textColor} onChange={setTextColor}>
-        <p style={TextStyle}>Texto do Site</p>
-      </ColorPicker>
+    <div style={{ display: "flex", height: "100vh" }}>
+      <div>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+          cor 1
+          <ColorPicker value={fundoColor1} onChange={setFundoColor1} />
+          cor 2
+          <ColorPicker value={fundoColor2} onChange={setFundoColor2} />
+        </div>
+
+        <div>
+          <ColorPicker>
+            <div style={FundoStyle}>Fundo do Site</div>
+          </ColorPicker>
+          <ColorPicker value={textColor} onChange={setTextColor}>
+            <p style={TextStyle}>Texto do Site</p>
+          </ColorPicker>
+        </div>
+      </div>
+
       <div>
         {imgSrc && (
           <img
@@ -175,6 +237,14 @@ const SlideRenderer = () => {
           </ImgCrop>
         )}
       </div>
+
+      <Button
+        type="primary"
+        style={{ marginLeft: 16 }}
+        onClick={() => fetchData()}
+      >
+        Salvar
+      </Button>
     </div>
   );
 };

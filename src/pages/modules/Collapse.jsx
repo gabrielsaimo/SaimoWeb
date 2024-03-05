@@ -7,6 +7,7 @@ import "../../css/Collapse.css";
 import { getCardapio, getImgCardapio } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
 import { useParams } from "react-router-dom";
+import { getStyles } from "../../services/user.ws";
 
 const { Panel } = Collapse;
 const LazyLoadedImage = lazy(() =>
@@ -16,12 +17,19 @@ const LazyLoadedImage = lazy(() =>
 const CollapseMenu = () => {
   // get params from url
   const { Company } = useParams();
-
+  const CompanyName = window.location.href.split("/").pop();
   const [cardapio, setCardapio] = useState([]);
   const [cardapioCategory, setCardapioCategory] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
+  const [styles, setStyles] = useState("");
+  console.log("🚀 ~ CollapseMenu ~ styles:", styles.colorText);
 
+  const getStylesUser = async () => {
+    const resp = await getStyles(CompanyName);
+    setStyles(JSON.parse(resp[0].styles));
+  };
   useEffect(() => {
+    getStylesUser();
     if (cardapio.length === 0 && cardapioCategory.length === 0) {
       getCardapios();
     }
@@ -38,6 +46,9 @@ const CollapseMenu = () => {
   const getCardapioCategory = async () => {
     const cardapioCollection = await getCategoty(Company);
     setCardapioCategory(cardapioCollection);
+  };
+  const styleText = {
+    color: styles.colorText,
   };
 
   const memoizedImgSrc = useMemo(() => {
@@ -56,7 +67,7 @@ const CollapseMenu = () => {
 
   const renderImageCarousel = (img, index, id) =>
     img[0].idreq === id && (
-      <div className="img" key={index} style={{ zIndex: 5 }}>
+      <div className="img" key={index} style={({ zIndex: 5 }, styleText)}>
         <LazyLoad key={index} height={200} offset={100}>
           <Carousel
             autoplay={true}
@@ -70,7 +81,6 @@ const CollapseMenu = () => {
               width: "80vw",
               maxWidth: 300,
               minWidth: "100px",
-              color: "#fff",
             }}
           >
             {img
@@ -83,7 +93,6 @@ const CollapseMenu = () => {
                       key={index}
                       style={{
                         borderRadius: 10,
-                        color: "#fff",
                         objectFit: "fill",
                         minWidth: "100px",
                       }}
@@ -123,7 +132,7 @@ const CollapseMenu = () => {
               <Panel
                 id={key}
                 style={{
-                  color: "#7a4827",
+                  color: styles.colorText,
                   fontWeight: "bold",
                   backgroundImage: `url(${require("../../assets/tinta.webp")}) `,
                   backgroundRepeat: "no-repeat",
@@ -150,23 +159,36 @@ const CollapseMenu = () => {
                         <div className="flex">
                           <div style={{ width: "100%", display: "contents" }}>
                             <div>
-                              <p className="p_1 name georgia-font">
+                              <p
+                                className="p_1 name georgia-font"
+                                style={styleText}
+                              >
                                 {categoria.name}
                               </p>
                             </div>
-                            <div className="flex">
+                            <div className="flex" style={styleText}>
                               {categoria.description.length > 25 && (
                                 <>
-                                  <div className="sub">{categoria.sub}</div>
-                                  <div className="description">
+                                  <div className="sub" style={styleText}>
+                                    {categoria.sub}
+                                  </div>
+                                  <div
+                                    className="description"
+                                    style={styleText}
+                                  >
                                     {categoria.description}
                                   </div>
                                 </>
                               )}
                               {categoria.description.length <= 25 && (
                                 <>
-                                  <div className="sub">{categoria.sub}</div>
-                                  <div className="description2">
+                                  <div className="sub" style={styleText}>
+                                    {categoria.sub}
+                                  </div>
+                                  <div
+                                    className="description2"
+                                    style={styleText}
+                                  >
                                     {categoria.description}
                                   </div>
                                 </>
@@ -181,7 +203,10 @@ const CollapseMenu = () => {
                               alignItems: "flex-end",
                             }}
                           >
-                            <p className="p_1 price georgia-bold-font">
+                            <p
+                              className="p_1 price georgia-bold-font"
+                              style={styleText}
+                            >
                               {`R$ ${
                                 categoria.price % 1 !== 0
                                   ? categoria.price.replace(".", ",")

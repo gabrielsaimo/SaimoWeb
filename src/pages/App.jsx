@@ -8,6 +8,7 @@ import Menu from "./modules/BottonMenu";
 import Footer from "./modules/footer";
 import SlideRenderer from "./Components/slide";
 import { getlogoName } from "../services/config";
+import { getStyles } from "../services/user.ws";
 const CollapseMenu = lazy(() => import("./modules/Collapse"));
 const CompanyName = window.location.href.split("/").pop();
 
@@ -15,10 +16,17 @@ function App() {
   const { Company } = useParams();
   const [contar, setContar] = useState(0);
   const [logo, setLogo] = useState(null);
+  const [styles, setStyles] = useState("");
 
   useEffect(() => {
     getImgLogos(CompanyName);
+    getStylesUser();
   }, []);
+
+  const getStylesUser = async () => {
+    const resp = await getStyles(CompanyName);
+    setStyles(JSON.parse(resp[0].styles));
+  };
 
   const handleLogoClick = async () => {
     setContar(contar + 1);
@@ -27,8 +35,13 @@ function App() {
     const img = await getlogoName(company);
     setLogo(img[0].imagem);
   };
+
+  const styleFundo = {
+    background: styles.backgrondColor,
+  };
+
   return (
-    <div className="App background_fundo">
+    <div className="App background_fundo" style={styleFundo}>
       {logo && (
         <LazyLoadImage
           src={atob(logo)}
