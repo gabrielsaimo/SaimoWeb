@@ -1,4 +1,4 @@
-import { Button, Divider, Input, message } from "antd";
+import { Button, Divider, Form, Input, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../services/user.ws";
 import { useParams } from "react-router-dom";
@@ -21,6 +21,26 @@ const Login = () => {
   }, [msn]);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+
+  const [form] = Form.useForm();
+
+  const validateEmail = (email) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleEmailChange = (e) => {
+    setName(e.target.value);
+    if (!validateEmail(e.target.value)) {
+      form.setFields([
+        {
+          name: "email",
+          errors: ["Por favor, insira um email válido"],
+        },
+      ]);
+    }
+  };
   const acessar = () => {
     GetUsuario();
   };
@@ -99,10 +119,37 @@ const Login = () => {
           gridGap: "10px",
         }}
       >
-        <label>Nome</label>
-        <Input type="text" onChange={(e) => setName(e.target.value)} />
-        <label>Senha</label>
-        <Input type="password" onChange={(e) => setPassword(e.target.value)} />
+        <Form form={form} layout="vertical">
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira seu email",
+              },
+            ]}
+          >
+            <Input type="email" onChange={handleEmailChange} />
+          </Form.Item>
+
+          <Form.Item
+            label="Senha"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Por favor, insira sua senha",
+              },
+            ]}
+          >
+            <Input
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Item>
+        </Form>
+
         <Divider />
         <Button
           onClick={acessar}
