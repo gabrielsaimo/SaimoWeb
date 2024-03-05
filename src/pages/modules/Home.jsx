@@ -3,7 +3,7 @@ import { Layout, Menu, Typography, Button, Drawer, Modal } from "antd";
 import Cookies from "js-cookie";
 import { MenuOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import logo from "../../assets/saimo.webp";
+import logo from "../../assets/logo.webp";
 const { Header, Footer, Content } = Layout;
 const { Title, Paragraph } = Typography;
 
