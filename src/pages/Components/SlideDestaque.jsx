@@ -27,11 +27,6 @@ const Destaque = () => {
     setDestaques(destaques);
   }, []);
 
-  useEffect(() => {
-    getStylesUser();
-    fetchCardapios();
-  }, [fetchCardapios]);
-
   const fetchImages = useCallback(async () => {
     if (destaques.length > 0 && imgSrc.length === 0) {
       const images = await Promise.all(
@@ -46,27 +41,28 @@ const Destaque = () => {
   }, [destaques, imgSrc]);
 
   useEffect(() => {
+    getStylesUser();
+    handleScroll();
     fetchImages();
-  }, [fetchImages]);
-
-  useEffect(() => {
-    if (destaques.length > 0) {
-      //  console.log("🚀 ~ useEffect ~ destaques:", destaques);
-      scrollIntervalRef.current = setInterval(() => {
-        if (scrollRef.current) {
-          const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-          if (scrollLeft + clientWidth >= scrollWidth - 200) {
-            setDestaques((prevDestaques) => [...prevDestaques, ...destaques]);
-          }
-          scrollRef.current.scrollLeft += scrollDirectionRef.current;
-        }
-      }, 20);
-
-      return () => {
-        clearInterval(scrollIntervalRef.current);
-      };
-    }
+    fetchCardapios();
   }, []);
+
+  const handleScroll = () => {
+    scrollIntervalRef.current = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 200) {
+          setDestaques((prevDestaques) => [...prevDestaques, ...destaques]);
+        }
+        scrollRef.current.scrollLeft += scrollDirectionRef.current;
+      }
+    }, 20);
+
+    return () => {
+      clearInterval(scrollIntervalRef.current);
+    };
+  };
+
   if (isLoading) {
     return <Spin />;
   }
