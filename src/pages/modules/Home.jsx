@@ -45,7 +45,7 @@ const Home = () => {
             <img
               src={logo}
               style={{ borderRadius: "100%", margin: "5px 30px 5px 10px" }}
-              alt="SaimoWeb"
+              alt="Menu Digital"
               height="64"
             />
           </Link>
@@ -73,7 +73,7 @@ const Home = () => {
           />
         </Menu>
         <Drawer
-          title="SaimoWeb"
+          title="Menu Digital"
           placement="right"
           closable={false}
           onClose={onClose}
@@ -119,9 +119,9 @@ const Home = () => {
       </Modal>
       <Content style={{ padding: "0 0px", marginTop: 164 }}>
         <div style={{ background: "#fff", padding: 24, minHeight: 380 }}>
-          <Title>Bem-vindo à SaimoWeb</Title>
+          <Title>Bem-vindo ao Menu Digital</Title>
           <Paragraph>
-            A SaimoWeb é uma empresa líder em desenvolvimento de sites e
+            A Menu Digital é uma empresa líder em desenvolvimento de sites e
             aplicativos. Com uma equipe de especialistas altamente qualificados,
             oferecemos soluções modernas e inovadoras para ajudar nossos
             clientes a alcançar seus objetivos de negócios.
@@ -144,7 +144,7 @@ const Home = () => {
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
-        © {new Date().getFullYear()} SaimoWeb. Todos os direitos reservados.
+        © {new Date().getFullYear()} Menu Digital. Todos os direitos reservados.
       </Footer>
     </Layout>
   );
