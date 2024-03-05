@@ -128,12 +128,11 @@ const Destaque = () => {
                       style={{
                         fontSize: "1em",
                         fontWeight: "bold",
-                        color: styles.colorText,
                       }}
                     >
                       {item.name}
                     </div>
-                    <div style={{ color: styles.colorText }}>
+                    <div>
                       {currency_BRL(item.price)}
                     </div>
                   </div>

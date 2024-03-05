@@ -79,14 +79,14 @@ const SlideRenderer = () => {
 
   const getImgLogos = async () => {
     const img = await getImgLogo(idcompany);
-
-    setImgSrc(img[0]);
-    setIdImg(img[0]?.id);
-    setTotalImg(img.length);
+    if (img[0]) {
+      setImgSrc(img[0]);
+      setIdImg(img[0]?.id);
+      setTotalImg(img.length);
+    }
   };
 
   useEffect(() => {
-    console.log(coint);
     if (fileList.length > 0 && coint == 1) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {
@@ -184,44 +184,46 @@ const SlideRenderer = () => {
 
       <div>
         {imgSrc && (
-          <img
-            src={atob(imgSrc.imagem)}
-            alt="img"
-            style={{
-              width: 300,
-              marginRight: 5,
-              borderRadius: 10,
-              marginLeft: 16,
-              border: "solid 1px #000000",
-            }}
-          />
-        )}
-        <Popconfirm
-          title="Tem certeza que deseja excluir essa imagem?"
-          okText="Excluir"
-          okButtonProps={{ danger: true }}
-          onConfirm={() => confirmDeleteImg(idImg)}
-          cancelText="Cancelar"
-        >
-          <Button
-            style={{
-              backgroundColor: "#fc5f5f",
-              width: 20,
-              position: "absolute",
-              marginLeft: -35,
-            }}
-          >
-            <DeleteOutlined
-              size={24}
+          <>
+            <img
+              src={atob(imgSrc.imagem)}
+              alt="img"
               style={{
-                color: "#fff",
-                marginLeft: -7,
+                width: 300,
+                marginRight: 5,
+                borderRadius: 10,
+                marginLeft: 16,
+                border: "solid 1px #000000",
               }}
             />
-          </Button>
-        </Popconfirm>
+            <Popconfirm
+              title="Tem certeza que deseja excluir essa imagem?"
+              okText="Excluir"
+              okButtonProps={{ danger: true }}
+              onConfirm={() => confirmDeleteImg(idImg)}
+              cancelText="Cancelar"
+            >
+              <Button
+                style={{
+                  backgroundColor: "#fc5f5f",
+                  width: 20,
+                  position: "absolute",
+                  marginLeft: -35,
+                }}
+              >
+                <DeleteOutlined
+                  size={24}
+                  style={{
+                    color: "#fff",
+                    marginLeft: -7,
+                  }}
+                />
+              </Button>
+            </Popconfirm>
+          </>
+        )}
       </div>
-      <div>
+      <div style={{ marginLeft: 16 }}>
         {totalImg < 1 && (
           <ImgCrop>
             <Upload
