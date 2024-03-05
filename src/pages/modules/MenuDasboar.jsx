@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import {
+  BgColorsOutlined,
   BookOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
@@ -100,7 +101,6 @@ const MenuDashboard = () => {
             {
               key: "1",
               icon: <BookOutlined />,
-              disabled: false,
               label: "Catalogo",
               disabled:
                 UserCategoria === "Gerente"
@@ -153,7 +153,7 @@ const MenuDashboard = () => {
             },
             {
               key: "6",
-              icon: <LogoutOutlined />,
+              icon: <BgColorsOutlined />,
               label: "Layout",
               onClick: () => {
                 setTela(6);
