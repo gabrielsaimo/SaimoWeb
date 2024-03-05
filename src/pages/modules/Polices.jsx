@@ -17,12 +17,12 @@ function Polices() {
       >
         <p style={{ fontWeight: "bold" }}>
           Informações sobre Proteção e Uso de Dados dos Clientes e Visitantes
-          dos Sites da Plataforma SaimoWeb. www.saimo-web.com.br
+          dos Sites da Plataforma MenuDigital. www.saimo-web.vercel.app
         </p>
         <p>
           Essa Política de Privacidade, informa como nossa empresa coleta,
           utiliza, armazena, trata e protege suas informações pessoais. Quando
-          você visita e utiliza o website www.saimo-web.com.br, você aceita e
+          você visita e utiliza o website www.saimo-web.vercel.app, você aceita e
           concorda com os Termos e Condições dessa Política de Privacidade.
         </p>
         <Card
@@ -62,8 +62,8 @@ function Polices() {
             outros.
           </p>
           <p>
-            O uso dos sites da Plataforma SaimoWeb pressupõe a aceitação deste
-            Acordo de Privacidade. A Plataforma SaimoWeb reserva-se ao direito
+            O uso dos sites da Plataforma MenuDigital pressupõe a aceitação deste
+            Acordo de Privacidade. A Plataforma MenuDigital reserva-se ao direito
             de alterar este acordo sem aviso prévio. Deste modo, recomendamos
             que consulte esta página com regularidade de forma a estar sempre
             atualizado.
@@ -239,7 +239,7 @@ function Polices() {
         </Card>
         <Card title="08. CONSENTIMENTO" key="18" style={{ marginBottom: 10 }}>
           <p>
-            O acesso aos websites e páginas associadas a Plataforma SaimoWeb,
+            O acesso aos websites e páginas associadas a Plataforma MenuDigital,
             representa a aceitação expressa e irrestrita dos termos de uso acima
             descritos.
           </p>
@@ -252,7 +252,7 @@ function Polices() {
             O usuário, ao cadastrar-se, manifesta conhecer e pode exercitar seus
             direitos de cancelar seu cadastro quando desejar.
           </p>
-          <p>Qualquer dúvida, envie email para contato@SaimoWeb.com.br</p>
+          <p>Qualquer dúvida, envie email para gabrielsaimo68@gmail.com</p>
         </Card>
       </div>
     </div>
