@@ -23,8 +23,8 @@ function App() {
   const handleLogoClick = async () => {
     setContar(contar + 1);
   };
-  const getImgLogos = async (idcompany) => {
-    const img = await getlogoName(idcompany);
+  const getImgLogos = async (company) => {
+    const img = await getlogoName(company);
     setLogo(img[0].imagem);
   };
   return (
@@ -34,7 +34,12 @@ function App() {
           src={atob(logo)}
           className="logo"
           alt="logo-principal"
-          style={{ width: "400px", borderRadius: "100%", marginTop: "50px" }}
+          style={{
+            width: "100vw",
+            maxWidth: 300,
+            borderRadius: "100%",
+            marginTop: "50px",
+          }}
           loading="eager"
           decoding="async"
           onClick={() => handleLogoClick()}
