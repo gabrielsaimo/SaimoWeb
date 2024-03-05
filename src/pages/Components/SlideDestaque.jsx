@@ -50,20 +50,23 @@ const Destaque = () => {
   }, [fetchImages]);
 
   useEffect(() => {
-    scrollIntervalRef.current = setInterval(() => {
-      if (scrollRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-        if (scrollLeft + clientWidth >= scrollWidth - 200) {
-          setDestaques((prevDestaques) => [...prevDestaques, ...destaques]);
+    if (destaques.length > 0) {
+      //  console.log("🚀 ~ useEffect ~ destaques:", destaques);
+      scrollIntervalRef.current = setInterval(() => {
+        if (scrollRef.current) {
+          const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+          if (scrollLeft + clientWidth >= scrollWidth - 200) {
+            setDestaques((prevDestaques) => [...prevDestaques, ...destaques]);
+          }
+          scrollRef.current.scrollLeft += scrollDirectionRef.current;
         }
-        scrollRef.current.scrollLeft += scrollDirectionRef.current;
-      }
-    }, 20);
+      }, 20);
 
-    return () => {
-      clearInterval(scrollIntervalRef.current);
-    };
-  }, [destaques]);
+      return () => {
+        clearInterval(scrollIntervalRef.current);
+      };
+    }
+  }, []);
   if (isLoading) {
     return <Spin />;
   }
@@ -132,9 +135,7 @@ const Destaque = () => {
                     >
                       {item.name}
                     </div>
-                    <div>
-                      {currency_BRL(item.price)}
-                    </div>
+                    <div>{currency_BRL(item.price)}</div>
                   </div>
                 </div>
               );

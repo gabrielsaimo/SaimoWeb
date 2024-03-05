@@ -33,7 +33,7 @@ function App() {
   };
   const getImgLogos = async (company) => {
     const img = await getlogoName(company);
-    setLogo(img[0].imagem);
+    if (img.length > 0) setLogo(img[0].imagem);
   };
 
   const styleFundo = {
