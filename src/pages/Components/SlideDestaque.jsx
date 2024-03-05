@@ -5,9 +5,7 @@ import {
 } from "../../services/cardapio.ws";
 import RenderImageDestaque from "./RenderImageDestaque";
 import currency_BRL from "./CurrencyBRL";
-
 import { Spin } from "antd";
-import { getStyles } from "../../services/user.ws";
 const Destaque = () => {
   const [destaques, setDestaques] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
