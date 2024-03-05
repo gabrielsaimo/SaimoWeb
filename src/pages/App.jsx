@@ -7,23 +7,24 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Menu from "./modules/BottonMenu";
 import Footer from "./modules/footer";
 import SlideRenderer from "./Components/slide";
-import { getImgLogo } from "../services/config";
+import { getlogoName } from "../services/config";
 const CollapseMenu = lazy(() => import("./modules/Collapse"));
-const idcompany = JSON.parse(localStorage.getItem("dateUser")).idcompany;
+const CompanyName = window.location.href.split("/").pop();
+
 function App() {
   const { Company } = useParams();
   const [contar, setContar] = useState(0);
   const [logo, setLogo] = useState(null);
 
   useEffect(() => {
-    getImgLogos(idcompany);
+    getImgLogos(CompanyName);
   }, []);
 
   const handleLogoClick = async () => {
     setContar(contar + 1);
   };
   const getImgLogos = async (idcompany) => {
-    const img = await getImgLogo(idcompany);
+    const img = await getlogoName(idcompany);
     setLogo(img[0].imagem);
   };
   return (
