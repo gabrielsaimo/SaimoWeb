@@ -1,10 +1,16 @@
-import { Button, ColorPicker, Popconfirm, Upload, message } from "antd";
+import { Button, ColorPicker, Popconfirm, theme, Upload, message } from "antd";
 import ImgCrop from "antd-img-crop";
 import React, { useEffect, useMemo, useState } from "react";
 import { DeleteImg, InsertImg } from "../../services/cardapio.ws";
 import { getImgLogo } from "../../services/config";
 import { DeleteOutlined } from "@ant-design/icons";
 import { postStyles } from "../../services/user.ws";
+import { generate, green, presetPalettes, red } from "@ant-design/colors";
+const genPresets = (presets = presetPalettes) =>
+  Object.entries(presets).map(([label, colors]) => ({
+    label,
+    colors,
+  }));
 const SlideRenderer = () => {
   const [fundoColor1, setFundoColor1] = useState("#1677ff");
   const [fundoColor2, setFundoColor2] = useState("#1677ff");
@@ -13,24 +19,27 @@ const SlideRenderer = () => {
   const [totalImg, setTotalImg] = useState(0);
   const [coint, setCoint] = useState(0);
   const random = Math.floor(Math.random() * 100000000);
-  const company = JSON.parse(localStorage.getItem("dateUser")).company;
-  const idcompany = JSON.parse(localStorage.getItem("dateUser")).idcompany;
-  const styles = JSON.parse(localStorage.getItem("dateUser")).styles;
-
+  const dateUser = JSON.parse(localStorage.getItem("dateUser"));
+  const { token } = theme.useToken();
+  const presets = genPresets({
+    primary: generate(token.colorPrimary),
+    red,
+    green,
+  });
   const [imgSrc, setImgSrc] = useState(null);
   const [idImg, setIdImg] = useState(null);
 
   const CompanyName = window.location.href.split("/").pop();
   useEffect(() => {
-    if (styles) {
-      const stylesObj = JSON.parse(styles);
+    if (dateUser.styles) {
+      const stylesObj = JSON.parse(dateUser.styles);
       setFundoColor1(stylesObj.backgrondColor.split(",")[1].replace("0%", ""));
       setFundoColor2(
         stylesObj.backgrondColor.split(",")[2].replace("100%)", "")
       );
       setTextColor(stylesObj.colorText);
     }
-  }, [styles]);
+  }, [dateUser.styles]);
 
   const fetchData = async () => {
     const styles = `{"backgrondColor":"linear-gradient(90deg, ${fundobgColor1} 0%, ${fundobgColor2} 100%)","colorText":"${textbgColor}"}`;
@@ -41,12 +50,12 @@ const SlideRenderer = () => {
 
     const response = await postStyles(data);
     const newDataUSer = {
-      id: JSON.parse(localStorage.getItem("dateUser")).id,
-      name: JSON.parse(localStorage.getItem("dateUser")).name,
-      categoria: JSON.parse(localStorage.getItem("dateUser")).categoria,
-      active: JSON.parse(localStorage.getItem("dateUser")).active,
-      idcompany: JSON.parse(localStorage.getItem("dateUser")).idcompany,
-      company: JSON.parse(localStorage.getItem("dateUser")).company,
+      id: dateUser.id,
+      name: dateUser.name,
+      categoria: dateUser.categoria,
+      active: dateUser.active,
+      idcompany: dateUser.idcompany,
+      company: dateUser.company,
       styles: styles.toString().replace(/\\/g, ""),
     };
     localStorage.setItem("dateUser", JSON.stringify(newDataUSer));
@@ -78,7 +87,7 @@ const SlideRenderer = () => {
   }, []);
 
   const getImgLogos = async () => {
-    const img = await getImgLogo(idcompany);
+    const img = await getImgLogo(dateUser.idcompany);
     if (img[0]) {
       setImgSrc(img[0]);
       setIdImg(img[0]?.id);
@@ -99,10 +108,10 @@ const SlideRenderer = () => {
   const insertImg = async (code) => {
     let body = {
       imagem: code,
-      idreq: idcompany,
+      idreq: dateUser.idcompany,
       tipo: "Logo",
       id: random,
-      company: company,
+      company: dateUser.company,
     };
     if (code) await InsertImg(body);
   };
@@ -159,87 +168,98 @@ const SlideRenderer = () => {
   };
 
   async function confirmDeleteImg(record) {
-    await DeleteImg(record, company);
+    await DeleteImg(record, dateUser.company);
     message.success("Imagem deletada com sucesso!");
   }
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
-      <div>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          cor 1
-          <ColorPicker value={fundoColor1} onChange={setFundoColor1} />
-          cor 2
-          <ColorPicker value={fundoColor2} onChange={setFundoColor2} />
+    <div style={{ height: "85vh" }}>
+      <div style={{ display: "flex" }}>
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            cor 1
+            <ColorPicker
+              value={fundoColor1}
+              presets={presets}
+              allowClear
+              onChange={setFundoColor1}
+            />
+            cor 2
+            <ColorPicker
+              value={fundoColor2}
+              presets={presets}
+              allowClear
+              onChange={setFundoColor2}
+            />
+          </div>
+
+          <div>
+            <ColorPicker>
+              <div style={FundoStyle}>Fundo do Site</div>
+            </ColorPicker>
+            <ColorPicker value={textColor} onChange={setTextColor}>
+              <p style={TextStyle}>Texto do Site</p>
+            </ColorPicker>
+          </div>
         </div>
 
         <div>
-          <ColorPicker>
-            <div style={FundoStyle}>Fundo do Site</div>
-          </ColorPicker>
-          <ColorPicker value={textColor} onChange={setTextColor}>
-            <p style={TextStyle}>Texto do Site</p>
-          </ColorPicker>
+          {imgSrc && (
+            <>
+              <img
+                src={atob(imgSrc.imagem)}
+                alt="img"
+                style={{
+                  width: 300,
+                  marginRight: 5,
+                  borderRadius: 10,
+                  marginLeft: 16,
+                  border: "solid 1px #000000",
+                }}
+              />
+              <Popconfirm
+                title="Tem certeza que deseja excluir essa imagem?"
+                okText="Excluir"
+                okButtonProps={{ danger: true }}
+                onConfirm={() => confirmDeleteImg(idImg)}
+                cancelText="Cancelar"
+              >
+                <Button
+                  style={{
+                    backgroundColor: "#fc5f5f",
+                    width: 20,
+                    position: "absolute",
+                    marginLeft: -35,
+                  }}
+                >
+                  <DeleteOutlined
+                    size={24}
+                    style={{
+                      color: "#fff",
+                      marginLeft: -7,
+                    }}
+                  />
+                </Button>
+              </Popconfirm>
+            </>
+          )}
+        </div>
+        <div style={{ marginLeft: 16 }}>
+          {totalImg < 1 && (
+            <ImgCrop>
+              <Upload
+                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                listType="picture-card"
+                fileList={fileList}
+                onChange={(e) => onChange(e)}
+                onPreview={onPreview}
+                accept="image/*"
+              >
+                {fileList.length < 1 && "+add Imagem"}
+              </Upload>
+            </ImgCrop>
+          )}
         </div>
       </div>
-
-      <div>
-        {imgSrc && (
-          <>
-            <img
-              src={atob(imgSrc.imagem)}
-              alt="img"
-              style={{
-                width: 300,
-                marginRight: 5,
-                borderRadius: 10,
-                marginLeft: 16,
-                border: "solid 1px #000000",
-              }}
-            />
-            <Popconfirm
-              title="Tem certeza que deseja excluir essa imagem?"
-              okText="Excluir"
-              okButtonProps={{ danger: true }}
-              onConfirm={() => confirmDeleteImg(idImg)}
-              cancelText="Cancelar"
-            >
-              <Button
-                style={{
-                  backgroundColor: "#fc5f5f",
-                  width: 20,
-                  position: "absolute",
-                  marginLeft: -35,
-                }}
-              >
-                <DeleteOutlined
-                  size={24}
-                  style={{
-                    color: "#fff",
-                    marginLeft: -7,
-                  }}
-                />
-              </Button>
-            </Popconfirm>
-          </>
-        )}
-      </div>
-      <div style={{ marginLeft: 16 }}>
-        {totalImg < 1 && (
-          <ImgCrop>
-            <Upload
-              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-              listType="picture-card"
-              fileList={fileList}
-              onChange={(e) => onChange(e)}
-              onPreview={onPreview}
-              accept="image/*"
-            >
-              {fileList.length < 1 && "+add Imagem"}
-            </Upload>
-          </ImgCrop>
-        )}
-      </div>
-
       <Button
         type="primary"
         style={{ marginLeft: 16 }}
