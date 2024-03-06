@@ -129,23 +129,18 @@ export default function Config() {
     },
     {
       key: "2",
-      label: "Messagens",
-      children: <Menssagem atualizar={actionMensagem} user={dateUser} />,
-    },
-    {
-      key: "3",
       label: "Pedidos",
       disabled: false,
       children: <Pedidos atualizar={actionPeido} user={dateUser} />,
     },
     {
-      key: "4",
+      key: "3",
       label: "Usuários",
       disabled: UserCategoria !== "ADM" ? true : false,
       children: <Users atualizar={actionPeido} user={dateUser} />,
     },
     {
-      key: "5",
+      key: "4",
       label: "Relatórios",
       disabled: UserCategoria !== "ADM" ? true : false,
       children: <Relatorios atualizar={actionPeido} user={dateUser} />,

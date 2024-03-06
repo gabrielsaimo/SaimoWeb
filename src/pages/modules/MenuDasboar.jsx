@@ -53,10 +53,9 @@ const MenuDashboard = () => {
     () => ({
       1: <Dashboard atualizar={null} user={dateUser} company={Company} />,
       2: <Relatorios />,
-      3: <Menssagem atualizar={true} user={dateUser} />,
-      4: <Pedidos atualizar={true} user={dateUser} />,
-      5: <Users atualizar={true} user={dateUser} />,
-      6: <LayoutSite atualizar={true} user={dateUser} />,
+      3: <Pedidos atualizar={true} user={dateUser} />,
+      4: <Users atualizar={true} user={dateUser} />,
+      5: <LayoutSite atualizar={true} user={dateUser} />,
     }),
     [dateUser, Company]
   );
@@ -125,15 +124,6 @@ const MenuDashboard = () => {
             },
             {
               key: "3",
-              icon: <MessageOutlined />,
-              label: "Mensagens",
-              onClick: () => {
-                setTela(3);
-                setCollapsed(true);
-              },
-            },
-            {
-              key: "4",
               icon: <TagOutlined />,
               label: "Pedidos",
               onClick: () => {
@@ -142,7 +132,7 @@ const MenuDashboard = () => {
               },
             },
             {
-              key: "5",
+              key: "4",
               icon: <UserOutlined />,
               disabled: UserCategoria === "ADM" ? false : true,
               label: "Usuários",
@@ -152,7 +142,7 @@ const MenuDashboard = () => {
               },
             },
             {
-              key: "6",
+              key: "5",
               icon: <BgColorsOutlined />,
               label: "Layout",
               onClick: () => {
@@ -204,12 +194,10 @@ const MenuDashboard = () => {
               : tela === 2
               ? "Relatórios"
               : tela === 3
-              ? "Mensagens"
-              : tela === 4
               ? "Pedidos"
-              : tela === 5
+              : tela === 4
               ? "Usuários"
-              : tela === 6
+              : tela === 5
               ? "Layout"
               : "Sair"}
           </Typography.Title>
