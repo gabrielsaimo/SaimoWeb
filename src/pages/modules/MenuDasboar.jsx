@@ -125,7 +125,7 @@ const MenuDashboard = () => {
               icon: <TagOutlined />,
               label: "Pedidos",
               onClick: () => {
-                setTela(4);
+                setTela(3);
                 setCollapsed(true);
               },
             },
@@ -135,7 +135,7 @@ const MenuDashboard = () => {
               disabled: UserCategoria === "ADM" ? false : true,
               label: "Usuários",
               onClick: () => {
-                setTela(5);
+                setTela(4);
                 setCollapsed(true);
               },
             },
@@ -144,13 +144,13 @@ const MenuDashboard = () => {
               icon: <BgColorsOutlined />,
               label: "Layout",
               onClick: () => {
-                setTela(6);
+                setTela(5);
                 setCollapsed(true);
               },
             },
 
             {
-              key: "7",
+              key: "6",
               icon: <LogoutOutlined />,
               label: "Sair",
               onClick: () => {
