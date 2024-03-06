@@ -5,14 +5,12 @@ import {
   LogoutOutlined,
   MenuFoldOutlined,
   MenuOutlined,
-  MessageOutlined,
   PieChartOutlined,
   TagOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Menu, Button, theme, Typography, Layout } from "antd";
 import Relatorios from "./Realatorios";
-import Menssagem from "./Menssagem";
 import Dashboard from "./Dasboard";
 import Pedidos from "./Pedidos";
 import Users from "./Users";
