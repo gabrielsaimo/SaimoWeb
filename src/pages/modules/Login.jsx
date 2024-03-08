@@ -61,7 +61,7 @@ const Login = () => {
       );
 
       if (UserCollection.user[0].active === false) {
-        alert("Usuário desativado");
+        message.error("Usuário desativado");
       } else if (
         UserCollection.user[0].categoria === "ADM" ||
         UserCollection.user[0].categoria === "Gerência"
@@ -85,13 +85,13 @@ const Login = () => {
       console.log(JSON.parse(cachedData), "teste");
 
       if (JSON.parse(cachedData).active === false) {
-        alert("Usuário desativado");
+        message.error("Usuário desativado");
       } else if (
         JSON.parse(cachedData).categoria === "ADM" ||
         JSON.parse(cachedData).categoria === "Gerência"
       ) {
       } else {
-        alert("Usuário não tem permissão");
+        message.error("Usuário não tem permissão");
       }
     }
     return cachedData ? JSON.parse(cachedData) : null;
