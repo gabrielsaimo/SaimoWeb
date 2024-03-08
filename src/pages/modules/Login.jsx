@@ -19,7 +19,7 @@ const Login = () => {
       localStorage.removeItem("token");
     }
   }, [msn]);
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [form] = Form.useForm();
@@ -31,11 +31,11 @@ const Login = () => {
   };
 
   const handleEmailChange = (e) => {
-    setName(e.target.value);
+    setEmail(e.target.value);
     if (!validateEmail(e.target.value)) {
       form.setFields([
         {
-          name: "email",
+          email: "email",
           errors: ["Por favor, insira um email válido"],
         },
       ]);
@@ -49,7 +49,7 @@ const Login = () => {
   }, []);
   const GetUsuario = async () => {
     setVisible(true);
-    const data = { name: name, password: password };
+    const data = { email: email, password: password };
 
     const UserCollection = await getUser(data);
 
@@ -72,10 +72,10 @@ const Login = () => {
       } else if (UserCollection.user[0].categoria === "Cozinha") {
         window.location.href = "/Cozinha/" + UserCollection.user[0].company;
       } else {
-        alert("Usuário não tem permissão");
+        message.error("Usuário não tem permissão", 5);
       }
     } else {
-      alert("Senha incorreta");
+      message.error("Usuário ou senha inválidos", 5);
       setVisible(false);
     }
   };
@@ -140,6 +140,7 @@ const Login = () => {
               {
                 required: true,
                 message: "Por favor, insira sua senha",
+                min: 8,
               },
             ]}
           >
@@ -154,10 +155,21 @@ const Login = () => {
         <Button
           onClick={acessar}
           type="primary"
-          disabled={name === "" || password === "" ? true : false}
+          disabled={email === "" || password === "" ? true : false}
           loading={visible}
         >
           Acessar
+        </Button>
+
+        <Divider />
+
+        <Button
+          onClick={() => {
+            window.location.href = "/Forgot";
+          }}
+          type="link"
+        >
+          Esqueci a senha
         </Button>
       </div>
     </div>

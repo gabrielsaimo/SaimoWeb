@@ -55,3 +55,18 @@ export const getStyles = async (company: string): Promise<any[]> => {
   const response = await api.get<User[]>(`/user/styles/${company}`);
   return response.data;
 };
+
+export const validadaEmail = async (email: string): Promise<any> => {
+  const response = await api.get<User>("/user/validadaEmail/" + email);
+  return response.data;
+};
+
+export const sendUserEmail = async (data: any): Promise<any> => {
+  const response = await api.post<User>("/user/email", data);
+  return response.data;
+};
+
+export const PostUserPassword = async (data: any): Promise<any> => {
+  const response = await api.post<User>("/user/newPassword", data);
+  return response.data;
+};

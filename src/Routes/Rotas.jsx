@@ -10,12 +10,14 @@ import Login from "../pages/modules/Login";
 import Home from "../pages/modules/Home";
 import Error404 from "../pages/modules/Error404";
 import Polices from "../pages/modules/Polices";
+import Forgot from "../pages/modules/forgot";
 
 export default function Rotas() {
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
       <Route path="/Login/:msn?" element={<Login />} />
+      <Route path="/Forgot" element={<Forgot />} />
       <Route path="/Dashboard/:Company" element={<MenuDashboard />} />
       <Route path="/Garçom/:Company" element={<Garçom />} />
       <Route path="/Catalogo/:Company" element={<App />} />
