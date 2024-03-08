@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Menu, Typography, Button, Drawer, Modal } from "antd";
+import { Layout, Menu, Typography, Button, Drawer, Modal, Card } from "antd";
 import Cookies from "js-cookie";
 import { MenuOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.webp";
 const { Header, Footer, Content } = Layout;
 const { Title, Paragraph } = Typography;
-
+const { Meta } = Card;
 const Home = () => {
   const [visible, setVisible] = useState(false);
   const [modal, setModal] = useState(false);
@@ -121,17 +121,17 @@ const Home = () => {
         <div style={{ background: "#fff", padding: 24, minHeight: 380 }}>
           <Title>Bem-vindo ao Menu Digital</Title>
           <Paragraph>
-            A Menu Digital é uma empresa líder em desenvolvimento de sites e
-            aplicativos. Com uma equipe de especialistas altamente qualificados,
-            oferecemos soluções modernas e inovadoras para ajudar nossos
-            clientes a alcançar seus objetivos de negócios.
+            A Menu Digital é uma empresa líder em criação de cardápios digitais.
+            Com uma equipe de especialistas altamente qualificados, oferecemos
+            soluções modernas e inovadoras para ajudar nossos clientes a
+            melhorar a experiência de seus clientes no restaurante.
           </Paragraph>
           <Title level={2}>Tecnologias de Programação</Title>
           <Paragraph>
             Utilizamos as mais recentes tecnologias de programação para garantir
-            que nossos produtos sejam de alta qualidade e estejam à frente da
-            curva. Nossas tecnologias incluem React, Node.js, Python, Java e
-            muito mais.
+            que nossos cardápios digitais sejam de alta qualidade e estejam à
+            frente da curva. Nossas tecnologias incluem React, Node.js, Python,
+            Java e muito mais.
           </Paragraph>
           <Title level={2}>Soluções Modernas</Title>
           <Paragraph>
@@ -141,6 +141,52 @@ const Home = () => {
             artificial, aprendizado de máquina ou desenvolvimento de aplicativos
             móveis, estamos sempre buscando maneiras de inovar e melhorar.
           </Paragraph>
+          <Title level={2}>Nossos Serviços</Title>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "20px",
+              overflow: "auto",
+            }}
+          >
+            <Card
+              hoverable
+              style={{ width: 240 }}
+              cover={
+                <img alt="example" src="https://via.placeholder.com/240" />
+              }
+            >
+              <Meta
+                title="Cardápios Digitais"
+                description="Criamos cardápios digitais personalizados para restaurantes de todos os tamanhos. Nossos cardápios são fáceis de usar e podem ser atualizados em tempo real."
+              />
+            </Card>
+            <Card
+              hoverable
+              style={{ width: 240 }}
+              cover={
+                <img alt="example" src="https://via.placeholder.com/240" />
+              }
+            >
+              <Meta
+                title="Aplicativos Móveis"
+                description="Desenvolvemos aplicativos móveis para restaurantes que permitem aos clientes fazer pedidos diretamente de seus telefones. Isso aumenta a eficiência e melhora a experiência do cliente."
+              />
+            </Card>
+            <Card
+              hoverable
+              style={{ width: 240 }}
+              cover={
+                <img alt="example" src="https://via.placeholder.com/240" />
+              }
+            >
+              <Meta
+                title="Integração com Sistemas de PDV"
+                description="Nossos cardápios digitais podem ser integrados com a maioria dos sistemas de ponto de venda (PDV), tornando o processo de pedidos mais suave e eficiente."
+              />
+            </Card>
+          </div>
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
