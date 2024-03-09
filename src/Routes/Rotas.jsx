@@ -11,7 +11,7 @@ import Home from "../pages/modules/Home";
 import Error404 from "../pages/modules/Error404";
 import Polices from "../pages/modules/Polices";
 import Forgot from "../pages/modules/forgot";
-import Register from "../pages/modules/register";
+import Register from "../pages/modules/Register";
 
 export default function Rotas() {
   return (
