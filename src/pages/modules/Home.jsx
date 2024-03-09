@@ -37,6 +37,13 @@ const Home = () => {
     setVisible(false);
   };
 
+  const Comprar = (type) => {
+    window.location.href =
+      "https://api.whatsapp.com/send?phone=5511989539505&text=Ol%C3%A1%2C%20gostaria%20de%20comprar%20o%20plano%20" +
+      type +
+      "%20do%20Menu%20Digital.";
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header
@@ -208,6 +215,7 @@ const Home = () => {
                 <Button
                   data-atropos-offset="6"
                   type="primary"
+                  onClick={() => Comprar("Básico")}
                   style={{ marginTop: "20px" }}
                 >
                   Comprar
@@ -242,6 +250,7 @@ const Home = () => {
                 <Button
                   data-atropos-offset={"6"}
                   type="primary"
+                  onClick={() => Comprar("Intermediário")}
                   style={{ marginTop: "20px" }}
                 >
                   Comprar
@@ -275,6 +284,7 @@ const Home = () => {
                 />
                 <Button
                   data-atropos-offset={"6"}
+                  onClick={() => Comprar("Premium")}
                   type="primary"
                   style={{ marginTop: "20px" }}
                 >
