@@ -103,7 +103,7 @@ const Home = () => {
             <Button
               type="primary"
               style={{ marginRight: "10px", width: 150, marginBottom: 20 }}
-              onClick={() => (window.location.href = "/register")}
+              onClick={() => (window.location.href = "/Register")}
             >
               Registrar
             </Button>

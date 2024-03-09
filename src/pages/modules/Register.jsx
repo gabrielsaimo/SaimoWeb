@@ -1,15 +1,16 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Button, Form, Input, Select, message } from "antd";
+import { Button, Form, Input, Select, Spin, message } from "antd";
 import "../../css/Register.css";
 import { MaskedInput } from "antd-mask-input";
 import { PutRegister } from "../../services/user.ws";
 export default function Register() {
   const { plan } = useParams();
   const [form] = Form.useForm();
-
+  const [loading, setLoading] = React.useState(false);
   const onFinish = async (values) => {
-    const random = Math.floor(Math.random() * 1000);
+    setLoading(true);
+    const random = Math.floor(Math.random() * 100000000);
     const data = {
       ...values,
       phone: Number(values.phone.replace(/\D/g, "")),
@@ -17,14 +18,23 @@ export default function Register() {
     };
     await PutRegister(data);
     form.resetFields();
-    message.success(
-      "Cadastro realizado com sucesso!",
-      "em breve você receberá um email com as instruções para acessar o sistema."
-    );
-    window.location.href = "/";
+    message.success("Cadastro realizado com sucesso!");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 3000);
   };
 
-  return (
+  return loading ? (
+    <Spin
+      size="large"
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+      }}
+    />
+  ) : (
     <div className="register-container">
       <h1>Register</h1>
       <Form form={form} name="register" onFinish={onFinish}>
@@ -115,6 +125,21 @@ export default function Register() {
             <Select.Option value={"Básico"}>Prata</Select.Option>
             <Select.Option value={"Intermediário"}>Ouro</Select.Option>
             <Select.Option value={"Premium"}>Diamante</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="typePlan"
+          label="Tipo de Plano:"
+          rules={[
+            {
+              required: true,
+              message: "Seleciona o tipo de plano!",
+            },
+          ]}
+        >
+          <Select style={{ width: 120 }}>
+            <Select.Option value={"Mensal"}>Mensal</Select.Option>
+            <Select.Option value={"Anual"}>Anual</Select.Option>
           </Select>
         </Form.Item>
 
