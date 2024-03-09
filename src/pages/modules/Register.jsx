@@ -17,7 +17,10 @@ export default function Register() {
     };
     await PutRegister(data);
     form.resetFields();
-    message.success("Cadastro realizado com sucesso!");
+    message.success(
+      "Cadastro realizado com sucesso!",
+      "em breve você receberá um email com as instruções para acessar o sistema."
+    );
     window.location.href = "/";
   };
 
