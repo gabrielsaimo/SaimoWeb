@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import "../css/App.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Menu from "./modules/BottonMenu";
-import Footer from "./modules/Footer";
+import Footer from "./modules/footer";
 import SlideRenderer from "./Components/slide";
 import { getlogoName } from "../services/config";
 import { getStyles } from "../services/user.ws";
