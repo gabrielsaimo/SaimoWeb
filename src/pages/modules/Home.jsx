@@ -188,11 +188,11 @@ const Home = () => {
             }}
           >
             <Atropos
-              activeOffset={1.0}
-              shadowScale={0.5}
-              shadowOffset={1.0}
-              rotateX={30}
-              rotateY={30}
+              activeOffset={100}
+              shadowScale={1}
+              shadowOffset={130}
+              rotateX={130}
+              rotateY={130}
               style={{ width: 240, margin: "10px" }}
             >
               <Card
@@ -200,7 +200,7 @@ const Home = () => {
                 style={{ width: 240 }}
                 cover={
                   <img
-                    data-atropos-offset={"5"}
+                    data-atropos-offset={"8"}
                     style={{ padding: "20px" }}
                     alt="example"
                     src="https://consultoriaritz.com/wp-content/uploads/2021/07/prata.png"
@@ -208,7 +208,12 @@ const Home = () => {
                 }
               >
                 <Meta
-                  title="Plano de R$30"
+                  title={
+                    <div style={{ textAlign: "center" }}>
+                      <h2 data-atropos-offset={"-2"}>Plano de R$30</h2>
+                      <h4 data-atropos-offset={"6"}>Anual (R$360)</h4>
+                    </div>
+                  }
                   data-atropos-offset={"-4"}
                   description="Este é o nosso plano básico. Perfeito para pequenos restaurantes que estão apenas começando a digitalizar seus cardápios."
                 />
@@ -223,11 +228,11 @@ const Home = () => {
               </Card>
             </Atropos>
             <Atropos
-              activeOffset={1.0}
-              shadowScale={0.5}
-              shadowOffset={1.0}
-              rotateX={30}
-              rotateY={30}
+              activeOffset={100}
+              shadowScale={1}
+              shadowOffset={130}
+              rotateX={130}
+              rotateY={130}
               style={{ width: 240, margin: "10px" }}
             >
               <Card
@@ -235,7 +240,7 @@ const Home = () => {
                 style={{ width: 240 }}
                 cover={
                   <img
-                    data-atropos-offset={"5"}
+                    data-atropos-offset={"8"}
                     style={{ padding: "20px" }}
                     alt="example"
                     src="https://consultoriaritz.com/wp-content/uploads/2021/07/ouro.png"
@@ -243,7 +248,12 @@ const Home = () => {
                 }
               >
                 <Meta
-                  title="Plano de R$40"
+                  title={
+                    <div style={{ textAlign: "center" }}>
+                      <h2 data-atropos-offset={"-2"}>Plano de R$45</h2>
+                      <h4 data-atropos-offset={"6"}>Anual (R$540)</h4>
+                    </div>
+                  }
                   data-atropos-offset={"-4"}
                   description="Este é o nosso plano intermediário. Ideal para restaurantes de médio porte que precisam de mais recursos."
                 />
@@ -258,11 +268,11 @@ const Home = () => {
               </Card>
             </Atropos>
             <Atropos
-              activeOffset={1.0}
-              shadowScale={0.5}
-              shadowOffset={1.0}
-              rotateX={30}
-              rotateY={30}
+              activeOffset={100}
+              shadowScale={1}
+              shadowOffset={130}
+              rotateX={130}
+              rotateY={130}
               style={{ width: 240, margin: "10px" }}
             >
               <Card
@@ -270,7 +280,7 @@ const Home = () => {
                 style={{ width: 240 }}
                 cover={
                   <img
-                    data-atropos-offset={"5"}
+                    data-atropos-offset={"8"}
                     style={{ padding: "20px" }}
                     alt="example"
                     src="https://consultoriaritz.com/wp-content/uploads/2021/07/diamante.png"
@@ -278,7 +288,12 @@ const Home = () => {
                 }
               >
                 <Meta
-                  title="Plano de R$60"
+                  title={
+                    <div style={{ textAlign: "center" }}>
+                      <h2 data-atropos-offset={"-2"}>Plano de R$60</h2>
+                      <h4 data-atropos-offset={"6"}>Anual (R$720)</h4>
+                    </div>
+                  }
                   data-atropos-offset={"-4"}
                   description="Este é o nosso plano premium. Perfeito para grandes restaurantes que precisam de todos os nossos recursos e suporte prioritário."
                 />
