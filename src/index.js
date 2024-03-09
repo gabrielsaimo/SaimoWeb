@@ -8,12 +8,16 @@ import reportWebVitals from "./reportWebVitals";
 import { sendToVercelAnalytics } from "./vitals";
 import "atropos/css";
 import { Analytics } from "@vercel/analytics/react";
+import { ConfigProvider } from "antd";
+import ptBR from "antd/lib/locale/pt_BR";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
-    <Analytics />
-    <Routes />
+    <ConfigProvider locale={ptBR}>
+      <Analytics />
+      <Routes />
+    </ConfigProvider>
   </BrowserRouter>
 );
 

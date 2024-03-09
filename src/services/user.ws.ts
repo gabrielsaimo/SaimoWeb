@@ -70,3 +70,8 @@ export const PostUserPassword = async (data: any): Promise<any> => {
   const response = await api.post<User>("/user/newPassword", data);
   return response.data;
 };
+
+export const PutRegister = async (data: any): Promise<any> => {
+  const response = await api.put<any>("/user/register", data);
+  return response.data;
+};

@@ -38,10 +38,7 @@ const Home = () => {
   };
 
   const Comprar = (type) => {
-    window.location.href =
-      "https://api.whatsapp.com/send?phone=5511989539505&text=Ol%C3%A1%2C%20gostaria%20de%20comprar%20o%20plano%20" +
-      type +
-      "%20do%20Menu%20Digital.";
+    window.location.href = `/register/${type}`;
   };
 
   return (
