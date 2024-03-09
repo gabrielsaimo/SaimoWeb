@@ -37,7 +37,12 @@ export default function Register() {
   ) : (
     <div className="register-container">
       <h1>Register</h1>
-      <Form form={form} name="register" onFinish={onFinish}>
+      <Form
+        form={form}
+        name="register"
+        onFinish={onFinish}
+        className="register-form"
+      >
         <Form.Item
           name="fullname"
           label="Nome Completo:"
