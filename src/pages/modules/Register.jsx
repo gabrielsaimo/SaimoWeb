@@ -4,6 +4,9 @@ import { Button, Form, Input, Select, Spin, message } from "antd";
 import "../../css/Register.css";
 import { MaskedInput } from "antd-mask-input";
 import { PutRegister } from "../../services/user.ws";
+import { postEmail } from "../../services/email.ws";
+import Email_cadastro from "../Templates/Emails/Cadastro/email_cadastro";
+import EmailSaimo from "../Templates/Emails/Saimo/email_saimo";
 export default function Register() {
   const { plan } = useParams();
   const [form] = Form.useForm();
@@ -11,14 +14,33 @@ export default function Register() {
   const onFinish = async (values) => {
     setLoading(true);
     const random = Math.floor(Math.random() * 100000000);
+    const emailCadastro = Email_cadastro(values);
+    const emailSaimo = EmailSaimo(random);
     const data = {
       ...values,
       phone: Number(values.phone.replace(/\D/g, "")),
       id: random,
     };
+
+    const emailCliente = {
+      destinatario: values.email,
+      assunto: "Cadastro realizado com sucesso",
+      corpo: emailCadastro,
+    };
+
+    const email_Saimo = {
+      destinatario: "gabrielsaimo68@gmail.com",
+      assunto: "Cliente cadastrado com sucesso!",
+      corpo: emailSaimo,
+    };
+    await postEmail(email_Saimo);
+    await postEmail(emailCliente);
     await PutRegister(data);
     form.resetFields();
     message.success("Cadastro realizado com sucesso!");
+    message.info("Você será redirecionado para a página inicial!");
+    message.info("Verifique seu email para mais informações!");
+
     setTimeout(() => {
       window.location.href = "/";
     }, 3000);
