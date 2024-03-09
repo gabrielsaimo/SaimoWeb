@@ -10,8 +10,8 @@ import Login from "../pages/modules/Login";
 import Home from "../pages/modules/Home";
 import Error404 from "../pages/modules/Error404";
 import Polices from "../pages/modules/Polices";
-import Forgot from "../pages/modules/Forgot";
-import Register from "../pages/modules/Register";
+import Forgot from "../pages/modules/forgot";
+import Register from "../pages/modules/register";
 
 export default function Rotas() {
   return (
