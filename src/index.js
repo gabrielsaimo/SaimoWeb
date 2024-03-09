@@ -6,6 +6,7 @@ import ReactDOM from "react-dom/client";
 import "../src/css/index.css";
 import reportWebVitals from "./reportWebVitals";
 import { sendToVercelAnalytics } from "./vitals";
+import "atropos/css";
 import { Analytics } from "@vercel/analytics/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

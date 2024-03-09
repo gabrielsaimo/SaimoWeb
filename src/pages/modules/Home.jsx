@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 import { MenuOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.webp";
+import Atropos from "atropos/react";
+import "atropos/css";
 const { Header, Footer, Content } = Layout;
 const { Title, Paragraph } = Typography;
 const { Meta } = Card;
@@ -117,75 +119,170 @@ const Home = () => {
           Ver Política de Privacidade
         </Button>
       </Modal>
-      <Content style={{ padding: "0 0px", marginTop: 164 }}>
+      <Content style={{ padding: "0 50px", marginTop: 164 }}>
         <div style={{ background: "#fff", padding: 24, minHeight: 380 }}>
           <Title>Bem-vindo ao Menu Digital</Title>
-          <Paragraph>
+          <Paragraph
+            style={{
+              fontSize: 18,
+              lineHeight: "1.6",
+              color: "#666",
+              width: "60%",
+            }}
+          >
             A Menu Digital é uma empresa líder em criação de cardápios digitais.
-            Com uma equipe de especialistas altamente qualificados, oferecemos
-            soluções modernas e inovadoras para ajudar nossos clientes a
-            melhorar a experiência de seus clientes no restaurante.
+            Com uma equipe de especialistas altamente qualificados e uma paixão
+            por inovação, oferecemos soluções modernas e inovadoras para ajudar
+            nossos clientes a melhorar a experiência de seus clientes no
+            restaurante. Nosso objetivo é tornar a experiência de jantar mais
+            conveniente, agradável e eficiente para todos.
           </Paragraph>
-          <Title level={2}>Tecnologias de Programação</Title>
-          <Paragraph>
-            Utilizamos as mais recentes tecnologias de programação para garantir
-            que nossos cardápios digitais sejam de alta qualidade e estejam à
-            frente da curva. Nossas tecnologias incluem React, Node.js, Python,
-            Java e muito mais.
+          <Title level={2}>Sistema de Delivery</Title>
+          <Paragraph
+            style={{
+              fontSize: 18,
+              lineHeight: "1.6",
+              color: "#666",
+              width: "60%",
+            }}
+          >
+            Nosso sistema de delivery permite que seus clientes façam pedidos
+            diretamente do conforto de suas casas. Com uma interface fácil de
+            usar, opções de pagamento flexíveis e uma ampla seleção de pratos
+            deliciosos, tornamos o processo de pedido tão simples quanto
+            possível. Além disso, nosso sistema de entrega garante que os
+            pedidos cheguem quentes e frescos, diretamente à porta do cliente.
           </Paragraph>
-          <Title level={2}>Soluções Modernas</Title>
-          <Paragraph>
-            Entendemos que o mundo da tecnologia está sempre mudando. É por isso
-            que nos esforçamos para fornecer soluções modernas que sejam
-            relevantes no mercado atual. Seja através do uso de inteligência
-            artificial, aprendizado de máquina ou desenvolvimento de aplicativos
-            móveis, estamos sempre buscando maneiras de inovar e melhorar.
+          <Title level={2}>Sistema de Comandas</Title>
+          <Paragraph
+            style={{
+              fontSize: 18,
+              lineHeight: "1.6",
+              color: "#666",
+              width: "60%",
+            }}
+          >
+            Nosso sistema de comandas digitaliza o processo de pedidos no
+            restaurante. Com a capacidade de enviar pedidos diretamente para a
+            cozinha e acompanhar o status do pedido em tempo real, você pode
+            melhorar a eficiência do seu restaurante e a satisfação do cliente.
+            Além disso, nosso sistema de comandas ajuda a reduzir erros de
+            pedidos e melhora a comunicação entre a equipe de serviço e a
+            cozinha.
           </Paragraph>
-          <Title level={2}>Nossos Serviços</Title>
+          <Title level={2}>Nossos Planos</Title>
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
               gap: "20px",
               overflow: "auto",
+              padding: "20px",
+              width: "100%",
             }}
           >
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img alt="example" src="https://via.placeholder.com/240" />
-              }
+            <Atropos
+              activeOffset={1.0}
+              shadowScale={0.5}
+              shadowOffset={1.0}
+              rotateX={30}
+              rotateY={30}
+              style={{ width: 240, margin: "10px" }}
             >
-              <Meta
-                title="Cardápios Digitais"
-                description="Criamos cardápios digitais personalizados para restaurantes de todos os tamanhos. Nossos cardápios são fáceis de usar e podem ser atualizados em tempo real."
-              />
-            </Card>
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img alt="example" src="https://via.placeholder.com/240" />
-              }
+              <Card
+                hoverable
+                style={{ width: 240 }}
+                cover={
+                  <img
+                    data-atropos-offset={"5"}
+                    style={{ padding: "20px" }}
+                    alt="example"
+                    src="https://consultoriaritz.com/wp-content/uploads/2021/07/prata.png"
+                  />
+                }
+              >
+                <Meta
+                  title="Plano de R$30"
+                  data-atropos-offset={"-4"}
+                  description="Este é o nosso plano básico. Perfeito para pequenos restaurantes que estão apenas começando a digitalizar seus cardápios."
+                />
+                <Button
+                  data-atropos-offset="6"
+                  type="primary"
+                  style={{ marginTop: "20px" }}
+                >
+                  Comprar
+                </Button>
+              </Card>
+            </Atropos>
+            <Atropos
+              activeOffset={1.0}
+              shadowScale={0.5}
+              shadowOffset={1.0}
+              rotateX={30}
+              rotateY={30}
+              style={{ width: 240, margin: "10px" }}
             >
-              <Meta
-                title="Aplicativos Móveis"
-                description="Desenvolvemos aplicativos móveis para restaurantes que permitem aos clientes fazer pedidos diretamente de seus telefones. Isso aumenta a eficiência e melhora a experiência do cliente."
-              />
-            </Card>
-            <Card
-              hoverable
-              style={{ width: 240 }}
-              cover={
-                <img alt="example" src="https://via.placeholder.com/240" />
-              }
+              <Card
+                hoverable
+                style={{ width: 240 }}
+                cover={
+                  <img
+                    data-atropos-offset={"5"}
+                    style={{ padding: "20px" }}
+                    alt="example"
+                    src="https://consultoriaritz.com/wp-content/uploads/2021/07/ouro.png"
+                  />
+                }
+              >
+                <Meta
+                  title="Plano de R$40"
+                  data-atropos-offset={"-4"}
+                  description="Este é o nosso plano intermediário. Ideal para restaurantes de médio porte que precisam de mais recursos."
+                />
+                <Button
+                  data-atropos-offset={"6"}
+                  type="primary"
+                  style={{ marginTop: "20px" }}
+                >
+                  Comprar
+                </Button>
+              </Card>
+            </Atropos>
+            <Atropos
+              activeOffset={1.0}
+              shadowScale={0.5}
+              shadowOffset={1.0}
+              rotateX={30}
+              rotateY={30}
+              style={{ width: 240, margin: "10px" }}
             >
-              <Meta
-                title="Integração com Sistemas de PDV"
-                description="Nossos cardápios digitais podem ser integrados com a maioria dos sistemas de ponto de venda (PDV), tornando o processo de pedidos mais suave e eficiente."
-              />
-            </Card>
+              <Card
+                hoverable
+                style={{ width: 240 }}
+                cover={
+                  <img
+                    data-atropos-offset={"5"}
+                    style={{ padding: "20px" }}
+                    alt="example"
+                    src="https://consultoriaritz.com/wp-content/uploads/2021/07/diamante.png"
+                  />
+                }
+              >
+                <Meta
+                  title="Plano de R$60"
+                  data-atropos-offset={"-4"}
+                  description="Este é o nosso plano premium. Perfeito para grandes restaurantes que precisam de todos os nossos recursos e suporte prioritário."
+                />
+                <Button
+                  data-atropos-offset={"6"}
+                  type="primary"
+                  style={{ marginTop: "20px" }}
+                >
+                  Comprar
+                </Button>
+              </Card>
+            </Atropos>
           </div>
         </div>
       </Content>
