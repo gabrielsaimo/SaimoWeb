@@ -173,12 +173,11 @@ const Home = () => {
           <Title level={2}>Nossos Planos</Title>
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
               gap: "20px",
-              overflow: "auto",
               padding: "20px",
-              width: "100%",
             }}
           >
             <Atropos

@@ -11,6 +11,7 @@ import Home from "../pages/modules/Home";
 import Error404 from "../pages/modules/Error404";
 import Polices from "../pages/modules/Polices";
 import Forgot from "../pages/modules/forgot";
+import Company from "../pages/modules/Company";
 
 export default function Rotas() {
   return (
@@ -18,6 +19,7 @@ export default function Rotas() {
       <Route exact path="/" element={<Home />} />
       <Route path="/Login/:msn?" element={<Login />} />
       <Route path="/Forgot" element={<Forgot />} />
+      <Route path="/Company" element={<Company />} />
       <Route path="/Dashboard/:Company" element={<MenuDashboard />} />
       <Route path="/Garçom/:Company" element={<Garçom />} />
       <Route path="/Catalogo/:Company" element={<App />} />
