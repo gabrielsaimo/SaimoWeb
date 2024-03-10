@@ -70,6 +70,7 @@ const Home = () => {
               right: 10,
               top: 5,
               width: 80,
+              backgroundColor: "#1890ff00",
               paddingRight: 10,
               paddingTop: 10,
               textAlign: "center",
