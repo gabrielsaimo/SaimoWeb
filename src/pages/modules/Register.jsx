@@ -108,6 +108,7 @@ export default function Register() {
             {
               required: true,
               message: "Insira uma senha!",
+              min: 8,
             },
           ]}
         >
