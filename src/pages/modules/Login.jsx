@@ -19,28 +19,11 @@ const Login = () => {
       localStorage.removeItem("token");
     }
   }, [msn]);
-  const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
 
   const [form] = Form.useForm();
 
-  const validateEmail = (email) => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    if (!validateEmail(e.target.value)) {
-      form.setFields([
-        {
-          email: "email",
-          errors: ["Por favor, insira um email válido"],
-        },
-      ]);
-    }
-  };
   const acessar = () => {
     GetUsuario();
   };
@@ -49,7 +32,7 @@ const Login = () => {
   }, []);
   const GetUsuario = async () => {
     setVisible(true);
-    const data = { email: email, password: password };
+    const data = { email: form.getFieldValue("email"), password: password };
 
     const UserCollection = await getUser(data);
 
@@ -127,10 +110,14 @@ const Login = () => {
               {
                 required: true,
                 message: "Por favor, insira seu email",
+                type: "email",
+                pattern: new RegExp(
+                  "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$"
+                ),
               },
             ]}
           >
-            <Input type="email" onChange={handleEmailChange} />
+            <Input type="email" />
           </Form.Item>
 
           <Form.Item
@@ -155,7 +142,7 @@ const Login = () => {
         <Button
           onClick={acessar}
           type="primary"
-          disabled={email === "" || password === "" ? true : false}
+          disabled={!form.getFieldValue("email") || !password}
           loading={visible}
         >
           Acessar
