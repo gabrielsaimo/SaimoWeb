@@ -207,7 +207,7 @@ const Home = () => {
                 }
               >
                 <Meta
-                  title={<h2 data-atropos-offset={"-2"}>Encanto Amapaense</h2>}
+                  title={<h3 data-atropos-offset={"-2"}>Encanto Amapaense</h3>}
                   data-atropos-offset={"-4"}
                   description="O Restaurante Encanto Amapaense viu um aumento de 30% nas vendas após a implementação do Menu Digital."
                 />
