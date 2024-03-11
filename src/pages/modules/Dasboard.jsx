@@ -679,6 +679,9 @@ export default function Dashboard({ atualizar, user, company }) {
                 <p>Sub Descrição: {item.sub}</p>
 
                 <p>Categoria: {item.category}</p>
+                <p>
+                  Destaque: {item.highlight ? <StarFilled /> : <StarOutlined />}
+                </p>
                 <div>
                   {memoizedImgSrc.map((img1, index) => (
                     <div className="img" key={index}>
