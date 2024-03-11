@@ -175,6 +175,54 @@ const Home = () => {
             pedidos e melhora a comunicação entre a equipe de serviço e a
             cozinha.
           </Paragraph>
+
+          <Title level={2}>Clientes Satisfeitos</Title>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "20px",
+              padding: "20px",
+            }}
+          >
+            <Atropos
+              activeOffset={100}
+              shadowScale={1}
+              shadowOffset={130}
+              rotateX={130}
+              rotateY={130}
+              style={{ width: 240, margin: "10px" }}
+            >
+              <Card
+                hoverable
+                style={{ width: 240 }}
+                cover={
+                  <img
+                    data-atropos-offset={"8"}
+                    style={{ padding: "20px" }}
+                    alt="example"
+                    src="https://encanto-amapaense.vercel.app/static/media/logo.252e91a12b95b5f50141.webp"
+                  />
+                }
+              >
+                <Meta
+                  title={<h2 data-atropos-offset={"-2"}>Encanto Amapaense</h2>}
+                  data-atropos-offset={"-4"}
+                  description="O Restaurante Encanto Amapaense viu um aumento de 30% nas vendas após a implementação do Menu Digital."
+                />
+                <Button
+                  data-atropos-offset={"6"}
+                  style={{ marginTop: "20px" }}
+                  type="primary"
+                  href="https://encanto-amapaense.vercel.app/"
+                >
+                  Ver Cardapio
+                </Button>
+              </Card>
+            </Atropos>
+          </div>
+
           <Title level={2}>Nossos Planos</Title>
           <div
             style={{
