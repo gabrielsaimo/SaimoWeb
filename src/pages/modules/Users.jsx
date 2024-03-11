@@ -21,6 +21,7 @@ export default function Users(atualizar) {
   const [active, setActive] = useState(false);
   const [categoria, setCategoria] = useState(null);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [Company] = useState(
     JSON.parse(localStorage.getItem("dateUser")).company
@@ -79,6 +80,7 @@ export default function Users(atualizar) {
     const body = {
       id: data.length + 1 + Math.floor(Math.random() * 100000000),
       name: name,
+      email: email,
       password: Company + "@" + name,
       categoria: categoria,
       active: true,
@@ -87,12 +89,14 @@ export default function Users(atualizar) {
     };
     putUser(body);
     setName("");
+    setEmail("");
     setCategoria(null);
     setActive(!active);
     gtUser();
   };
   const cancelar = () => {
     setName("");
+    setEmail("");
     setCategoria(null);
     setShowModal(false);
   };
@@ -107,6 +111,11 @@ export default function Users(atualizar) {
       title: "Nome",
       dataIndex: "name",
       key: "name",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
       title: "Categoria",
@@ -186,6 +195,12 @@ export default function Users(atualizar) {
       >
         <Space direction="vertical">
           <h2>Novo Usuário</h2>
+          <Input
+            type="text"
+            value={email}
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <Input
             type="text"
             value={name}
