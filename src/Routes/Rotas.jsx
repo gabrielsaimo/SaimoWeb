@@ -12,6 +12,7 @@ import Error404 from "../pages/modules/Error404";
 import Polices from "../pages/modules/Polices";
 import Forgot from "../pages/modules/Forgot";
 import Register from "../pages/modules/Register";
+import Delivery from "../pages/modules/Delivery";
 
 export default function Rotas() {
   return (
@@ -24,6 +25,7 @@ export default function Rotas() {
       <Route path="/Garçom/:Company" element={<Garçom />} />
       <Route path="/Catalogo/:Company" element={<App />} />
       <Route path="/Cardapio/:Company" element={<App />} />
+      <Route path="/Delivery/:Company" element={<Delivery />} />
       <Route path="/privacy-policy" element={<Polices />} />
       <Route path="/*" element={<Error404 />}></Route>
       <Route path="*" element={<Error404 />}></Route>
