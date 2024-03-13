@@ -37,14 +37,20 @@ const Forgot = () => {
       cod: values.Code,
     };
 
+    const pass = await PostUserPassword(data);
+    if (pass.message) {
+      message.error("Código invalido", 5);
+      return;
+    }
     message.success("Senha alterada com sucesso", 5);
-    await PostUserPassword(data);
     await postEmail({
       destinatario: data.email,
       assunto: "Senha alterada",
       corpo: EmailSenha,
     });
-    window.location.href = "/Login";
+    setTimeout(() => {
+      window.location.href = "/Login";
+    }, 3000);
   };
 
   return (
