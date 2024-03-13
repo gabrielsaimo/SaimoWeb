@@ -1,4 +1,4 @@
-const Email_cadastro = (values) => {
+const Email_cadastro = (values: any) => {
   return `<html lang="pt-br">
     <head>
       <meta charset="UTF-8" />

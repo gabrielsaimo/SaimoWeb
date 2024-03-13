@@ -154,7 +154,7 @@ const Login = () => {
           onClick={() => {
             window.location.href = "/Forgot";
           }}
-          type="link"
+          type="primary"
         >
           Esqueci a senha
         </Button>

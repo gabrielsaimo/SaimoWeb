@@ -5,12 +5,14 @@ import {
   sendUserEmail,
   validadaEmail,
 } from "../../services/user.ws";
+import { postEmail } from "../../services/email.ws";
+import Email_senha from "../Templates/Emails/Senha/email_senha";
 
 const Forgot = () => {
   const [form] = Form.useForm();
   const [step, setStep] = useState(1);
+
   const onSendEmail = async (values) => {
-    message.success("Email enviado com sucesso", 5);
     const data = {
       destinatario: values.email,
       assunto: "Recuperação de senha",
@@ -19,6 +21,8 @@ const Forgot = () => {
     if (resp.length === 0) {
       message.error("Email não cadastrado", 5);
       return;
+    } else {
+      message.success("Email enviado com sucesso", 5);
     }
     sendUserEmail(data);
     setStep(2);
@@ -26,14 +30,20 @@ const Forgot = () => {
 
   const onFinish = async (values) => {
     console.log("Received values of form: ", values);
+    const EmailSenha = Email_senha(form.getFieldValue("email"));
     const data = {
       email: form.getFieldValue("email"),
       newPassword: values.password,
       cod: values.Code,
     };
 
-    await PostUserPassword(data);
     message.success("Senha alterada com sucesso", 5);
+    await PostUserPassword(data);
+    await postEmail({
+      destinatario: data.email,
+      assunto: "Senha alterada",
+      corpo: EmailSenha,
+    });
     window.location.href = "/Login";
   };
 

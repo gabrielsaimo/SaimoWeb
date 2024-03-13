@@ -1,4 +1,4 @@
-const EmailSaimo = (id) => {
+const EmailSaimo = (id: number) => {
   return `
    <html lang="pt-br">
   <head>
