@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { service } from "../../services/firebase.ws";
 import { Button, Card, Col, Divider, message, Modal, Row, Space } from "antd";

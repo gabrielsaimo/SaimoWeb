@@ -148,7 +148,6 @@ export default function Relatorios(atualizar) {
         chartInstance.destroy();
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tpRelatorio, dataGrafico, typeGrafico]);
 
   const columnsVendas = [

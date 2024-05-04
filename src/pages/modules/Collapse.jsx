@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { Collapse, Carousel, Spin } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";

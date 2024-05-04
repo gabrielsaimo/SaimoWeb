@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Badge, Button, Card, Descriptions, Modal, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import {

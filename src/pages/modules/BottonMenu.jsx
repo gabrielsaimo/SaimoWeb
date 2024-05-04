@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { Anchor, Button, Drawer, Tooltip } from "antd";
 import { SearchOutlined } from "@ant-design/icons";

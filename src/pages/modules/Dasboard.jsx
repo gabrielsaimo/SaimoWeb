@@ -1,4 +1,3 @@
-/* eslint-disable  */
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   Button,

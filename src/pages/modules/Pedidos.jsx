@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Badge, Descriptions, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { getPedidoId, getPedidosAdm } from "../../services/Pedidos.ws";
