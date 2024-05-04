@@ -57,8 +57,13 @@ const Destaque = () => {
     };
   }, []);
   if (isLoading) {
-    return <Spin />;
+    if (destaques.length === 0 || imgSrc.length === 0) {
+      return null;
+    } else {
+      return <Spin />;
+    }
   }
+
   return (
     <div
       style={{ textAlign: "center", justifyContent: "center", display: "flex" }}
@@ -100,10 +105,10 @@ const Destaque = () => {
                       height: "350px",
                     }}
                   >
-                    {imgSrc.map(
-                      (img1, index) =>
-                        img1 !== undefined &&
-                        RenderImageDestaque(img1, index, item.id)
+                    {imgSrc.map((img1, index) =>
+                      img1 !== undefined
+                        ? RenderImageDestaque(img1, index, item.id)
+                        : null
                     )}
                   </div>
                   <div
