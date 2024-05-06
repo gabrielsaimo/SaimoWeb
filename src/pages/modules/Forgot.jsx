@@ -54,28 +54,8 @@ const Forgot = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundImage: "linear-gradient(to right,#00ff00 , #0a4bff)",
-      }}
-    >
-      <div
-        style={{
-          width: "400px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          border: "1px solid #ccc",
-          padding: "20px",
-          borderRadius: "5px",
-          display: "grid",
-          gridGap: "10px",
-        }}
-      >
+    <div className="content-background">
+      <div className="container">
         {step === 1 && (
           <div className="col-md-6">
             <h2>Esqueci minha senha</h2>

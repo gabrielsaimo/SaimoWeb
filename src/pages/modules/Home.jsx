@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { MenuOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.webp";
+import "../../css/Home.css";
 import Atropos from "atropos/react";
 import "atropos/css";
 const { Header, Footer, Content } = Layout;
@@ -42,11 +43,7 @@ const Home = () => {
   };
 
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
+    <Layout className="body">
       <Header
         style={{ position: "fixed", zIndex: 1, width: "100%", height: 80 }}
       >
@@ -84,8 +81,9 @@ const Home = () => {
           />
         </Menu>
         <Drawer
-          title="Menu Digital"
+          title={<p className="title">Menu Digital</p>}
           placement="right"
+          className="body"
           closable={false}
           onClose={onClose}
           open={visible}
@@ -128,17 +126,12 @@ const Home = () => {
           Ver Política de Privacidade
         </Button>
       </Modal>
-      <Content style={{ padding: "0 50px", marginTop: 164 }}>
+      <Content style={{ padding: "0 10px", marginTop: 164 }} className="">
         <div style={{ padding: 24, minHeight: 380 }}>
-          <Title>Bem-vindo ao Menu Digital</Title>
-          <Paragraph
-            style={{
-              fontSize: 18,
-              lineHeight: "1.6",
-              color: "#666",
-              width: "60%",
-            }}
-          >
+          <Title level={1} className="title">
+            Bem-vindo ao Menu Digital
+          </Title>
+          <Paragraph className="paragraph">
             A Menu Digital é uma empresa líder em criação de cardápios digitais.
             Com uma equipe de especialistas altamente qualificados e uma paixão
             por inovação, oferecemos soluções modernas e inovadoras para ajudar
@@ -146,15 +139,10 @@ const Home = () => {
             restaurante. Nosso objetivo é tornar a experiência de jantar mais
             conveniente, agradável e eficiente para todos.
           </Paragraph>
-          <Title level={2}>Sistema de Delivery</Title>
-          <Paragraph
-            style={{
-              fontSize: 18,
-              lineHeight: "1.6",
-              color: "#666",
-              width: "60%",
-            }}
-          >
+          <Title level={2} className="title">
+            Sistema de Delivery
+          </Title>
+          <Paragraph className="paragraph">
             Nosso sistema de delivery permite que seus clientes façam pedidos
             diretamente do conforto de suas casas. Com uma interface fácil de
             usar, opções de pagamento flexíveis e uma ampla seleção de pratos
@@ -162,15 +150,10 @@ const Home = () => {
             possível. Além disso, nosso sistema de entrega garante que os
             pedidos cheguem quentes e frescos, diretamente à porta do cliente.
           </Paragraph>
-          <Title level={2}>Sistema de Comandas</Title>
-          <Paragraph
-            style={{
-              fontSize: 18,
-              lineHeight: "1.6",
-              color: "#666",
-              width: "60%",
-            }}
-          >
+          <Title level={2} className="title">
+            Sistema de Comandas
+          </Title>
+          <Paragraph className="paragraph">
             Nosso sistema de comandas digitaliza o processo de pedidos no
             restaurante. Com a capacidade de enviar pedidos diretamente para a
             cozinha e acompanhar o status do pedido em tempo real, você pode
@@ -180,14 +163,16 @@ const Home = () => {
             cozinha.
           </Paragraph>
 
-          <Title level={2}>Clientes Satisfeitos</Title>
+          <Title level={2} className="title">
+            Clientes Satisfeitos
+          </Title>
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
               gap: "20px",
-              padding: "20px",
+              padding: "15px",
             }}
           >
             <Atropos
@@ -196,11 +181,11 @@ const Home = () => {
               shadowOffset={130}
               rotateX={130}
               rotateY={130}
-              style={{ width: 240, margin: "10px" }}
+              style={{ width: 340, margin: "10px" }}
             >
               <Card
                 hoverable
-                style={{ width: 240 }}
+                className="card-primary"
                 cover={
                   <img
                     data-atropos-offset={"8"}
@@ -211,9 +196,18 @@ const Home = () => {
                 }
               >
                 <Meta
-                  title={<h3 data-atropos-offset={"-2"}>Encanto Amapaense</h3>}
+                  title={
+                    <h3 className="title" data-atropos-offset={"-2"}>
+                      Encanto Amapaense
+                    </h3>
+                  }
                   data-atropos-offset={"-4"}
-                  description="O Restaurante Encanto Amapaense viu um aumento de 30% nas vendas após a implementação do Menu Digital."
+                  description={
+                    <p className="title">
+                      O Restaurante Encanto Amapaense viu um aumento de 30% nas
+                      vendas após a implementação do Menu Digital.
+                    </p>
+                  }
                 />
                 <Button
                   data-atropos-offset={"6"}
@@ -227,7 +221,9 @@ const Home = () => {
             </Atropos>
           </div>
 
-          <Title level={2}>Nossos Planos</Title>
+          <Title level={2} className="title">
+            Nossos Planos
+          </Title>
           <div
             style={{
               display: "flex",
@@ -247,7 +243,7 @@ const Home = () => {
             >
               <Card
                 hoverable
-                style={{ width: 240 }}
+                className="card"
                 cover={
                   <img
                     data-atropos-offset={"8"}
@@ -260,12 +256,22 @@ const Home = () => {
                 <Meta
                   title={
                     <div style={{ textAlign: "center" }}>
-                      <h2 data-atropos-offset={"-2"}>Plano de R$30</h2>
-                      <h4 data-atropos-offset={"6"}>Anual (R$360)</h4>
+                      <h2 data-atropos-offset={"-2"} className="title">
+                        Plano de R$30
+                      </h2>
+                      <h4 data-atropos-offset={"6"} className="title">
+                        Anual (R$360)
+                      </h4>
                     </div>
                   }
                   data-atropos-offset={"-4"}
-                  description="Este é o nosso plano básico. Perfeito para pequenos restaurantes que estão apenas começando a digitalizar seus cardápios."
+                  description={
+                    <p className="title">
+                      Este é o nosso plano básico. Perfeito para pequenos
+                      restaurantes que estão apenas começando a digitalizar seus
+                      cardápios.
+                    </p>
+                  }
                 />
                 <Button
                   data-atropos-offset="6"
@@ -287,7 +293,7 @@ const Home = () => {
             >
               <Card
                 hoverable
-                style={{ width: 240 }}
+                className="card"
                 cover={
                   <img
                     data-atropos-offset={"8"}
@@ -300,12 +306,22 @@ const Home = () => {
                 <Meta
                   title={
                     <div style={{ textAlign: "center" }}>
-                      <h2 data-atropos-offset={"-2"}>Plano de R$45</h2>
-                      <h4 data-atropos-offset={"6"}>Anual (R$540)</h4>
+                      <h2 data-atropos-offset={"-2"} className="title">
+                        Plano de R$45
+                      </h2>
+                      <h4 data-atropos-offset={"6"} className="title">
+                        Anual (R$540)
+                      </h4>
                     </div>
                   }
                   data-atropos-offset={"-4"}
-                  description="Este é o nosso plano intermediário. Ideal para restaurantes de médio porte que precisam de mais recursos."
+                  description={
+                    <p className="title">
+                      Este é o nosso plano intermediário. Ideal para
+                      restaurantes de médio porte que precisam de mais recursos
+                      e suporte personalizado.
+                    </p>
+                  }
                 />
                 <Button
                   data-atropos-offset={"6"}
@@ -327,7 +343,7 @@ const Home = () => {
             >
               <Card
                 hoverable
-                style={{ width: 240 }}
+                className="card"
                 cover={
                   <img
                     data-atropos-offset={"8"}
@@ -340,12 +356,22 @@ const Home = () => {
                 <Meta
                   title={
                     <div style={{ textAlign: "center" }}>
-                      <h2 data-atropos-offset={"-2"}>Plano de R$60</h2>
-                      <h4 data-atropos-offset={"6"}>Anual (R$720)</h4>
+                      <h2 data-atropos-offset={"-2"} className="title">
+                        Plano de R$60
+                      </h2>
+                      <h4 data-atropos-offset={"6"} className="title">
+                        Anual (R$720)
+                      </h4>
                     </div>
                   }
                   data-atropos-offset={"-4"}
-                  description="Este é o nosso plano premium. Perfeito para grandes restaurantes que precisam de todos os nossos recursos e suporte prioritário."
+                  description={
+                    <p className="title">
+                      Este é o nosso plano premium. Perfeito para grandes
+                      restaurantes que precisam de todos os nossos recursos e
+                      suporte prioritário.
+                    </p>
+                  }
                 />
                 <Button
                   data-atropos-offset={"6"}
@@ -360,8 +386,11 @@ const Home = () => {
           </div>
         </div>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        © {new Date().getFullYear()} Menu Digital. Todos os direitos reservados.
+      <Footer className="body" style={{ textAlign: "center" }}>
+        <p className="title">
+          © {new Date().getFullYear()} Menu Digital. Todos os direitos
+          reservados.
+        </p>
       </Footer>
     </Layout>
   );

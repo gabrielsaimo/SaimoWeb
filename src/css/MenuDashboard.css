@@ -1,0 +1,37 @@
+.user-info {
+  text-align: center;
+}
+
+.user-name {
+  color: #fff;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.menu {
+  height: 100%;
+  border-right: 0;
+}
+
+.header {
+  padding: 0;
+  display: flex;
+}
+
+.menu-button {
+  font-size: 16px;
+  border: none;
+  width: 64px;
+  height: 64px;
+}
+
+.title {
+  color: #000;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.content {
+  margin: 0px;
+  padding: 10px;
+}

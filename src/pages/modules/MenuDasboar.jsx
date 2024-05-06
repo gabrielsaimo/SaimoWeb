@@ -16,6 +16,7 @@ import Pedidos from "./Pedidos";
 import Users from "./Users";
 import LayoutSite from "./LayoutSite";
 import { useParams } from "react-router-dom";
+import "../../css/MenuDashboard.css";
 const { Header, Sider, Content } = Layout;
 
 const MenuDashboard = () => {
@@ -83,8 +84,8 @@ const MenuDashboard = () => {
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ color: "#FFF", margin: 10, fontWeight: "bold" }}>
+        <div className="user-info">
+          <div className="user-name">
             {userNome} - {UserCategoria}
           </div>
         </div>
@@ -93,7 +94,7 @@ const MenuDashboard = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["0"]}
-          style={{ height: "100%", borderRight: 0 }}
+          className="menu"
           items={[
             {
               key: "1",
@@ -162,31 +163,18 @@ const MenuDashboard = () => {
       </Sider>
       <Layout>
         <Header
+          className="header"
           style={{
-            padding: 0,
             background: colorBgContainer,
-            display: "flex",
           }}
         >
           <Button
             icon={collapsed ? <MenuOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "16px",
-              border: "none",
-              width: 64,
-              height: 64,
-            }}
+            className="menu-button"
           />
 
-          <Typography.Title
-            level={3}
-            style={{
-              color: "#000",
-              margin: 10,
-              fontWeight: "bold",
-            }}
-          >
+          <Typography.Title level={3} className="title">
             {tela === 1
               ? "Catalogo"
               : tela === 2
@@ -201,9 +189,8 @@ const MenuDashboard = () => {
           </Typography.Title>
         </Header>
         <Content
+          className="content"
           style={{
-            margin: "0px",
-            padding: 10,
             background: colorBgContainer,
           }}
         >

@@ -21,7 +21,7 @@ const EmailSaimo = (id: number) => {
         max-width: 600px;
         margin: 0 auto;
         padding: 20px;
-        background-color: #fff;
+        background-color: var(--primary-color);
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }

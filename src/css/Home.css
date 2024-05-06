@@ -1,0 +1,29 @@
+.body {
+  background-color: var(--primary-color) !important;
+}
+.paragraph {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--grey-color);
+  width: 60%;
+}
+@media (max-width: 767px) {
+  .paragraph {
+    width: 100%;
+  }
+}
+.title {
+  color: var(--secondary-color) !important;
+}
+
+.card {
+  background: var(--primary-color) !important;
+  width: 240px;
+  min-height: 600px;
+}
+
+.card-primary {
+  background: var(--primary-color) !important;
+  width: 340px;
+  min-height: 450px;
+}

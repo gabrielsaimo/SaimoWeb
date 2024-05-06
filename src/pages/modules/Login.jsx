@@ -2,7 +2,7 @@ import { Button, Divider, Form, Input, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../services/user.ws";
 import { useParams } from "react-router-dom";
-
+import "../../css/Login.css";
 const Login = () => {
   const [visible, setVisible] = useState(false);
   const { msn } = useParams();
@@ -80,31 +80,11 @@ const Login = () => {
     return cachedData ? JSON.parse(cachedData) : null;
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundImage: "linear-gradient(to right,#00ff00 , #0a4bff)",
-      }}
-    >
-      <div
-        style={{
-          width: "400px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          border: "1px solid #ccc",
-          padding: "20px",
-          borderRadius: "5px",
-          display: "grid",
-          gridGap: "10px",
-        }}
-      >
+    <div className="content-background">
+      <div className="container">
         <Form form={form} layout="vertical">
           <Form.Item
-            label="Email"
+            label={<p className="form-item-email">Email</p>}
             name="email"
             rules={[
               {
@@ -121,7 +101,7 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item
-            label="Senha"
+            label={<p className="form-item-password">Senha</p>}
             name="password"
             rules={[
               {
