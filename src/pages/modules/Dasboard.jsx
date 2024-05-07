@@ -566,7 +566,17 @@ export default function Dashboard({ atualizar, user, company }) {
         <Button type="primary" onClick={() => setOpen(true)}>
           Tour
         </Button>
+
+        <Button
+          type="primary"
+          style={{ marginLeft: 10 }}
+          title="Cardápio"
+          onClick={() => (window.location.href = "/Cardapio/" + company)}
+        >
+          Ver Cardápio
+        </Button>
         <Divider />
+
         <Col span={24}>
           <Card bordered={false}>
             <>
