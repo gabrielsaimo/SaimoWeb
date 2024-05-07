@@ -1,12 +1,14 @@
 import {
   Button,
   Card,
+  Form,
   Input,
   Modal,
   Popconfirm,
   Select,
   Space,
   Table,
+  Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import {
@@ -14,8 +16,9 @@ import {
   postUserAdm,
   putUser,
   deleteUser,
+  GetAdmProfile,
 } from "../../services/user.ws";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, CloseOutlined } from "@ant-design/icons";
 export default function Users(atualizar) {
   const [data, setData] = useState([]);
   const [active, setActive] = useState(false);
@@ -23,15 +26,20 @@ export default function Users(atualizar) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [modalEdit, setModalEdit] = useState(false);
   const [Company] = useState(
     JSON.parse(localStorage.getItem("dateUser")).company
   );
+  const [id] = useState(JSON.parse(localStorage.getItem("dateUser")).id);
+  const [CompanyList, setCompanyList] = useState();
   const [idcompany] = useState(
     JSON.parse(localStorage.getItem("dateUser")).idcompany
   );
+  const [dataEdit, setDataEdit] = useState();
 
   useEffect(() => {
     gtUser();
+    getProfilesList();
   }, [active, atualizar]);
 
   const gtUser = () => {
@@ -50,6 +58,11 @@ export default function Users(atualizar) {
     gtUser();
   };
 
+  const getProfilesList = async () => {
+    const companyProfile = await GetAdmProfile(id);
+    setCompanyList(companyProfile);
+  };
+
   const onChange = (value, data) => {
     const body = {
       id: data.id,
@@ -63,18 +76,29 @@ export default function Users(atualizar) {
     gtUser();
   };
   const onChangeCategory = (value, data) => {
-    const body = {
-      id: data.id,
-      active: data.active,
-      categoria: value,
-      idcompany: idcompany,
-      company: Company,
-    };
-    postUserAdm(body);
+    data.user_profile_json.forEach((company) => {
+      if (Company === company.company) {
+        const body = {
+          id: company.id,
+          categoria: value,
+        };
+
+        postUserAdm(body);
+      }
+    });
     setActive(!active);
     gtUser();
   };
 
+  const ModalShow = (_) => {
+    setModalEdit(true);
+    setDataEdit(_);
+  };
+
+  const onChangeCompany = (value) => {
+    setSelectedCompanies([...selectedCompanies, value]);
+  };
+  const [form] = Form.useForm();
   const Novo = () => {
     setShowModal(false);
     const body = {
@@ -100,6 +124,7 @@ export default function Users(atualizar) {
     setCategoria(null);
     setShowModal(false);
   };
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
 
   const columns = [
     {
@@ -158,6 +183,15 @@ export default function Users(atualizar) {
       key: "id",
       render: (_, data) => (
         <>
+          <Button
+            style={{ backgroundColor: "green" }}
+            onClick={() => {
+              ModalShow(_);
+            }}
+          >
+            Editar
+          </Button>
+
           <Popconfirm
             title="Tem certeza que deseja excluir esse Usuario?"
             onConfirm={() => confirmDelete(data)}
@@ -220,6 +254,112 @@ export default function Users(atualizar) {
             <Select.Option value={"Cozinha"}>Cozinherio</Select.Option>
           </Select>
         </Space>
+      </Modal>
+      <Modal
+        title="Basic Modal"
+        open={modalEdit}
+        onCancel={() => setModalEdit(false)}
+      >
+        <Button type="primary" onClick={() => setShowModal(true)}>
+          Adicionar empresa
+        </Button>
+
+        <Form
+          labelCol={{
+            span: 6,
+          }}
+          wrapperCol={{
+            span: 18,
+          }}
+          form={form}
+          name="dynamic_form_complex"
+          style={{
+            maxWidth: 600,
+          }}
+          autoComplete="off"
+          initialValues={{
+            items: [{}],
+          }}
+        >
+          <Form.List name="items">
+            {(fields, { add, remove }) => (
+              <div
+                style={{
+                  display: "flex",
+                  rowGap: 16,
+                  flexDirection: "column",
+                }}
+              >
+                {fields.map((field) => (
+                  <Card
+                    size="small"
+                    title={`Empresa ${field.name + 1}`}
+                    key={field.key}
+                    extra={
+                      <CloseOutlined
+                        onClick={() => {
+                          remove(field.name);
+                        }}
+                      />
+                    }
+                  >
+                    <Form.Item label="Empresa" name={[field.name, "Company"]}>
+                      <Select
+                        onChange={(value) => onChangeCompany(value)}
+                        style={{ width: "100%" }}
+                      >
+                        {CompanyList?.filter(
+                          (company) =>
+                            !selectedCompanies.includes(company.company)
+                        ).map((company) => (
+                          <Select.Option
+                            key={company.company}
+                            value={company.company}
+                          >
+                            {company.company}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <Form.Item
+                      label="Categoria"
+                      name={[field.name, "Category"]}
+                    >
+                      <Select
+                        style={{ width: 120 }}
+                        showSearch
+                        value={categoria}
+                        placeholder="Categoria"
+                        onChange={(value) => setCategoria(value)}
+                      >
+                        <Select.Option value={"ADM"}>ADM</Select.Option>
+                        <Select.Option value={"Gerência"}>
+                          Gerente
+                        </Select.Option>
+                        <Select.Option value={"Garçom"}>Garçom</Select.Option>
+                        <Select.Option value={"Cozinha"}>
+                          Cozinherio
+                        </Select.Option>
+                      </Select>
+                    </Form.Item>
+                  </Card>
+                ))}
+
+                <Button type="dashed" onClick={() => add()} block>
+                  + Add Item
+                </Button>
+              </div>
+            )}
+          </Form.List>
+
+          <Form.Item noStyle shouldUpdate>
+            {() => (
+              <Typography>
+                <pre>{JSON.stringify(form.getFieldsValue(), null, 2)}</pre>
+              </Typography>
+            )}
+          </Form.Item>
+        </Form>
       </Modal>
     </Card>
   );

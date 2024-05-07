@@ -9,7 +9,16 @@ import {
   TagOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Menu, Button, theme, Typography, Layout } from "antd";
+import {
+  Menu,
+  Button,
+  theme,
+  Typography,
+  Layout,
+  Spin,
+  Modal,
+  Drawer,
+} from "antd";
 import Relatorios from "./Realatorios";
 import Dashboard from "./Dasboard";
 import Pedidos from "./Pedidos";
@@ -17,10 +26,11 @@ import Users from "./Users";
 import LayoutSite from "./LayoutSite";
 import { useParams } from "react-router-dom";
 import "../../css/MenuDashboard.css";
-const { Header, Sider, Content } = Layout;
+import { getImgLogo } from "../../services/config";
+import Company from "./Company";
 
 const MenuDashboard = () => {
-  const { Company } = useParams();
+  const { CompanyParams } = useParams();
   const [collapsed, setCollapsed] = useState(false);
   const [tela, setTela] = useState(1);
   const {
@@ -30,8 +40,12 @@ const MenuDashboard = () => {
   const [userNome, setUserNome] = useState("");
   const [UserCategoria, setUserCategoria] = useState("");
   const [isMobile, setIsMobile] = useState(false);
+  const { Header, Sider, Content } = Layout;
+  const [imgSrc, setImgSrc] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    getImgLogos();
     function handleResize() {
       setIsMobile(window.innerWidth < 768); // Defina aqui o ponto de quebra para dispositivos móveis
       setCollapsed(window.innerWidth < 768);
@@ -40,23 +54,34 @@ const MenuDashboard = () => {
     handleResize(); // Verifica o tamanho da tela inicialmente
     window.addEventListener("resize", handleResize); // Adiciona um listener para redimensionamento
 
+    getCachedDateUser();
     return () => {
       window.removeEventListener("resize", handleResize); // Remove o listener ao desmontar o componente
     };
   }, []);
-  useEffect(() => {
-    getCachedDateUser();
-  }, []);
+
+  const getImgLogos = async () => {
+    const idcompany = JSON.parse(
+      localStorage.getItem("dateUser")
+    ).user_profile_json;
+    idcompany.forEach(async (company) => {
+      const img = await getImgLogo(company.idcompany);
+
+      if (img && CompanyParams === company.company) {
+        setImgSrc(img[0]);
+      }
+    });
+  };
 
   const cachedContent = useMemo(
     () => ({
-      1: <Dashboard atualizar={null} user={dateUser} company={Company} />,
+      1: <Dashboard atualizar={null} user={dateUser} company={CompanyParams} />,
       2: <Relatorios />,
       3: <Pedidos atualizar={true} user={dateUser} />,
       4: <Users atualizar={true} user={dateUser} />,
       5: <LayoutSite atualizar={true} user={dateUser} />,
     }),
-    [dateUser, Company]
+    [dateUser, CompanyParams]
   );
 
   const getCachedDateUser = () => {
@@ -88,12 +113,34 @@ const MenuDashboard = () => {
           <div className="user-name">
             {userNome} - {UserCategoria}
           </div>
+          <div style={{ cursor: "pointer" }} onClick={() => setShowModal(true)}>
+            {imgSrc ? (
+              <div className="company-card-container">
+                <img
+                  src={atob(imgSrc?.imagem)}
+                  alt="img"
+                  style={{
+                    width: 50,
+                    marginRight: 5,
+                    borderRadius: 10,
+                    marginLeft: 16,
+                    border: "solid 1px #000000",
+                  }}
+                />
+                <b style={{ color: "#FFF" }}>
+                  {collapsed ? null : CompanyParams}
+                </b>
+              </div>
+            ) : (
+              <Spin />
+            )}
+          </div>
         </div>
         <Menu
-          props={Company}
+          props={CompanyParams}
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["0"]}
+          defaultSelectedKeys={["1"]}
           className="menu"
           items={[
             {
@@ -108,7 +155,7 @@ const MenuDashboard = () => {
                   : true,
               onClick: () => {
                 setTela(1);
-                setCollapsed(true);
+                setCollapsed(false);
               },
             },
             {
@@ -197,6 +244,21 @@ const MenuDashboard = () => {
           {cachedContent[tela]}
         </Content>
       </Layout>
+      <Modal
+        open={showModal}
+        footer={false}
+        onCancel={() => setShowModal(false)}
+        width={380}
+      ></Modal>
+      <Drawer
+        placement={"top"}
+        closable={false}
+        size="large"
+        onClose={() => setShowModal(false)}
+        open={showModal}
+      >
+        <Company />
+      </Drawer>
     </Layout>
   );
 };

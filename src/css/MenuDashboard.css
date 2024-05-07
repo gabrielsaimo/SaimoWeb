@@ -35,3 +35,22 @@
   margin: 0px;
   padding: 10px;
 }
+
+.company-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.company-card-container:hover {
+  background-color: #007bff;
+  width: 90%;
+  margin-left: 5%;
+  color: #fff;
+  border-radius: 10px;
+  transform: scale(1.01);
+}
+
+.title {
+  color: var(--secondary-color) !important;
+}

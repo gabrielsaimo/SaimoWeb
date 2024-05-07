@@ -13,6 +13,7 @@ import Polices from "../pages/modules/Polices";
 import Forgot from "../pages/modules/Forgot";
 import Register from "../pages/modules/Register";
 import Delivery from "../pages/modules/Delivery";
+import Company from "../pages/modules/Company";
 
 export default function Rotas() {
   return (
@@ -21,7 +22,8 @@ export default function Rotas() {
       <Route path="/Login/:msn?" element={<Login />} />
       <Route path="/Register/:plan?" element={<Register />} />
       <Route path="/Forgot" element={<Forgot />} />
-      <Route path="/Dashboard/:Company" element={<MenuDashboard />} />
+      <Route path="/Company" element={<Company />} />
+      <Route path="/Dashboard/:CompanyParams" element={<MenuDashboard />} />
       <Route path="/Garçom/:Company" element={<Garçom />} />
       <Route path="/Catalogo/:Company" element={<App />} />
       <Route path="/Cardapio/:Company" element={<App />} />

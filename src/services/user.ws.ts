@@ -18,9 +18,9 @@ export const getUser = async (data: User): Promise<User> => {
   }
 };
 
-export const getUsers = async (Company: string): Promise<User[]> => {
+export const getUsers = async (Email: string): Promise<User[]> => {
   try {
-    const response = await api.get<User[]>("/user/adm/" + Company);
+    const response = await api.get<User[]>("/user/adm/" + Email);
     return response.data;
   } catch (error) {
     console.error("Erro ao obter usuários:", error);
@@ -73,5 +73,15 @@ export const PostUserPassword = async (data: any): Promise<any> => {
 
 export const PutRegister = async (data: any): Promise<any> => {
   const response = await api.put<any>("/user/register", data);
+  return response.data;
+};
+
+export const GetAdmProfile = async (id: number): Promise<any> => {
+  const response = await api.get<any>("/user/admProfile/" + id);
+  return response.data;
+};
+
+export const DeleteAdmProfile = async (id: number): Promise<any> => {
+  const response = await api.delete<any>("/user/deleteAdmProfile/" + id);
   return response.data;
 };

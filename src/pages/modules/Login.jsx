@@ -49,7 +49,7 @@ const Login = () => {
         UserCollection.user[0].categoria === "ADM" ||
         UserCollection.user[0].categoria === "Gerência"
       ) {
-        window.location.href = "/dashboard/" + UserCollection.user[0].company;
+        window.location.href = "/Company";
       } else if (UserCollection.user[0].categoria === "Garçom") {
         window.location.href = "/Garçom/" + UserCollection.user[0].company;
       } else if (UserCollection.user[0].categoria === "Cozinha") {

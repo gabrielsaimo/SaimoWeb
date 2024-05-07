@@ -49,3 +49,21 @@ code {
   display: grid;
   grid-gap: 10px;
 }
+
+.ant-modal-content {
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
+}
+.ant-modal-title {
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
+}
+
+.background-page {
+  background-color: var(--primary-color);
+}
+
+.ant-drawer-body {
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
+}
