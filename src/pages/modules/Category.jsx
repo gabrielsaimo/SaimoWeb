@@ -38,9 +38,7 @@ export default function Category() {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [modalNewAction, setModalNewAction] = useState(false);
-  const [Company] = useState(
-    JSON.parse(localStorage.getItem("dateUser")).company
-  );
+  const [Company] = useState(window.location.href.split("/").pop());
   const [loading, setLoading] = useState(false);
 
   const handleOk = () => {
