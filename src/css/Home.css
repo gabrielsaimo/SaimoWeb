@@ -27,3 +27,7 @@
   width: 340px;
   min-height: 450px;
 }
+
+.ant-modal-content {
+  background: var(--primary-color) !important;
+}
