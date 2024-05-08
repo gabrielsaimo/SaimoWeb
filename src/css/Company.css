@@ -29,7 +29,7 @@ html {
   margin-right: 5px;
   border-radius: 10px;
   margin-left: 16px;
-  border: solid 1px #000000;
+  filter: drop-shadow(3px 3px 5px var(--secondary-color));
 }
 
 .company-image-container {
