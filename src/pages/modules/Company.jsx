@@ -2,20 +2,19 @@ import { useEffect, useState } from "react";
 import { getImgLogo } from "../../services/config";
 import "../../css/Company.css";
 import { Button, Input, Modal, Spin } from "antd";
-import { PutEmpresa } from "../../services/user.ws";
+import { PutEmpresa, admProfile } from "../../services/user.ws";
 
 export default function Company() {
   const companys = JSON.parse(localStorage.getItem("dateUser"));
   const [images, setImages] = useState({});
-  const [acont, setAcont] = useState(0);
+  const [acont, setAcont] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [pageModal, setPageModal] = useState(1);
   const [CompanyName, setCompanyName] = useState("");
 
   useEffect(() => {
     companys.user_profile_json.forEach(async (company) => {
       if (!company.idcompany) {
-        console.error("Company not found");
+        setAcont(0);
       } else {
         const img = await getImgLogo(company.idcompany);
         setAcont(acont + 1);
@@ -33,8 +32,44 @@ export default function Company() {
     };
     const response = await PutEmpresa(data);
     if (response) {
+      let body = {
+        idcompany: response[0].id,
+        id_user: companys.id,
+        company: CompanyName,
+        category: "ADM",
+      };
+      const resp = await admProfile(body);
       setShowModal(false);
+      let body2 = [];
+      resp.map((company) => {
+        body2.push({
+          company: company.company,
+          id_user: company.id_user,
+          id: company.id,
+          idcompany: company.idcompany,
+          category: company.category,
+          Permission: company.Permission,
+        });
+      });
+
+      const newDataUSer = {
+        id: companys.id,
+        name: companys.name,
+        categoria: companys.categoria,
+        active: companys.active,
+        idcompany: companys.idcompany,
+        user_profile_json: body2,
+        company: companys.company,
+        styles: companys.styles,
+      };
+      localStorage.setItem("dateUser", JSON.stringify(newDataUSer));
+      window.location.reload();
     }
+  };
+
+  const CompanySelectd = (company) => {
+    localStorage.setItem("companySelectd", JSON.stringify(company));
+    window.location.href = "/dashboard/" + company.company;
   };
 
   return (
@@ -59,9 +94,7 @@ export default function Company() {
             {companys?.user_profile_json.map((company) => (
               <div
                 key={company.id}
-                onClick={() =>
-                  (window.location.href = "/dashboard/" + company.company)
-                }
+                onClick={() => CompanySelectd(company)}
                 className="company-card background-page"
               >
                 {images[company.idcompany] ? (
@@ -90,12 +123,13 @@ export default function Company() {
                 bordered={false}
                 style={{ width: 300 }}
               >
-                <p>Adicione uma nova ou mais empresas</p>
+                <p>Adicione uma ou mais empresas</p>
                 <p>para acessar o painel de controle</p>
                 <p>de cada uma delas</p>
                 <Button
                   className="button-add-company"
                   type="primary"
+                  size="large"
                   onClick={() => setShowModal(true)}
                 >
                   Adicionar Empresa

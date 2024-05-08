@@ -69,6 +69,7 @@ html,
 .menu-button,
 .ant-select-selector,
 .ant-select-dropdown,
+.ant-table-cell,
 th {
   background-color: var(--primary-color) !important;
   color: var(--secondary-color) !important;
@@ -86,6 +87,8 @@ td.ant-table-cell.ant-table-cell-row-hover {
 
 label.ant-form-item-required,
 .ant-select-item-option-content,
+.ant-empty-description,
+.span.ant-upload,
 h1 {
   color: var(--secondary-color) !important;
 }

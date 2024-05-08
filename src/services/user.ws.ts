@@ -92,6 +92,6 @@ export const PutEmpresa = async (data: any): Promise<any> => {
 };
 
 export const admProfile = async (data: any): Promise<any> => {
-  const response = await api.post<any>("/user/admProfile", data);
+  const response = await api.put<any>("/user/admProfile", data);
   return response.data;
 };

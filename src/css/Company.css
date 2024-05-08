@@ -47,6 +47,16 @@ html {
   justify-content: center;
 }
 
+.add-company {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  border: 1px solid var(--secondary-color);
+  padding: 10px;
+}
+
 @media (max-width: 767px) {
   .control-painel {
     flex-direction: row;

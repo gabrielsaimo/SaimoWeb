@@ -33,6 +33,7 @@ const SlideRenderer = () => {
   const [coint, setCoint] = useState(0);
   const random = Math.floor(Math.random() * 100000000);
   const dateUser = JSON.parse(localStorage.getItem("dateUser"));
+  const company = JSON.parse(localStorage.getItem("companySelectd"));
   const { token } = theme.useToken();
   const presets = genPresets({
     primary: generate(token.colorPrimary),
@@ -109,7 +110,7 @@ const SlideRenderer = () => {
   }, []);
 
   const getImgLogos = async () => {
-    const img = await getImgLogo(dateUser.idcompany);
+    const img = await getImgLogo(company.idcompany);
     if (img[0]) {
       setImgSrc(img[0]);
       setIdImg(img[0]?.id);
@@ -130,10 +131,10 @@ const SlideRenderer = () => {
   const insertImg = async (code) => {
     let body = {
       imagem: code,
-      idreq: dateUser.idcompany,
+      idreq: company.idcompany,
       tipo: "Logo",
       id: random,
-      company: dateUser.company,
+      company: company.company,
     };
     if (code) await InsertImg(body);
   };
@@ -347,7 +348,9 @@ const SlideRenderer = () => {
                 onPreview={onPreview}
                 accept="image/*"
               >
-                {fileList.length < 1 && "+add Imagem"}
+                {fileList.length < 1 && (
+                  <p className="ant-empty-description">+add Imagem</p>
+                )}
               </Upload>
             </ImgCrop>
           )}
