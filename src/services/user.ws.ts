@@ -85,3 +85,13 @@ export const DeleteAdmProfile = async (id: number): Promise<any> => {
   const response = await api.delete<any>("/user/deleteAdmProfile/" + id);
   return response.data;
 };
+
+export const PutEmpresa = async (data: any): Promise<any> => {
+  const response = await api.put<any>("/user/empresa", data);
+  return response.data;
+};
+
+export const admProfile = async (data: any): Promise<any> => {
+  const response = await api.post<any>("/user/admProfile", data);
+  return response.data;
+};

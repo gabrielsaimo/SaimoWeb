@@ -56,6 +56,7 @@ const Login = () => {
         window.location.href = "/Cozinha/" + UserCollection.user[0].company;
       } else {
         message.error("Usuário não tem permissão", 5);
+        setVisible(false);
       }
     } else {
       message.error("Usuário ou senha inválidos", 5);
