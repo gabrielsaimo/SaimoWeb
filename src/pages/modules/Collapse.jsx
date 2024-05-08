@@ -135,7 +135,17 @@ const CollapseMenu = () => {
                 style={{
                   color: styles.colorText,
                   fontWeight: "bold",
-                  backgroundImage: `url(${temaBrown})`,
+                  backgroundImage: `url(${
+                    styles.tema == "Black"
+                      ? temaBlack
+                      : styles.tema === "White"
+                      ? temaWhite
+                      : styles.tema === "Blue"
+                      ? temaBlue
+                      : styles.tema === "Brown"
+                      ? temaBrown
+                      : temaBlack
+                  })`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: 150,
                   backgroundPositionX: "50%",

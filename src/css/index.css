@@ -67,6 +67,8 @@ html,
 .ant-table-footer,
 .ant-layout-header,
 .menu-button,
+.ant-select-selector,
+.ant-select-dropdown,
 th {
   background-color: var(--primary-color) !important;
   color: var(--secondary-color) !important;
@@ -83,6 +85,16 @@ td.ant-table-cell.ant-table-cell-row-hover {
 }
 
 label.ant-form-item-required,
+.ant-select-item-option-content,
 h1 {
+  color: var(--secondary-color) !important;
+}
+
+.ant-select-item-option-active {
+  background-color: var(--grey-color) !important;
+  color: var(--secondary-color) !important;
+}
+
+.ant-select-item-option-content :hover {
   color: var(--secondary-color) !important;
 }
