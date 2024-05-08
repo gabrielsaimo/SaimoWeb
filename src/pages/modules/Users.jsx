@@ -215,7 +215,7 @@ export default function Users(atualizar) {
     },
   ];
   return (
-    <Card style={{ minHeight: "90vh" }}>
+    <Card className="background-page" style={{ minHeight: "90vh" }}>
       <Button type="primary" onClick={() => setShowModal(true)}>
         Novo
       </Button>

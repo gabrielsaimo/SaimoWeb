@@ -7,7 +7,10 @@ import { getCardapio, getImgCardapio } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
 import { useParams } from "react-router-dom";
 import { getStyles } from "../../services/user.ws";
-
+import temaBlack from "../../assets/tinta.webp";
+import temaWhite from "../../assets/tinta_white.png";
+import temaBlue from "../../assets/tinta_blue.png";
+import temaBrown from "../../assets/tinta_brown.png";
 const { Panel } = Collapse;
 const LazyLoadedImage = lazy(() =>
   import("antd").then((module) => ({ default: module.Image }))
@@ -21,7 +24,6 @@ const CollapseMenu = () => {
   const [cardapioCategory, setCardapioCategory] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
   const [styles, setStyles] = useState("");
-  console.log("🚀 ~ CollapseMenu ~ styles:", styles.colorText);
 
   const getStylesUser = async () => {
     const resp = await getStyles(CompanyName);
@@ -133,7 +135,7 @@ const CollapseMenu = () => {
                 style={{
                   color: styles.colorText,
                   fontWeight: "bold",
-                  backgroundImage: `url(${require("../../assets/tinta.webp")}) `,
+                  backgroundImage: `url(${temaBrown})`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: 150,
                   backgroundPositionX: "50%",

@@ -330,7 +330,7 @@ export default function Relatorios(atualizar) {
   const tagChild = dataMesAno.map(forMap);
 
   return (
-    <Card style={{ minHeight: "90vh" }}>
+    <Card className="background-page" style={{ minHeight: "90vh" }}>
       {menu ? (
         <MenuOutlined
           style={{ fontSize: 30, color: "#1890ff" }}

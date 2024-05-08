@@ -561,7 +561,7 @@ export default function Dashboard({ atualizar, user, company }) {
   }
 
   return (
-    <div style={{ minHeight: "90vh" }}>
+    <div className="background-page" style={{ minHeight: "90vh" }}>
       <Row gutter={8}>
         <Button type="primary" onClick={() => setOpen(true)}>
           Tour
