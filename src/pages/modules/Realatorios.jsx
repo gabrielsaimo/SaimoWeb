@@ -35,6 +35,9 @@ export default function Relatorios(atualizar) {
   const [chartInstance, setChartInstance] = useState(null);
   const [typeGrafico, setTypeGrafico] = useState("doughnut");
   const [menu, setMenu] = useState(false);
+  const [idcompany] = useState(
+    JSON.parse(localStorage.getItem("companySelectd")).idcompany
+  );
   const handleClose = (removedTag) => {
     const newTags = dataMesAno.filter((tag) => tag !== removedTag);
     setdataMesAno(newTags);
@@ -64,7 +67,7 @@ export default function Relatorios(atualizar) {
   }
 
   useEffect(() => {
-    getUsers().then((users) => {
+    getUsers(idcompany).then((users) => {
       setUser(users);
     });
   }, [atualizar]);

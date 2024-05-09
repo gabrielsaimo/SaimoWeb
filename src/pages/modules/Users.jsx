@@ -43,7 +43,7 @@ export default function Users(atualizar) {
   }, [active, atualizar]);
 
   const gtUser = () => {
-    getUsers(Company).then((users) => {
+    getUsers(idcompany).then((users) => {
       setData(users);
     });
   };
