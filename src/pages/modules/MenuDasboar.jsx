@@ -148,7 +148,7 @@ const MenuDashboard = () => {
               icon: <BookOutlined />,
               label: "Catalogo",
               disabled:
-                UserCategoria === "Gerente"
+                UserCategoria === "Gerência"
                   ? false
                   : UserCategoria === "ADM"
                   ? false
@@ -180,7 +180,12 @@ const MenuDashboard = () => {
             {
               key: "4",
               icon: <UserOutlined />,
-              disabled: UserCategoria === "ADM" ? false : true,
+              disabled:
+                UserCategoria === "Gerência"
+                  ? false
+                  : UserCategoria === "ADM"
+                  ? false
+                  : true,
               label: "Usuários",
               onClick: () => {
                 setTela(4);

@@ -1,0 +1,7 @@
+.cardTexte {
+  background-color: var(--grey-color);
+  color: var(--primary-color);
+  border-radius: 20px;
+  padding: 5px;
+  padding-inline: 10px;
+}

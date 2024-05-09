@@ -20,8 +20,8 @@ export const getPedidos = async (Company: any): Promise<pedido[]> => {
   const response = await api.get<pedido[]>("/pedido/" + Company);
   return response.data;
 };
-export const getPedidosAdm = async (): Promise<pedido[]> => {
-  const response = await api.get<pedido[]>("/pedido/adm");
+export const getPedidosAdm = async (idcompany: number): Promise<pedido[]> => {
+  const response = await api.get<pedido[]>("/pedido/adm/" + idcompany);
   return response.data;
 };
 
@@ -74,8 +74,8 @@ export const putPedido = async (data: any): Promise<any> => {
   return response.data;
 };
 
-export const getPedidoId = async (company: any): Promise<pedido> => {
-  const response = await api.get<pedido>(`/pedido/pedidos/${company}`);
+export const getPedidoId = async (idcompany: any): Promise<pedido> => {
+  const response = await api.get<pedido>(`/pedido/pedidos/${idcompany}`);
   if (response.data === null) {
     alert("Pedido não encontrado");
     return response.data;

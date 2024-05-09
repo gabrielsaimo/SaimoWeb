@@ -1,9 +1,10 @@
-import { Badge, Descriptions, notification } from "antd";
+import { Badge, Button, Card, Descriptions, Drawer, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { getPedidoId, getPedidosAdm } from "../../services/Pedidos.ws";
 import { getCardapio } from "../../services/cardapio.ws";
 import moment from "moment/moment";
 import { io } from "socket.io-client";
+import "../../css/Pedidos.css";
 export default function Pedidos(atualizar) {
   const data = new Date();
   const hora = data.getHours();
@@ -14,6 +15,16 @@ export default function Pedidos(atualizar) {
   const [cardapio, setCardapio] = useState([]);
   const [api, contextHolder] = notification.useNotification();
   const [pedidoss, setPedidos] = useState([]);
+  const companySelectd = JSON.parse(localStorage.getItem("companySelectd"));
+  const [open, setOpen] = useState(false);
+  const [detalhesPedido, setDetalhesPedido] = useState({});
+  const showDrawer = (pedido) => {
+    setDetalhesPedido(pedido);
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   const openNotification = (placement, title, notifi) => {
     api.info({
       message: `${title}`,
@@ -43,140 +54,142 @@ export default function Pedidos(atualizar) {
     getPedido();
   }, [atualizar]);
   const getPedido = async () => {
-    const pedidos = await getPedidosAdm();
+    const pedidos = await getPedidosAdm(companySelectd.idcompany);
     setPedido(pedidos);
   };
 
   async function getPedidoss() {
-    const pedidos = await getPedidoId();
+    const pedidos = await getPedidoId(companySelectd.idcompany);
     setPedidos(pedidos);
   }
 
   useEffect(() => {
     getCardapios();
   }, []);
-  
+
   const getCardapios = async () => {
-    const cardapio = await getCardapio();
+    const cardapio = await getCardapio(companySelectd.company);
     setCardapio(cardapio);
   };
 
   return (
     <div style={{ minHeight: "90vh" }}>
+      <Drawer title="Detalhes do Pedido" onClose={onClose} open={open}>
+        <div>
+          <div>
+            <strong>Hora do pedido:</strong>{" "}
+            {moment(detalhesPedido.created_at).format("DD/MM/YYYY HH:mm:ss")}
+          </div>
+
+          <div>
+            <strong>Status: </strong>
+            <Badge
+              status={
+                detalhesPedido.status === "Em Analize"
+                  ? "warning"
+                  : detalhesPedido.status === "Cancelado"
+                  ? "error"
+                  : detalhesPedido.status === "Finalizado"
+                  ? "success"
+                  : detalhesPedido.status === "Em Preparo"
+                  ? "processing"
+                  : "default"
+              }
+              text={<text>{detalhesPedido.status}</text>}
+            />
+          </div>
+          <div>
+            <strong>Mesa:</strong> N° {detalhesPedido.mesa}
+          </div>
+          <div>
+            <strong>Valor do Pedido:</strong> R$ {detalhesPedido.valor},00
+          </div>
+          <div>
+            <strong>N° Pedido:</strong> {detalhesPedido.id}
+          </div>
+          <br />
+          <div>
+            <strong>Pedidos:</strong>
+            {cardapio.length > 0 && pedidoss.length > 0 ? (
+              pedidoss.map((pedidoss) => (
+                <>
+                  {detalhesPedido.pedidos === pedidoss.idpedido ? (
+                    <>
+                      {pedidoss.qdt > 0 ? (
+                        <p>
+                          x{pedidoss.qdt} {pedidoss.item}
+                        </p>
+                      ) : null}
+                    </>
+                  ) : null}
+                </>
+              ))
+            ) : (
+              <p>Carregando...</p>
+            )}
+          </div>
+          <br />
+          {detalhesPedido.status === "Cancelado" ||
+          detalhesPedido.status === "Em Cancelamento" ? (
+            <>
+              <p style={{ color: "red", fontWeight: "bold" }}>
+                <strong>Motivo:</strong> {detalhesPedido.obs_cancel}
+              </p>
+            </>
+          ) : null}
+        </div>
+      </Drawer>
       <h1>Atualizado as {dataFormatada}</h1>
       {contextHolder}
       {pedidos.map((pedido) => (
         <div style={{ marginBottom: 10 }}>
-          <Descriptions
-            bordered
-            column={{
-              xxl: 4,
-              xl: 3,
-              lg: 3,
-              md: 3,
-              sm: 2,
-              xs: 1,
-            }}
-          >
-            <Descriptions.Item label="N° Pedido">{pedido.id}</Descriptions.Item>
-            <Descriptions.Item label="Mesa">{pedido.mesa}</Descriptions.Item>
-            <Descriptions.Item label="Hora do pedido">
-              {moment(pedido.data).format("DD/MM/YYYY HH:mm:ss")}
-            </Descriptions.Item>
-            <Descriptions.Item label="Status">
-              <Badge
-                status={
-                  pedido.status === "Em Analize"
-                    ? "warning"
-                    : pedido.status === "Cancelado"
-                    ? "error"
-                    : pedido.status === "Finalizado"
-                    ? "success"
-                    : pedido.status === "Em Preparo"
-                    ? "processing"
-                    : "default"
-                }
-                text={pedido.status}
-              />
-            </Descriptions.Item>
-            <Descriptions.Item label="Valor do Pedido">
-              R$ {pedido.valor},00
-            </Descriptions.Item>
-            {pedido.desconto > 0 ? (
-              <Descriptions.Item label="Desconto" style={{ color: "red" }}>
-                R$ {pedido.desconto},00
-              </Descriptions.Item>
-            ) : null}
+          <Card style={{ width: "100%" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className="cardTexte">
+                <strong>Hora do pedido:</strong>{" "}
+                {moment(pedido.created_at).format("DD/MM/YYYY HH:mm:ss")}
+              </div>
 
-            <Descriptions.Item label="Valor Total">
-              R$ {Number(pedido.valor) - Number(pedido.desconto)},00
-            </Descriptions.Item>
-            <Descriptions.Item label="Pedido" span={2}>
-              {cardapio.length > 0 && pedidoss.length > 0 ? (
-                pedidoss.map((pedidoss) => (
-                  <>
-                    {pedido.pedidos === pedidoss.idpedido ? (
-                      <>
-                        {pedidoss.qdt > 0 ? (
-                          <p>
-                            x{pedidoss.qdt} {pedidoss.item}
-                          </p>
-                        ) : null}
-                      </>
-                    ) : null}
-                  </>
-                ))
-              ) : (
-                <p>Carregando...</p>
-              )}
-            </Descriptions.Item>
-            {pedido.status !== "Em Analize" &&
-            pedido.status !== "Em Cancelamento" ? (
-              <>
-                <Descriptions.Item label="Aceito por">
-                  {pedido.acepted_by}
-                </Descriptions.Item>
-                <Descriptions.Item label="Aceito em">
-                  {moment(pedido.acepted_at).format("DD/MM/YYYY HH:mm:ss")}
-                </Descriptions.Item>
-                {pedido.status === "Finalizado" ||
-                pedido.status === "Pronto" ||
-                pedido.status === "Cancelado" ? (
-                  <>
-                    <Descriptions.Item
-                      label={
-                        pedido.status === "Cancelado"
-                          ? "Cancelado por"
-                          : "Finalizado por"
-                      }
-                    >
-                      {pedido.finished_by}
-                    </Descriptions.Item>
-                    <Descriptions.Item
-                      label={
-                        pedido.status === "Cancelado"
-                          ? "Cancelado em"
-                          : "Finalizado em"
-                      }
-                    >
-                      {moment(pedido.finished_at).format("DD/MM/YYYY HH:mm:ss")}
-                    </Descriptions.Item>
-                  </>
-                ) : null}
-              </>
-            ) : null}
+              <div className="cardTexte">
+                <strong>Status: </strong>
+                <Badge
+                  status={
+                    pedido.status === "Em Analize"
+                      ? "warning"
+                      : pedido.status === "Cancelado"
+                      ? "error"
+                      : pedido.status === "Finalizado"
+                      ? "success"
+                      : pedido.status === "Em Preparo"
+                      ? "processing"
+                      : "default"
+                  }
+                  text={<text className="cardTexte">{pedido.status}</text>}
+                />
+              </div>
+              <div className="cardTexte">
+                <strong>Mesa:</strong> N° {pedido.mesa}
+              </div>
+              <div className="cardTexte">
+                <strong>Valor do Pedido:</strong> R$ {pedido.valor},00
+              </div>
+              <div className="cardTexte">
+                <strong>N° Pedido:</strong> {pedido.id}
+              </div>
+              <Button type="primary" onClick={() => showDrawer(pedido)}>
+                Detalhes
+              </Button>
+            </div>
+
             {pedido.status === "Cancelado" ||
             pedido.status === "Em Cancelamento" ? (
               <>
-                <Descriptions.Item
-                  label="Motivo"
-                  style={{ color: "red", fontWeight: "bold" }}
-                >
-                  {pedido.obs_cancel}
-                </Descriptions.Item>
+                <p style={{ color: "red", fontWeight: "bold" }}>
+                  <strong>Motivo:</strong> {pedido.obs_cancel}
+                </p>
               </>
             ) : null}
-          </Descriptions>
+          </Card>
         </div>
       ))}
     </div>
