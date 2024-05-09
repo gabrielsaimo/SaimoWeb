@@ -111,6 +111,7 @@ label.ant-form-item-required,
 .ant-notification-notice-description,
 .ant-badge-status-text,
 .anticon.anticon-close,
+.ant-popconfirm-title,
 .ant-drawer-title,
 h1 {
   color: var(--secondary-color) !important;
