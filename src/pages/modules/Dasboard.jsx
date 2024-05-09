@@ -50,6 +50,7 @@ import { getCategoty } from "../../services/category.ws";
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
   const cachedData = localStorage.getItem("dateUser");
+  const companySelectd = localStorage.getItem("companySelectd").idcompany;
   if (cachedData === null) return (window.location.href = "/Login");
 
   const validaEmpresa = JSON.parse(cachedData).user_profile_json.some(
@@ -268,7 +269,7 @@ export default function Dashboard({ atualizar, user, company }) {
         category,
         update_at: new Date(),
         update_by: JSON.parse(cachedData).name,
-        idcompany: JSON.parse(cachedData).idcompany,
+        idcompany: companySelectd,
         company: company,
       });
       message.success("Item atualizado com sucesso!");
@@ -285,7 +286,7 @@ export default function Dashboard({ atualizar, user, company }) {
         category,
         update_at: new Date(),
         update_by: JSON.parse(cachedData).name,
-        idcompany: JSON.parse(cachedData).idcompany,
+        idcompany: companySelectd,
         company: company,
       });
       message.success("Item salvo com sucesso!");

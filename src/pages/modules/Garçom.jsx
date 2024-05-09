@@ -71,7 +71,7 @@ const { Panel } = Collapse;
 export default function Garçom() {
   const { Company } = useParams();
   const [idCompany] = useState(
-    JSON.parse(localStorage.getItem("dateUser")).idcompany
+    JSON.parse(localStorage.getItem("companySelectd")).idcompany
   );
   const [showModall, setShowModall] = React.useState(false);
   const [userNome] = useState(

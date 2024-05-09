@@ -33,7 +33,7 @@ export default function Users(atualizar) {
   const [id] = useState(JSON.parse(localStorage.getItem("dateUser")).id);
   const [CompanyList, setCompanyList] = useState();
   const [idcompany] = useState(
-    JSON.parse(localStorage.getItem("dateUser")).idcompany
+    JSON.parse(localStorage.getItem("companySelectd")).idcompany
   );
   const [dataEdit, setDataEdit] = useState();
 

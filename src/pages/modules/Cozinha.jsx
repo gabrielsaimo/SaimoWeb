@@ -57,7 +57,7 @@ export default function Cozinha() {
   const afterStatus = text.slice(statusIndex).trim();
   const [api, contextHolder] = notification.useNotification();
   const [idCompany] = useState(
-    JSON.parse(localStorage.getItem("dateUser")).idcompany
+    JSON.parse(localStorage.getItem("companySelectd")).idcompany
   );
 
   const [pedidoss, setPedidos] = useState([]);
@@ -94,7 +94,6 @@ export default function Cozinha() {
       }
     });
   }, []);
-
 
   useEffect(() => {
     const socket = io("http://192.168.12.11:3020"); // Substitua 'http://localhost:3000' pela URL correta do seu servidor

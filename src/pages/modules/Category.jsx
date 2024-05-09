@@ -84,7 +84,8 @@ export default function Category() {
             cardapioCategory.length + 1 + Math.floor(Math.random() * 100000000),
           name,
           active,
-          idcompany: JSON.parse(localStorage.getItem("dateUser")).idcompany,
+          idcompany: JSON.parse(localStorage.getItem("companySelectd"))
+            .idcompany,
           company: Company,
         });
         setTimeout(() => {
