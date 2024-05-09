@@ -14,6 +14,7 @@ import {
   Switch,
 } from "antd";
 import "firebase/database";
+import "../../css/Garcom.css"
 import { getCardapio } from "../../services/cardapio.ws";
 import {
   deletePedidos,
@@ -716,7 +717,7 @@ export default function Garçom() {
             {dateMesa.map((itemMesa, index) => (
               <Card
                 title={"Mesa " + itemMesa.nm_mesa}
-                extra={<h4>Por: {itemMesa.created_by}</h4>}
+                extra={<h4 className="text">Por: {itemMesa.created_by}</h4>}
                 style={{ width: "100%", marginTop: 16, marginBottom: 16 }}
                 key={index}
               >
