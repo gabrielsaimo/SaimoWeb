@@ -576,7 +576,9 @@ export default function Dashboard({ atualizar, user, company }) {
       <Button
         type="primary"
         title="Cardápio"
-        onClick={() => (window.location.href = "/Cardapio/" + company)}
+        onClick={() =>
+          (window.location.href = `/Cardapio/${companySelectd}/${company}`)
+        }
       >
         Cardápio
       </Button>
@@ -584,7 +586,9 @@ export default function Dashboard({ atualizar, user, company }) {
         type="primary"
         style={{ marginLeft: 10 }}
         title="Cardápio"
-        onClick={() => (window.location.href = "/Catalogo/" + company)}
+        onClick={() =>
+          (window.location.href = `/Catalogo/${companySelectd}/${company}`)
+        }
       >
         Catálogo
       </Button>

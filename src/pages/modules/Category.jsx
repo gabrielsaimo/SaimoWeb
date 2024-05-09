@@ -71,6 +71,7 @@ export default function Category() {
     }
   }, [action, Company]);
   async function fetchData() {
+    console.log("Company1", companySelectd);
     const cardapioCollection = await getCategoty(companySelectd, Company);
     setCardapioCategory(cardapioCollection);
   }

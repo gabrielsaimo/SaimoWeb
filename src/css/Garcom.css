@@ -76,8 +76,3 @@
   margin-top: 20px;
 }
 
-.ant-collapse-content-active,
-.ant-collapse-content-box {
-  background-color: var(--low-grey-color) !important;
-  color: var(--secondary-color) !important;
-}
