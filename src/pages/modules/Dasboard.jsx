@@ -19,6 +19,7 @@ import {
   Carousel,
   Tag,
   Typography,
+  Popover,
   Switch,
 } from "antd";
 import "firebase/database";
@@ -33,6 +34,7 @@ import {
   CheckCircleOutlined,
   StarFilled,
   StarOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import Category from "./Category";
 import LazyLoad from "react-lazyload";
@@ -562,21 +564,91 @@ export default function Dashboard({ atualizar, user, company }) {
     setFilteredStatus(null);
   }
 
+  const [openPop, setOpenPop] = useState(false);
+  const hide = () => {
+    setOpen(false);
+  };
+  const handleOpenChange = (newOpen) => {
+    setOpenPop(newOpen);
+  };
+  const content1 = (
+    <div>
+      <Button
+        type="primary"
+        title="Cardápio"
+        onClick={() => (window.location.href = "/Cardapio/" + company)}
+      >
+        Cardápio
+      </Button>
+      <Button
+        type="primary"
+        style={{ marginLeft: 10 }}
+        title="Cardápio"
+        onClick={() => (window.location.href = "/Catalogo/" + company)}
+      >
+        Catálogo
+      </Button>
+    </div>
+  );
+
+  const content2 = (
+    <div>
+      <Button
+        type="primary"
+        title="Cardápio"
+        onClick={() => (window.location.href = "/Cozinha/" + company)}
+      >
+        Cozinheiro
+      </Button>
+      <Button
+        type="primary"
+        style={{ marginLeft: 10 }}
+        title="Cardápio"
+        onClick={() => (window.location.href = "/Garçom/" + company)}
+      >
+        Garçom
+      </Button>
+    </div>
+  );
+
   return (
     <div className="background-page" style={{ minHeight: "90vh" }}>
       <Row gutter={8}>
         <Button type="primary" onClick={() => setOpen(true)}>
           Tour
         </Button>
-
-        <Button
-          type="primary"
+        <Popover
+          content={
+            <>
+              <Popover
+                content={content1}
+                title={<label className="text">Ver Como</label>}
+              >
+                <Button type="primary">Ver Como</Button>
+              </Popover>
+              <Popover
+                content={content2}
+                title={<label className="text">Entrar Como</label>}
+              >
+                <Button type="primary" style={{ marginLeft: 10 }}>
+                  Entrar Como
+                </Button>
+              </Popover>
+            </>
+          }
+          title={<label className="text">Opções</label>}
+          trigger="click"
+          open={openPop}
+          onOpenChange={handleOpenChange}
           style={{ marginLeft: 10 }}
-          title="Cardápio"
-          onClick={() => (window.location.href = "/Cardapio/" + company)}
         >
-          Ver Cardápio
-        </Button>
+          <div className="rgbButton">
+            <a className="btn">
+              <EyeOutlined />
+            </a>
+          </div>
+        </Popover>
+
         <Divider />
 
         <Col span={24}>

@@ -2,6 +2,7 @@
   :root {
     --primary-color: #282c34;
     --secondary-color: #fff;
+    --low-grey-color: #5a5a5a;
     --grey-color: #d3d3d3;
   }
 }
@@ -65,16 +66,25 @@ code {
 .ant-card-body,
 main,
 html,
+.text,
 .ant-table-container,
 .ant-table-footer,
 .ant-layout-header,
 .menu-button,
 .ant-select-selector,
 .ant-select-dropdown,
+.ant-card-head,
 .ant-table-cell,
+.ant-notification-notice,
+.ant-descriptions-item-content,
+.ant-popover-inner,
 th {
   background-color: var(--primary-color) !important;
   color: var(--secondary-color) !important;
+}
+
+.ant-card-body {
+  border-radius: 10px !important;
 }
 
 td.ant-table-cell.ant-table-cell-row-hover {
@@ -91,6 +101,10 @@ label.ant-form-item-required,
 .ant-select-item-option-content,
 .ant-empty-description,
 .span.ant-upload,
+.ant-select-selection-placeholder,
+.ant-notification-notice-message,
+.ant-notification-notice-description,
+.ant-badge-status-text,
 h1 {
   color: var(--secondary-color) !important;
 }
@@ -102,4 +116,78 @@ h1 {
 
 .ant-select-item-option-content :hover {
   color: var(--secondary-color) !important;
+}
+
+.ant-divider {
+  background-color: var(--low-grey-color) !important;
+}
+
+.rgbButton {
+  background: #020024;
+  background: linear-gradient(
+    115deg,
+    #020024 0%,
+    red 0%,
+    #ffab00 12%,
+    #e0ff00 24%,
+    #00ff08 36%,
+    #00e4ff 48%,
+    #0005ff 60%,
+    #fe00e7 72%,
+    red 84%,
+    #ffa200 96%
+  );
+  width: 40px;
+  height: 40px;
+  position: relative;
+  animation: gradient 55s linear infinite;
+  border-radius: 20px;
+  margin-left: 10px;
+}
+
+.rgbButton::before {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  background: inherit;
+  filter: blur(4px);
+  border-radius: 20px;
+}
+
+.rgbButton .btn {
+  position: absolute;
+  background-color: var(--primary-color);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2em;
+  width: 37px;
+  height: 37px;
+  text-align: center;
+  padding-top: 8px;
+  color: #fff;
+  letter-spacing: 1px;
+  border-radius: 20px;
+}
+.rgbButton:hover {
+  transform: scale(1.3);
+  width: 41px;
+  height: 41px;
+  margin-bottom: -1px;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 18.75em 31.25em;
+  }
+  100% {
+    background-position: 0.1em 0.1em;
+  }
 }

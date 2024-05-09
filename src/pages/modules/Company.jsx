@@ -70,6 +70,18 @@ export default function Company() {
   const CompanySelectd = (company) => {
     localStorage.setItem("companySelectd", JSON.stringify(company));
     window.location.href = "/dashboard/" + company.company;
+    if (company.active === false) {
+      message.error("Usuário desativado");
+    } else if (company.category === "ADM" || company.category === "Gerência") {
+      window.location.href = "/dashboard/" + company.company;
+    } else if (company.category === "Garçom") {
+      window.location.href = "/Garçom/" + company.company;
+    } else if (company.category === "Cozinha") {
+      window.location.href = "/Cozinha/" + company.company;
+    } else {
+      message.error("Usuário não tem permissão", 5);
+      setVisible(false);
+    }
   };
 
   return (
@@ -114,30 +126,34 @@ export default function Company() {
                 <p className="title-company">{company.category}</p>
               </div>
             ))}
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <div
-                className="company-card background-page"
-                style={{ display: "flex", justifyContent: "center" }}
-              >
+            {companys.categoria === "ADM" ||
+            companys.categoria === "Gerência" ? (
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <div
-                  title="Adicionar Empresa"
-                  bordered={false}
-                  style={{ width: 300 }}
+                  className="company-card background-page"
+                  style={{ display: "flex", justifyContent: "center" }}
                 >
-                  <h1
-                    className="button-add-company"
-                    type="primary"
-                    style={{ fontSize: 50 }}
-                    onClick={() => setShowModal(true)}
+                  <div
+                    title="Adicionar Empresa"
+                    bordered={false}
+                    style={{ width: 300 }}
                   >
-                    +
-                  </h1>
-                  <p>Adicionar Empresa</p>
+                    <h1
+                      className="button-add-company"
+                      type="primary"
+                      style={{ fontSize: 50 }}
+                      onClick={() => setShowModal(true)}
+                    >
+                      +
+                    </h1>
+                    <p>Adicionar Empresa</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </div>
-        ) : (
+        ) : companys.categoria === "ADM" ||
+          companys.categoria === "Gerência" ? (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <div className="add-company">
               <div
@@ -156,6 +172,22 @@ export default function Company() {
                 >
                   Adicionar Empresa
                 </Button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div className="add-company">
+              <div
+                title="Você não tem empresas cadastradas"
+                bordered={false}
+                style={{ width: 300 }}
+              >
+                <h3>Você não tem empresas cadastradas</h3>
+                <p>
+                  Entre com contato com o Administrador da Empresa para
+                  adiciona-lo em uma Empresa
+                </p>
               </div>
             </div>
           </div>

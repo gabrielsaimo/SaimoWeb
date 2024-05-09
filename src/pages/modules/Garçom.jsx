@@ -1051,8 +1051,10 @@ export default function Garçom() {
               <h2 className="title">Finalizar Pedido</h2>
               <div style={{ marginBottom: 10 }}>
                 <label>Valor</label>
+                <br />
                 <Input
                   prefix="R$"
+                  style={{ maxWidth: 270 }}
                   value={valorMesa > 0 ? valorMesa : 0}
                   readOnly
                 />
@@ -1067,6 +1069,7 @@ export default function Garçom() {
                 <div></div>
                 <div>
                   <label>Taxa de serviço</label>
+
                   <Switch
                     size="large"
                     style={{ marginLeft: 10, marginBottom: 1 }}
@@ -1078,8 +1081,10 @@ export default function Garçom() {
                       finalmesa(itensMesa, !taxa),
                     ]}
                   />
+                  <br />
                   <Input
                     prefix="R$"
+                    style={{ maxWidth: 270 }}
                     value={
                       valorMesa > 0 ? (parseInt(valorMesa) * 0.1).toFixed(2) : 0
                     }
@@ -1089,8 +1094,10 @@ export default function Garçom() {
               </div>
               <div style={{ marginBottom: 10 }}>
                 <lavel>Valor Total</lavel>
+                <br />
                 <Input
                   prefix="R$"
+                  style={{ maxWidth: 270 }}
                   value={
                     valorMesa > 0 && taxa
                       ? (
@@ -1152,7 +1159,7 @@ export default function Garçom() {
                 <div style={{ marginBottom: 10 }}>
                   <Input
                     prefix="R$"
-                    style={{ width: "80vw", maxWidth: 470 }}
+                    style={{ maxWidth: 270 }}
                     value={
                       valorMesa > 0 && taxa
                         ? (
@@ -1179,7 +1186,7 @@ export default function Garçom() {
 
                 <Space>
                   <Select
-                    style={{ width: 100 }}
+                    style={{ width: 163 }}
                     value={tipoPagamento}
                     placeholder="Tipo de Pagamento"
                     onChange={(event) => setTipoPagamento(event)}
@@ -1191,7 +1198,7 @@ export default function Garçom() {
                     <Option value="Cortesia">Cortesia</Option>
                   </Select>
                   <Input
-                    style={{ width: 115 }}
+                    style={{ width: 100 }}
                     placeholder="Valor"
                     value={valorPagamentos}
                     prefix="R$"
@@ -1205,6 +1212,7 @@ export default function Garçom() {
                 <TextArea
                   rows={3}
                   placeholder="Observações"
+                  style={{ maxWidth: 270 }}
                   value={obsFinalizar}
                   onChange={(event) => setObsFinalizar(event.target.value)}
                 />

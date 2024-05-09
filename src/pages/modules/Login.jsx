@@ -45,15 +45,8 @@ const Login = () => {
 
       if (UserCollection.user[0].active === false) {
         message.error("Usuário desativado");
-      } else if (
-        UserCollection.user[0].categoria === "ADM" ||
-        UserCollection.user[0].categoria === "Gerência"
-      ) {
+      } else if (UserCollection.user[0].active === true) {
         window.location.href = "/Company";
-      } else if (UserCollection.user[0].categoria === "Garçom") {
-        window.location.href = "/Garçom/" + UserCollection.user[0].company;
-      } else if (UserCollection.user[0].categoria === "Cozinha") {
-        window.location.href = "/Cozinha/" + UserCollection.user[0].company;
       } else {
         message.error("Usuário não tem permissão", 5);
         setVisible(false);
