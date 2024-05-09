@@ -40,7 +40,9 @@ export default function Category() {
   const [modalNewAction, setModalNewAction] = useState(false);
   const [Company] = useState(window.location.href.split("/").pop());
   const [loading, setLoading] = useState(false);
-
+  const companySelectd = JSON.parse(
+    localStorage.getItem("companySelectd")
+  ).idcompany;
   const handleOk = () => {
     setLoading(true);
     handleSave();
@@ -69,7 +71,7 @@ export default function Category() {
     }
   }, [action, Company]);
   async function fetchData() {
-    const cardapioCollection = await getCategoty(Company);
+    const cardapioCollection = await getCategoty(companySelectd, Company);
     setCardapioCategory(cardapioCollection);
   }
 

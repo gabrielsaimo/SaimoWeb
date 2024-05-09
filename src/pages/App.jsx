@@ -13,7 +13,7 @@ const CollapseMenu = lazy(() => import("./modules/Collapse"));
 const CompanyName = window.location.href.split("/").pop();
 
 function App() {
-  const { Company } = useParams();
+  const { idcompany, Company } = useParams();
   const [contar, setContar] = useState(0);
   const [logo, setLogo] = useState(null);
   const [styles, setStyles] = useState("");
@@ -69,7 +69,7 @@ function App() {
 
       <Suspense fallback={<Spin />}>
         <SlideRenderer index={contar} />
-        <CollapseMenu props={Company} />
+        <CollapseMenu props={(idcompany, Company)} />
       </Suspense>
 
       <Space direction="vertical" style={{ margin: "10px 0" }}></Space>

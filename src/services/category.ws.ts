@@ -8,8 +8,13 @@ interface category {
 
 const handleResponse = (response: AxiosResponse) => response.data;
 
-export const getCategoty = async (Company: any): Promise<category[]> => {
-  const response = await api.get<category[]>("/categoria-cardapio/" + Company);
+export const getCategoty = async (
+  idcompany: number,
+  Company: any
+): Promise<category[]> => {
+  const response = await api.get<category[]>(
+    `/categoria-cardapio/${idcompany}/${Company}`
+  );
   return handleResponse(response);
 };
 

@@ -18,7 +18,7 @@ const LazyLoadedImage = lazy(() =>
 
 const CollapseMenu = () => {
   // get params from url
-  const { Company } = useParams();
+  const { idcompany, Company } = useParams();
   const CompanyName = window.location.href.split("/").pop();
   const [cardapio, setCardapio] = useState([]);
   const [cardapioCategory, setCardapioCategory] = useState([]);
@@ -40,12 +40,12 @@ const CollapseMenu = () => {
   }, []);
 
   const getCardapios = async () => {
-    const cardapioCollection = await getCardapio(Company);
+    const cardapioCollection = await getCardapio(idcompany, Company);
     setCardapio(cardapioCollection);
   };
 
   const getCardapioCategory = async () => {
-    const cardapioCollection = await getCategoty(Company);
+    const cardapioCollection = await getCategoty(idcompany, Company);
     setCardapioCategory(cardapioCollection);
   };
   const styleText = {

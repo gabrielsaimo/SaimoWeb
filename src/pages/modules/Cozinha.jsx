@@ -125,7 +125,7 @@ export default function Cozinha() {
     getCardapios();
   }, []);
   const getCardapios = async () => {
-    const cardapio = await getCardapio(Company);
+    const cardapio = await getCardapio(idCompany,Company);
     setCardapio(cardapio);
   };
   async function getPedidoss() {

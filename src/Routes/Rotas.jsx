@@ -25,7 +25,7 @@ export default function Rotas() {
       <Route path="/Company" element={<Company />} />
       <Route path="/Dashboard/:CompanyParams" element={<MenuDashboard />} />
       <Route path="/Garçom/:Company" element={<Garçom />} />
-      <Route path="/Catalogo/:Company" element={<App />} />
+      <Route path="/Catalogo/:idcompany/:Company" element={<App />} />
       <Route path="/Cardapio/:Company" element={<App />} />
       <Route path="/Delivery/:Company" element={<Delivery />} />
       <Route path="/privacy-policy" element={<Polices />} />

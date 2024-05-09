@@ -68,7 +68,10 @@ export default function Pedidos(atualizar) {
   }, []);
 
   const getCardapios = async () => {
-    const cardapio = await getCardapio(companySelectd.company);
+    const cardapio = await getCardapio(
+      companySelectd.idcompany,
+      companySelectd.company
+    );
     setCardapio(cardapio);
   };
 

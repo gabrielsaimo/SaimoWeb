@@ -14,7 +14,7 @@ import {
   Switch,
 } from "antd";
 import "firebase/database";
-import "../../css/Garcom.css"
+import "../../css/Garcom.css";
 import { getCardapio } from "../../services/cardapio.ws";
 import {
   deletePedidos,
@@ -138,7 +138,7 @@ export default function Garçom() {
     await setLoading(false);
   };
   const getCardapios = async () => {
-    const cardapio = await getCardapio(Company);
+    const cardapio = await getCardapio(idCompany, Company);
     setCardapio(cardapio);
   };
 

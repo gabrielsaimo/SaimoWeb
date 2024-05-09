@@ -194,13 +194,13 @@ export default function Dashboard({ atualizar, user, company }) {
   }, [search, cardapio, filteredStatus, uptela]);
 
   const gtCardapio = async () => {
-    const cardapioCollection = await getCardapio(company);
+    const cardapioCollection = await getCardapio(companySelectd, company);
     const cardapios = cardapioCollection;
     setCardapio(cardapios.sort((a, b) => a.id - b.id));
   };
 
   const getCardapiocategory = async () => {
-    const cardapioCollection = await getCategoty(company);
+    const cardapioCollection = await getCategoty(companySelectd, company);
     const categoty = cardapioCollection;
 
     setCardapioCategory(categoty.sort((a, b) => a.id - b.id));
