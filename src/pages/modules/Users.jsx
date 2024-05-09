@@ -28,7 +28,7 @@ export default function Users(atualizar) {
   const [showModal, setShowModal] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
   const [Company] = useState(
-    JSON.parse(localStorage.getItem("dateUser")).company
+    JSON.parse(localStorage.getItem("companySelectd")).company
   );
   const [id] = useState(JSON.parse(localStorage.getItem("dateUser")).id);
   const [CompanyList, setCompanyList] = useState();

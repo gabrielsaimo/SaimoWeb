@@ -29,7 +29,6 @@ const Forgot = () => {
   };
 
   const onFinish = async (values) => {
-    console.log("Received values of form: ", values);
     const EmailSenha = Email_senha(form.getFieldValue("email"));
     const data = {
       email: form.getFieldValue("email"),

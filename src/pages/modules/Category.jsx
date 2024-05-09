@@ -137,7 +137,6 @@ export default function Category() {
 
   function closeModal() {
     setModalNewAction(false);
-    console.log("closeModal");
     fetchData();
     clearSelecteds();
   }

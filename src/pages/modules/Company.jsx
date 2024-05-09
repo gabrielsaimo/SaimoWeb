@@ -42,7 +42,7 @@ export default function Company() {
       setShowModal(false);
       let body2 = [];
       resp.map((company) => {
-        body2.push({
+        body2.push(...companys.user_profile_json, {
           company: company.company,
           id_user: company.id_user,
           id: company.id,
@@ -114,6 +114,28 @@ export default function Company() {
                 <p className="title-company">{company.category}</p>
               </div>
             ))}
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                className="company-card background-page"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <div
+                  title="Adicionar Empresa"
+                  bordered={false}
+                  style={{ width: 300 }}
+                >
+                  <h1
+                    className="button-add-company"
+                    type="primary"
+                    style={{ fontSize: 50 }}
+                    onClick={() => setShowModal(true)}
+                  >
+                    +
+                  </h1>
+                  <p>Adicionar Empresa</p>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           <div style={{ display: "flex", justifyContent: "center" }}>

@@ -50,7 +50,9 @@ import { getCategoty } from "../../services/category.ws";
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
   const cachedData = localStorage.getItem("dateUser");
-  const companySelectd = localStorage.getItem("companySelectd").idcompany;
+  const companySelectd = JSON.parse(
+    localStorage.getItem("companySelectd")
+  ).idcompany;
   if (cachedData === null) return (window.location.href = "/Login");
 
   const validaEmpresa = JSON.parse(cachedData).user_profile_json.some(
@@ -112,7 +114,6 @@ export default function Dashboard({ atualizar, user, company }) {
     };
   }, []);
   useEffect(() => {
-    console.log(coint);
     if (fileList.length > 0 && coint == 1) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {

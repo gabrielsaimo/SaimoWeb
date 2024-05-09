@@ -66,8 +66,6 @@ const Login = () => {
   const getCachedDateUser = () => {
     const cachedData = localStorage.getItem("dateUser");
     if (cachedData) {
-      console.log(JSON.parse(cachedData), "teste");
-
       if (JSON.parse(cachedData).active === false) {
         message.error("Usuário desativado");
       } else if (

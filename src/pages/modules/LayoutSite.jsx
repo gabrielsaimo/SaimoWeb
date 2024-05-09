@@ -47,7 +47,6 @@ const SlideRenderer = () => {
   useEffect(() => {
     if (dateUser.styles) {
       const stylesObj = JSON.parse(dateUser.styles);
-      console.log("🚀 ~ useEffect ~ stylesObj:", stylesObj);
       setFundoColor1(stylesObj.backgrondColor.split(",")[1].replace("0%", ""));
       setFundoColor2(
         stylesObj.backgrondColor.split(",")[2].replace("100%)", "")
@@ -77,7 +76,6 @@ const SlideRenderer = () => {
       styles: styles.toString().replace(/\\/g, ""),
     };
     localStorage.setItem("dateUser", JSON.stringify(newDataUSer));
-    console.log(response.data);
   };
 
   const onChange = ({ fileList: newFileList }) => {
