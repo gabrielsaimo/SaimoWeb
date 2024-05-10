@@ -577,7 +577,7 @@ export default function Dashboard({ atualizar, user, company }) {
         type="primary"
         title="Cardápio"
         onClick={() =>
-          (window.location.href = `/Cardapio/${companySelectd}/${company}`)
+          window.open(`/Cardapio/${companySelectd}/${company}`, "_blank")
         }
       >
         Cardápio
@@ -587,7 +587,7 @@ export default function Dashboard({ atualizar, user, company }) {
         style={{ marginLeft: 10 }}
         title="Cardápio"
         onClick={() =>
-          (window.location.href = `/Catalogo/${companySelectd}/${company}`)
+          window.open(`/Catalogo/${companySelectd}/${company}`, "_blank")
         }
       >
         Catálogo
@@ -600,7 +600,7 @@ export default function Dashboard({ atualizar, user, company }) {
       <Button
         type="primary"
         title="Cardápio"
-        onClick={() => (window.location.href = "/Cozinha/" + company)}
+        onClick={() => window.open(`/Cozinha/${company}`, "_blank")}
       >
         Cozinheiro
       </Button>
@@ -608,7 +608,7 @@ export default function Dashboard({ atualizar, user, company }) {
         type="primary"
         style={{ marginLeft: 10 }}
         title="Cardápio"
-        onClick={() => (window.location.href = "/Garçom/" + company)}
+        onClick={() => window.open(`/Garçom/${company}`, "_blank")}
       >
         Garçom
       </Button>

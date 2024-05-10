@@ -10,7 +10,9 @@ export default function Company() {
   const [acont, setAcont] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [CompanyName, setCompanyName] = useState("");
-
+  if (companys === null) {
+    window.location.href = "/login/logout";
+  }
   useEffect(() => {
     companys.user_profile_json.forEach(async (company) => {
       if (!company.idcompany) {
@@ -105,14 +107,14 @@ export default function Company() {
           >
             {companys?.user_profile_json.map((company) => (
               <div
-                key={company.id}
+                key={company?.id}
                 onClick={() => CompanySelectd(company)}
                 className="company-card background-page"
               >
-                {images[company.idcompany] ? (
+                {images[company?.idcompany] ? (
                   <div className="company-image-container">
                     <img
-                      src={atob(images[company.idcompany])}
+                      src={atob(images[company?.idcompany])}
                       alt="img"
                       className="company-image"
                     />
@@ -122,8 +124,8 @@ export default function Company() {
                     <Spin />
                   </div>
                 )}
-                <h3 className="title-company">{company.company}</h3>
-                <p className="title-company">{company.category}</p>
+                <h3 className="title-company">{company?.company}</h3>
+                <p className="title-company">{company?.category}</p>
               </div>
             ))}
             {companys.categoria === "ADM" ||

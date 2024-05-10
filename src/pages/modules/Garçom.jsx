@@ -71,9 +71,10 @@ const { Panel } = Collapse;
 
 export default function Garçom() {
   const { Company } = useParams();
-  const [idCompany] = useState(
-    JSON.parse(localStorage.getItem("companySelectd")).idcompany
+  const companySelectd = useState(
+    JSON.parse(localStorage.getItem("companySelectd"))
   );
+
   const [showModall, setShowModall] = React.useState(false);
   const [userNome] = useState(
     JSON.parse(localStorage.getItem("dateUser")).name
@@ -83,8 +84,8 @@ export default function Garçom() {
   if (cachedData === null) {
     return (window.location.href = "/Login");
   }
-  console.log(JSON.parse(cachedData).company, Company);
-  if (JSON.parse(cachedData).company !== Company) {
+
+  if (companySelectd[0].company !== Company) {
     return (window.location.href = "/Login/error");
   }
 
@@ -104,7 +105,7 @@ export default function Garçom() {
   const [valorPagamentos, setValorPagamentos] = useState(0);
   const [valoresPagos, setValoresPagos] = useState([]);
   const [pedidosTotais, setPedidosTotais] = useState([
-    { iditem: "", qdt: "1", idcompany: idCompany },
+    { iditem: "", qdt: "1", idcompany: companySelectd[0].idcompany },
   ]);
   const [idpedido, setIdpedido] = useState();
   const [status, setStatus] = useState();
@@ -118,7 +119,7 @@ export default function Garçom() {
   const random = Math.floor(Math.random() * 100000000);
 
   useEffect(() => {
-    if (Company === undefined || Company === null) {
+    if (companySelectd === undefined || Company === null) {
       window.location.href = window.location.origin + "/login/logout";
     }
     getCardapios();
@@ -133,17 +134,17 @@ export default function Garçom() {
   }, [pedidosTotais]);
   const getPedido = async () => {
     setLoading(true);
-    const pedidos = await getPedidos(idCompany);
+    const pedidos = await getPedidos(companySelectd[0].idcompany);
     setPedido(pedidos);
     await setLoading(false);
   };
   const getCardapios = async () => {
-    const cardapio = await getCardapio(idCompany, Company);
+    const cardapio = await getCardapio(companySelectd[0].idcompany, Company);
     setCardapio(cardapio);
   };
 
   const getMesa = async () => {
-    const mesas = await getMesas(idCompany);
+    const mesas = await getMesas(companySelectd[0].idcompany);
     setDateMesa(mesas);
   };
 
@@ -278,7 +279,7 @@ export default function Garçom() {
         newPedidos[index]["created_by"] = userNome;
         newPedidos[index]["update_at"] = new Date();
         newPedidos[index]["update_by"] = userNome;
-        newPedidos[index]["idcompany"] = idCompany;
+        newPedidos[index]["idcompany"] = companySelectd[0].idcompany;
         newPedidos[index]["status"] = "Em Analize";
         if (idpedido === undefined) {
           newPedidos[index]["idpedido"] = random;
@@ -295,7 +296,12 @@ export default function Garçom() {
   const adicionarNovoPedido = () => {
     setPedidosTotais([
       ...pedidosTotais,
-      { iditem: "", qdt: "1", categoria: "", idcompany: idCompany },
+      {
+        iditem: "",
+        qdt: "1",
+        categoria: "",
+        idcompany: companySelectd[0].idcompany,
+      },
     ]);
   };
 
@@ -369,7 +375,7 @@ export default function Garçom() {
         mesa: mesa,
         update_at: new Date(),
         update_by: userNome,
-        idcompany: idCompany,
+        idcompany: companySelectd[0].idcompany,
       });
       setModalCancelamento(false);
       clear();
@@ -385,7 +391,7 @@ export default function Garçom() {
         status: "Aberto",
         update_at: new Date(),
         update_by: userNome,
-        idcompany: idCompany,
+        idcompany: companySelectd[0].idcompany,
       });
 
       await postTransferir({
@@ -394,7 +400,7 @@ export default function Garçom() {
         mesa: mesa,
         update_at: new Date(),
         update_by: userNome,
-        idcompany: idCompany,
+        idcompany: companySelectd[0].idcompany,
       });
       setModalCancelamento(false);
       clear();
@@ -414,7 +420,7 @@ export default function Garçom() {
   }, [active]);
 
   async function getPedidoss() {
-    const pedidos = await getPedidoId(idCompany);
+    const pedidos = await getPedidoId(companySelectd[0].idcompany);
     setPedidos(pedidos);
   }
   async function enviarPedido() {
@@ -434,7 +440,7 @@ export default function Garçom() {
         valor: total,
         update_at: new Date(),
         update_by: userNome,
-        idcompany: idCompany,
+        idcompany: companySelectd[0].idcompany,
       });
       putPedi();
       setShowModall(false);
@@ -452,7 +458,7 @@ export default function Garçom() {
         status: "Aberto",
         update_at: new Date(),
         update_by: userNome,
-        idcompany: idCompany,
+        idcompany: companySelectd[0].idcompany,
       });
 
       await putPedidos({
@@ -467,7 +473,7 @@ export default function Garçom() {
         valor: total,
         update_at: new Date(),
         update_by: userNome,
-        idcompany: idCompany,
+        idcompany: companySelectd[0].idcompany,
       });
       putPedi();
       setShowModall(false);
@@ -489,7 +495,9 @@ export default function Garçom() {
   }
   function clear() {
     setMesa("");
-    setPedidosTotais([{ id: "", qdt: "1", idCompany: idCompany }]);
+    setPedidosTotais([
+      { id: "", qdt: "1", idCompany: companySelectd[0].idcompany },
+    ]);
     setObs("");
     setTipoPagamento(null);
     setObsFinalizar("");

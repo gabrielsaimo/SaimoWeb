@@ -56,8 +56,8 @@ export default function Cozinha() {
   const beforeStatus = text.slice(0, statusIndex).trim();
   const afterStatus = text.slice(statusIndex).trim();
   const [api, contextHolder] = notification.useNotification();
-  const [idCompany] = useState(
-    JSON.parse(localStorage.getItem("companySelectd")).idcompany
+  const companySelectd = useState(
+    JSON.parse(localStorage.getItem("companySelectd"))
   );
 
   const [pedidoss, setPedidos] = useState([]);
@@ -117,7 +117,7 @@ export default function Cozinha() {
     getPedido();
   }, [modalCancelamento]);
   const getPedido = async () => {
-    const pedidos = await getPedidos(idCompany);
+    const pedidos = await getPedidos(companySelectd[0].idcompany);
     setPedido(pedidos);
   };
 
@@ -125,11 +125,11 @@ export default function Cozinha() {
     getCardapios();
   }, []);
   const getCardapios = async () => {
-    const cardapio = await getCardapio(idCompany,Company);
+    const cardapio = await getCardapio(companySelectd[0].idcompany, Company);
     setCardapio(cardapio);
   };
   async function getPedidoss() {
-    const pedidos = await getPedidoId(idCompany);
+    const pedidos = await getPedidoId(companySelectd[0].idcompany);
     setPedidos(pedidos);
   }
 
@@ -213,8 +213,8 @@ export default function Cozinha() {
   if (cachedData === null) {
     return (window.location.href = "/Login");
   }
-  console.log(JSON.parse(cachedData).company, Company);
-  if (JSON.parse(cachedData).company !== Company) {
+
+  if (companySelectd[0].company !== Company) {
     return (window.location.href = "/Login/error");
   }
 
