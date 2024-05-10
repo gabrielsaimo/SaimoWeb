@@ -633,7 +633,7 @@ export default function Dashboard({ atualizar, user, company }) {
     if (canvas) {
       const url = canvas.toDataURL();
       const a = document.createElement("a");
-      a.download = "QRCode.png";
+      a.download = `QRCode_${company}.png`;
       a.href = url;
       document.body.appendChild(a);
       a.click();
@@ -650,20 +650,23 @@ export default function Dashboard({ atualizar, user, company }) {
         <Popover
           content={
             <>
-              <Popover
-                content={content1}
-                title={<label className="text">Ver Como</label>}
-              >
-                <Button type="primary">Ver Como</Button>
-              </Popover>
-              <Popover
-                content={content2}
-                title={<label className="text">Entrar Como</label>}
-              >
-                <Button type="primary" style={{ marginLeft: 10 }}>
-                  Entrar Como
-                </Button>
-              </Popover>
+              <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                <Popover
+                  content={content1}
+                  title={<label className="text">Ver Como</label>}
+                >
+                  <Button type="primary">Ver Como</Button>
+                </Popover>
+                <Popover
+                  content={content2}
+                  title={<label className="text">Entrar Como</label>}
+                >
+                  <Button type="primary" style={{ marginLeft: 10 }}>
+                    Entrar Como
+                  </Button>
+                </Popover>
+              </div>
+
               <Divider />
               <div
                 style={{
@@ -678,12 +681,13 @@ export default function Dashboard({ atualizar, user, company }) {
                     <QRCode
                       errorLevel="H"
                       value={`https://menu-digital.vercel.app/Cardapio/${companySelectd}/${company}`}
-                      icon={atob(logo)}
-                      size={200}
-                      iconSize={60}
+                      icon={atob(logo) || ""}
+                      size={400}
+                      iconSize={150}
                     />
                   </div>
                 )}
+                <Divider />
                 <Button type="primary" onClick={downloadQRCode}>
                   Baixar QRCode
                 </Button>
