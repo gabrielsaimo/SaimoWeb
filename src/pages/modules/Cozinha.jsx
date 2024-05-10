@@ -79,24 +79,29 @@ export default function Cozinha() {
   useEffect(() => {
     onValue(mensagensRef, (snapshot) => {
       const mensagens = snapshot.val();
-      openNotification(
-        "topRight",
-        mensagens.title,
-        mensagens.notification,
-        mensagens.type
-      );
-      getPedido();
-
-      if (mensagens.type === "success") {
-        new Audio(sound).play();
-      } else {
-        new Audio(soundError).play();
+      if (
+        mensagens.company === Company &&
+        mensagens.idcompany === companySelectd.id
+      ) {
+        openNotification(
+          "topRight",
+          mensagens.title,
+          mensagens.notification,
+          mensagens.type
+        );
+        if (mensagens.type === "success") {
+          new Audio(sound).play();
+        } else {
+          new Audio(soundError).play();
+        }
       }
+
+      getPedido();
     });
   }, []);
 
   useEffect(() => {
-    const socket = io("http://192.168.12.11:3020"); // Substitua 'http://localhost:3000' pela URL correta do seu servidor
+    const socket = io("http://192.168.12.11:3020");
 
     socket.on("notification", (data) => {
       if (data.company === Company) {

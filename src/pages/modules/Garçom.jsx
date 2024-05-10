@@ -182,6 +182,7 @@ export default function Garçom() {
       notification,
       type,
       company: Company,
+      idcompany: companySelectd[0].idcompany,
     };
 
     await set(mensagensRef, mensagens)
