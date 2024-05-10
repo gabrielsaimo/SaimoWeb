@@ -69,8 +69,9 @@ export default function Company() {
     }
   };
 
-  const CompanySelectd = (company) => {
+  const CompanySelectd = (company, imgLogo) => {
     localStorage.setItem("companySelectd", JSON.stringify(company));
+    localStorage.setItem("companyLogo", JSON.stringify(imgLogo));
     window.location.href = "/dashboard/" + company.company;
     if (company.active === false) {
       message.error("Usuário desativado");

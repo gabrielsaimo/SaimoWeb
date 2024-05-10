@@ -21,6 +21,7 @@ import {
   Typography,
   Popover,
   Switch,
+  QRCode,
 } from "antd";
 import "firebase/database";
 import ImgCrop from "antd-img-crop";
@@ -48,6 +49,7 @@ import {
   putCardapio,
 } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
+import { getImgLogo } from "../../services/config";
 
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
@@ -97,6 +99,7 @@ export default function Dashboard({ atualizar, user, company }) {
   const [coint, setCoint] = useState(0);
   const [open, setOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState([]);
+  const [logo, setLogo] = useState();
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     setCoint(coint + 1);
@@ -124,6 +127,15 @@ export default function Dashboard({ atualizar, user, company }) {
       reader.readAsDataURL(fileList[0].originFileObj);
     }
   }, [fileList[0]]);
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      const img = await getImgLogo(companySelectd);
+      setLogo(img[0].imagem);
+    };
+
+    fetchLogo();
+  }, []);
 
   const insertImg = async (code) => {
     let body = {
@@ -571,6 +583,7 @@ export default function Dashboard({ atualizar, user, company }) {
   const handleOpenChange = (newOpen) => {
     setOpenPop(newOpen);
   };
+
   const content1 = (
     <div>
       <Button
@@ -615,6 +628,19 @@ export default function Dashboard({ atualizar, user, company }) {
     </div>
   );
 
+  const downloadQRCode = () => {
+    const canvas = document.getElementById("myqrcode")?.querySelector("canvas");
+    if (canvas) {
+      const url = canvas.toDataURL();
+      const a = document.createElement("a");
+      a.download = "QRCode.png";
+      a.href = url;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
+
   return (
     <div className="background-page" style={{ minHeight: "90vh" }}>
       <Row gutter={8}>
@@ -638,6 +664,30 @@ export default function Dashboard({ atualizar, user, company }) {
                   Entrar Como
                 </Button>
               </Popover>
+              <Divider />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {logo && (
+                  <div id="myqrcode">
+                    <QRCode
+                      errorLevel="H"
+                      value={`https://menu-digital.vercel.app/Cardapio/${companySelectd}/${company}`}
+                      icon={atob(logo)}
+                      size={200}
+                      iconSize={60}
+                    />
+                  </div>
+                )}
+                <Button type="primary" onClick={downloadQRCode}>
+                  Baixar QRCode
+                </Button>
+              </div>
             </>
           }
           title={<label className="text">Opções</label>}
