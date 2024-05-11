@@ -32,7 +32,6 @@ const SlideRenderer = () => {
   const [fundoColor2, setFundoColor2] = useState("#1677ff");
   const [textColor, setTextColor] = useState("#1677ff");
   const [Tema, setTema] = useState("");
-  console.log("🚀 ~ SlideRenderer ~ Tema:", Tema);
   const [fileList, setFileList] = useState([]);
   const [totalImg, setTotalImg] = useState(0);
   const [coint, setCoint] = useState(0);

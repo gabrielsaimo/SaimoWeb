@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useMemo,
-  useEffect,
-  Suspense,
-} from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 
 import { Link, useParams } from "react-router-dom";
 import { Button, Divider, Spin } from "antd";
@@ -14,15 +8,12 @@ import {
   ShoppingOutlined,
 } from "@ant-design/icons";
 import { getImgLogo } from "../../services/config";
-//import DrawerTranslate from "../Components/DrawerTranslate";
-//import logo from "../../assets/logo.webp";
 
 function UseHome() {
   const [language, setLanguage] = useState(localStorage.getItem("i18nextLng"));
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { idcompany, Company } = useParams();
   const [imgSrc, setImgSrc] = useState(null);
-  console.log("🚀 ~ UseHome ~ imgSrc:", imgSrc);
   const openDrawer = useCallback(() => {
     setIsDrawerOpen(true);
   }, []);
