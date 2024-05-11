@@ -612,7 +612,7 @@ export default function Dashboard({ atualizar, user, company }) {
     <div>
       <Button
         type="primary"
-        style={{width: 200}}
+        style={{ width: 200 }}
         onClick={() =>
           window.open(`/home/${companySelectd}/${company}`, "_blank")
         }
@@ -690,7 +690,7 @@ export default function Dashboard({ atualizar, user, company }) {
                   <div id="myqrcode">
                     <QRCode
                       errorLevel="H"
-                      value={`https://menu-digital.vercel.app/Cardapio/${companySelectd}/${company}`}
+                      value={`https://menu-digital.vercel.app/home/${companySelectd}/${company}`}
                       icon={atob(logo) || ""}
                       size={400}
                       iconSize={150}
