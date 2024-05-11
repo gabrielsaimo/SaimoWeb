@@ -67,7 +67,7 @@ const CollapseMenu = () => {
   }, [cardapio, imgSrc]);
 
   const renderImageCarousel = (img, index, id) =>
-    img[0].idreq === id && (
+    img[0]?.idreq === id && (
       <div className="img" key={index} style={({ zIndex: 5 }, styleText)}>
         <LazyLoad key={index} height={200} offset={100}>
           <Carousel
@@ -80,7 +80,7 @@ const CollapseMenu = () => {
             dotPosition="bottom"
             style={{
               width: "80vw",
-              maxWidth: 300,
+              maxWidth: 200,
               minWidth: "100px",
             }}
           >
@@ -88,7 +88,7 @@ const CollapseMenu = () => {
               .filter((img1) => img1.idreq && img1.idreq === id)
               .map((img1, index) => (
                 <Suspense key={index} fallback={<Spin />}>
-                  <div style={{ width: "80vw", maxWidth: 300 }}>
+                  <div style={{ width: "80vw", maxWidth: 200 }}>
                     <LazyLoadedImage
                       src={atob(img1.imagem)}
                       key={index}

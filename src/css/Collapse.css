@@ -4,8 +4,8 @@
   margin: 2px 15px 25px;
   padding: 10px;
   width: 46%;
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 200px;
+  max-width: 200px;
 }
 .ant-collapse-content-box {
   display: flex;

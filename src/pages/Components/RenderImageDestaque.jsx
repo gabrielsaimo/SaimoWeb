@@ -26,7 +26,7 @@ const carouselStyle = {
 };
 
 const RenderImageDestaque = (img, index, id) =>
-  img[0].idreq === id ? (
+  img[0]?.idreq === id ? (
     <div className="img" style={{ zIndex: 5 }} key={id}>
       <LazyLoad height={200} offset={100}>
         <Image.PreviewGroup preview={false}>
