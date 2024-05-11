@@ -78,6 +78,7 @@ html,
 .ant-notification-notice,
 .ant-descriptions-item-content,
 .ant-popover-inner,
+.ant-tour-inner,
 .ant-drawer-header,
 th {
   background-color: var(--primary-color) !important;
@@ -100,6 +101,15 @@ td.ant-table-cell.ant-table-cell-row-hover {
 .ant-drawer-body {
   background-color: var(--primary-color) !important;
   color: var(--secondary-color) !important;
+}
+
+.ant-btn {
+  color: var(--secondary-color) !important;
+  border: 1px solid var(--secondary-color);
+}
+.ant-btn-default {
+  color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color);
 }
 
 label.ant-form-item-required,
@@ -130,6 +140,11 @@ h1 {
 
 .ant-divider {
   background-color: var(--low-grey-color) !important;
+}
+
+.ant-popover-inner,
+.ant-modal-content {
+  border: 1px solid var(--secondary-color) !important;
 }
 
 .rgbButton {

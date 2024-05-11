@@ -6,7 +6,6 @@ import {
   Upload,
   message,
   Select,
-  Divider,
   Collapse,
   Affix,
 } from "antd";
@@ -174,9 +173,8 @@ const SlideRenderer = () => {
                 style={{
                   width: 300 - 21,
                   marginRight: 5,
-                  borderRadius: 10,
+                  borderRadius: 500,
                   marginLeft: 16,
-                  border: "solid 1px #000000",
                 }}
               />
               <Popconfirm
@@ -415,11 +413,10 @@ const SlideRenderer = () => {
                       src={atob(imgSrc?.imagem)}
                       alt="img"
                       style={{
-                        width: 100,
+                        width: 150,
                         marginRight: 5,
-                        borderRadius: 10,
+                        borderRadius: 500,
                         marginBottom: 20,
-                        border: "solid 1px #000000",
                       }}
                     />
                   )}

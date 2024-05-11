@@ -612,6 +612,16 @@ export default function Dashboard({ atualizar, user, company }) {
     <div>
       <Button
         type="primary"
+        style={{width: 200}}
+        onClick={() =>
+          window.open(`/home/${companySelectd}/${company}`, "_blank")
+        }
+      >
+        Pagina Inicial
+      </Button>
+      <Divider />
+      <Button
+        type="primary"
         title="Cardápio"
         onClick={() => window.open(`/Cozinha/${company}`, "_blank")}
       >
