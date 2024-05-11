@@ -14,11 +14,13 @@ import Forgot from "../pages/modules/Forgot";
 import Register from "../pages/modules/Register";
 import Delivery from "../pages/modules/Delivery";
 import Company from "../pages/modules/Company";
+import UserHome from "../pages/modules/UserHome";
 
 export default function Rotas() {
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
+      <Route path="/Home/:idcompany/:Company" element={<UserHome />} />
       <Route path="/Login/:msn?" element={<Login />} />
       <Route path="/Register/:plan?" element={<Register />} />
       <Route path="/Forgot" element={<Forgot />} />

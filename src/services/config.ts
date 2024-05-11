@@ -28,7 +28,7 @@ export const deleteConfig = async (data: config): Promise<void> => {
   await api.delete(`/config/${data.id}`);
 };
 
-export const getImgLogo = async (idcomapany: any): Promise<any> => {
+export const getImgLogo = async (idcomapany: number): Promise<any> => {
   const response = await api.get<any>("/cardapio/logo/" + idcomapany);
   return response.data;
 };
