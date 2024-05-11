@@ -6,12 +6,15 @@ import {
   Upload,
   message,
   Select,
+  Divider,
+  Collapse,
+  Affix,
 } from "antd";
 import ImgCrop from "antd-img-crop";
 import React, { useEffect, useMemo, useState } from "react";
 import { DeleteImg, InsertImg } from "../../services/cardapio.ws";
 import { getImgLogo } from "../../services/config";
-import { DeleteOutlined } from "@ant-design/icons";
+import { CaretRightOutlined, DeleteOutlined } from "@ant-design/icons";
 import { postStyles } from "../../services/user.ws";
 import { generate, green, presetPalettes, red } from "@ant-design/colors";
 import temaBlack from "../../assets/tinta.webp";
@@ -23,11 +26,13 @@ const genPresets = (presets = presetPalettes) =>
     label,
     colors,
   }));
+const { Panel } = Collapse;
 const SlideRenderer = () => {
   const [fundoColor1, setFundoColor1] = useState("#1677ff");
   const [fundoColor2, setFundoColor2] = useState("#1677ff");
   const [textColor, setTextColor] = useState("#1677ff");
   const [Tema, setTema] = useState("");
+  console.log("🚀 ~ SlideRenderer ~ Tema:", Tema);
   const [fileList, setFileList] = useState([]);
   const [totalImg, setTotalImg] = useState(0);
   const [coint, setCoint] = useState(0);
@@ -57,13 +62,13 @@ const SlideRenderer = () => {
   }, [dateUser.styles]);
 
   const fetchData = async () => {
-    const styles = `{"backgrondColor":"linear-gradient(90deg, ${fundobgColor1} 0%, ${fundobgColor2} 100%)","colorText":"${textbgColor}", "tema":"${temabgSelect}"}`;
+    const styles = `{"backgrondColor":"linear-gradient(90deg,${fundobgColor1} 0%,${fundobgColor2} 100%)","colorText":"${textbgColor}", "tema":"${temabgSelect}"}`;
     const data = {
       company: CompanyName.replace(/%20/g, " "),
       styles: styles.toString().replace(/\\/g, ""),
     };
 
-    const response = await postStyles(data);
+    await postStyles(data);
     const newDataUSer = {
       id: dateUser.id,
       name: dateUser.name,
@@ -76,6 +81,7 @@ const SlideRenderer = () => {
       styles: styles.toString().replace(/\\/g, ""),
     };
     localStorage.setItem("dateUser", JSON.stringify(newDataUSer));
+    message.success("Estilo salvo com sucesso!");
   };
 
   const onChange = ({ fileList: newFileList }) => {
@@ -102,6 +108,222 @@ const SlideRenderer = () => {
     () => (typeof Tema === "string" ? Tema : Tema.toHexString()),
     [Tema]
   );
+  const FundoStyle = {
+    marginTop: 16,
+    background:
+      "linear-gradient(90deg, " +
+      fundobgColor1 +
+      " 0%, " +
+      fundobgColor2 +
+      " 100%)",
+    width: 300,
+    height: 300,
+    borderRadius: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 20,
+    cursor: "pointer",
+    color: textbgColor,
+    border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
+  };
+  const FundoStyle2 = {
+    background:
+      "linear-gradient(90deg, " +
+      fundobgColor1 +
+      " 0%, " +
+      fundobgColor2 +
+      " 100%)",
+    width: 334,
+    height: 600,
+    borderRadius: 10,
+    color: textbgColor,
+    border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
+  };
+
+  const TextStyle = {
+    marginTop: 16,
+    background:
+      "linear-gradient(90deg, " +
+      fundobgColor1 +
+      " 0%, " +
+      fundobgColor2 +
+      " 100%)",
+    display: "flex",
+    alignItems: "center",
+    fontSize: 50,
+    cursor: "pointer",
+    color: textbgColor,
+    border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
+    borderRadius: 10,
+  };
+  const TextStyle2 = {
+    color: textbgColor,
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: "Logo",
+      children: (
+        <div>
+          {imgSrc && (
+            <>
+              <img
+                src={atob(imgSrc.imagem)}
+                alt="img"
+                style={{
+                  width: 300 - 21,
+                  marginRight: 5,
+                  borderRadius: 10,
+                  marginLeft: 16,
+                  border: "solid 1px #000000",
+                }}
+              />
+              <Popconfirm
+                title="Tem certeza que deseja excluir essa imagem?"
+                okText="Excluir"
+                okButtonProps={{ danger: true }}
+                onConfirm={() => confirmDeleteImg(idImg)}
+                cancelText="Cancelar"
+              >
+                <Button
+                  style={{
+                    backgroundColor: "#fc5f5f",
+                    width: 20,
+                    position: "absolute",
+                    marginLeft: -37,
+                  }}
+                >
+                  <DeleteOutlined
+                    size={24}
+                    style={{
+                      color: "#fff",
+                      marginLeft: -7,
+                    }}
+                  />
+                </Button>
+              </Popconfirm>
+            </>
+          )}
+        </div>
+      ),
+    },
+    {
+      key: "2",
+      label: "Cor de Fundo",
+      children: (
+        <div>
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            cor 1
+            <ColorPicker
+              value={fundoColor1}
+              presets={presets}
+              allowClear
+              onChange={setFundoColor1}
+            />
+            cor 2
+            <ColorPicker
+              value={fundoColor2}
+              presets={presets}
+              allowClear
+              onChange={setFundoColor2}
+            />
+          </div>
+          <ColorPicker disabled>
+            <div style={FundoStyle}>Fundo do Site</div>
+          </ColorPicker>
+        </div>
+      ),
+    },
+    {
+      key: "3",
+      label: "Cor do Texto",
+      children: (
+        <div>
+          <ColorPicker value={textColor} onChange={setTextColor}>
+            <p style={TextStyle}>Texto do Site</p>
+          </ColorPicker>
+        </div>
+      ),
+    },
+    {
+      key: "4",
+      label: "Fundo de Texto da Catégoria",
+      children: (
+        <div>
+          <div>
+            <Select value={Tema} onChange={setTema} style={{ width: 300 }}>
+              <Select.Option value="Black">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  Preto
+                  <img
+                    src={temaBlack}
+                    alt="img"
+                    style={{
+                      width: 80,
+                      height: 40,
+                      cursor: "pointer",
+                      marginLeft: 10,
+                    }}
+                    onClick={() => setTema("Black")}
+                  />
+                </div>
+              </Select.Option>
+              <Select.Option value="White">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  Branco
+                  <img
+                    src={temaWhite}
+                    alt="img"
+                    style={{
+                      width: 80,
+                      height: 40,
+                      cursor: "pointer",
+                      marginLeft: 10,
+                    }}
+                    onClick={() => setTema("White")}
+                  />
+                </div>
+              </Select.Option>
+              <Select.Option value="Blue">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  Azul
+                  <img
+                    src={temaBlue}
+                    alt="img"
+                    style={{
+                      width: 80,
+                      height: 40,
+                      cursor: "pointer",
+                      marginLeft: 10,
+                    }}
+                    onClick={() => setTema("Blue")}
+                  />
+                </div>
+              </Select.Option>
+              <Select.Option value="Brown">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  Marrom
+                  <img
+                    src={temaBrown}
+                    alt="img"
+                    style={{
+                      width: 80,
+                      height: 40,
+                      cursor: "pointer",
+                      marginLeft: 10,
+                    }}
+                    onClick={() => setTema("Brown")}
+                  />
+                </div>
+              </Select.Option>
+            </Select>
+          </div>
+        </div>
+      ),
+    },
+  ];
 
   useEffect(() => {
     getImgLogos();
@@ -137,42 +359,6 @@ const SlideRenderer = () => {
     if (code) await InsertImg(body);
   };
 
-  const FundoStyle = {
-    marginTop: 16,
-    background:
-      "linear-gradient(90deg, " +
-      fundobgColor1 +
-      " 0%, " +
-      fundobgColor2 +
-      " 100%)",
-    width: 300,
-    height: 300,
-    borderRadius: 10,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: 20,
-    cursor: "pointer",
-    color: textbgColor,
-    border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
-  };
-
-  const TextStyle = {
-    marginTop: 16,
-    background:
-      "linear-gradient(90deg, " +
-      fundobgColor1 +
-      " 0%, " +
-      fundobgColor2 +
-      " 100%)",
-    display: "flex",
-    alignItems: "center",
-    fontSize: 50,
-    cursor: "pointer",
-    color: textbgColor,
-    border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
-    borderRadius: 10,
-  };
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -194,147 +380,103 @@ const SlideRenderer = () => {
   }
   return (
     <div style={{ height: "85vh" }}>
-      <div style={{ display: "flex" }}>
-        <div>
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            cor 1
-            <ColorPicker
-              value={fundoColor1}
-              presets={presets}
-              allowClear
-              onChange={setFundoColor1}
-            />
-            cor 2
-            <ColorPicker
-              value={fundoColor2}
-              presets={presets}
-              allowClear
-              onChange={setFundoColor2}
-            />
-          </div>
+      <Affix offsetTop={10} style={{ position: "fixed", right: 10 }}>
+        <Button type="primary" onClick={() => fetchData()}>
+          Salvar
+        </Button>
+      </Affix>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
 
-          <div>
-            <ColorPicker>
-              <div style={FundoStyle}>Fundo do Site</div>
-            </ColorPicker>
-            <ColorPicker value={textColor} onChange={setTextColor}>
-              <p style={TextStyle}>Texto do Site</p>
-            </ColorPicker>
-          </div>
-
-          <div>
-            <div>
-              <Select value={Tema} onChange={setTema} style={{ width: 300 }}>
-                <Select.Option value="Black">
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    Preto
-                    <img
-                      src={temaBlack}
-                      alt="img"
-                      style={{
-                        width: 80,
-                        height: 40,
-                        cursor: "pointer",
-                        marginLeft: 10,
-                      }}
-                      onClick={() => setTema("Black")}
-                    />
-                  </div>
-                </Select.Option>
-                <Select.Option value="white">
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    Branco
-                    <img
-                      src={temaWhite}
-                      alt="img"
-                      style={{
-                        width: 80,
-                        height: 40,
-                        cursor: "pointer",
-                        marginLeft: 10,
-                      }}
-                      onClick={() => setTema("white")}
-                    />
-                  </div>
-                </Select.Option>
-                <Select.Option value="Blue">
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    Azul
-                    <img
-                      src={temaBlue}
-                      alt="img"
-                      style={{
-                        width: 80,
-                        height: 40,
-                        cursor: "pointer",
-                        marginLeft: 10,
-                      }}
-                      onClick={() => setTema("Blue")}
-                    />
-                  </div>
-                </Select.Option>
-                <Select.Option value="Brown">
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    Marrom
-                    <img
-                      src={temaBrown}
-                      alt="img"
-                      style={{
-                        width: 80,
-                        height: 40,
-                        cursor: "pointer",
-                        marginLeft: 10,
-                      }}
-                      onClick={() => setTema("Brown")}
-                    />
-                  </div>
-                </Select.Option>
-              </Select>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          {imgSrc && (
+          flex: 1,
+        }}
+      >
+        <Collapse
+          items={items}
+          defaultActiveKey={1}
+          style={{ minWidth: 334, marginTop: 20, marginRight: 20 }}
+        />
+        <div style={{ marginTop: 20 }}>
+          <ColorPicker disabled style={{ minWidth: 334 }}>
             <>
-              <img
-                src={atob(imgSrc.imagem)}
-                alt="img"
-                style={{
-                  width: 300,
-                  marginRight: 5,
-                  borderRadius: 10,
-                  marginLeft: 16,
-                  border: "solid 1px #000000",
-                }}
-              />
-              <Popconfirm
-                title="Tem certeza que deseja excluir essa imagem?"
-                okText="Excluir"
-                okButtonProps={{ danger: true }}
-                onConfirm={() => confirmDeleteImg(idImg)}
-                cancelText="Cancelar"
-              >
-                <Button
+              <div style={FundoStyle2}>
+                <div
                   style={{
-                    backgroundColor: "#fc5f5f",
-                    width: 20,
-                    position: "absolute",
-                    marginLeft: -35,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    marginTop: 16,
                   }}
                 >
-                  <DeleteOutlined
-                    size={24}
+                  {imgSrc?.imagem && (
+                    <img
+                      src={atob(imgSrc?.imagem)}
+                      alt="img"
+                      style={{
+                        width: 100,
+                        marginRight: 5,
+                        borderRadius: 10,
+                        marginBottom: 20,
+                        border: "solid 1px #000000",
+                      }}
+                    />
+                  )}
+                  <Collapse
+                    bordered={false}
+                    header={<p style={TextStyle2}>Categoria</p>}
+                    easing="ease-in-out"
+                    waitForAnimate={true}
+                    defaultActiveKey={1}
+                    destroyInactivePanel={false}
+                    expandIconPosition="end"
+                    expandIcon={({ isActive }) => (
+                      <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                    )}
                     style={{
-                      color: "#fff",
-                      marginLeft: -7,
+                      background: "transparent",
+                      width: 334,
                     }}
-                  />
-                </Button>
-              </Popconfirm>
+                  >
+                    <Panel
+                      id={1}
+                      style={
+                        TextStyle2 && {
+                          fontWeight: "bold",
+                          backgroundImage: `url(${
+                            Tema == "Black"
+                              ? temaBlack
+                              : Tema === "White"
+                              ? temaWhite
+                              : Tema === "Blue"
+                              ? temaBlue
+                              : Tema === "Brown"
+                              ? temaBrown
+                              : temaBlack
+                          })`,
+                          textAlign: "center",
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: 150,
+                          backgroundPositionX: "50%",
+                          backgroundPositionY: -8,
+                          flexWrap: "wrap",
+                        }
+                      }
+                      header={<text style={TextStyle2}>Categoria</text>}
+                    >
+                      <p style={TextStyle2}>Texto do Site123</p>
+                    </Panel>
+                  </Collapse>
+
+                  <p style={TextStyle2}>Texto do Site</p>
+                </div>
+              </div>
             </>
-          )}
+          </ColorPicker>
         </div>
+
         <div style={{ marginLeft: 16 }}>
           {totalImg < 1 && (
             <ImgCrop>
@@ -354,13 +496,8 @@ const SlideRenderer = () => {
           )}
         </div>
       </div>
-      <Button
-        type="primary"
-        style={{ marginLeft: 16 }}
-        onClick={() => fetchData()}
-      >
-        Salvar
-      </Button>
+
+      <div style={{ marginTop: 20 }}></div>
     </div>
   );
 };
