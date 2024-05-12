@@ -49,7 +49,6 @@ import {
   putCardapio,
 } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
-import { getImgLogo } from "../../services/config";
 
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
@@ -66,7 +65,7 @@ export default function Dashboard({ atualizar, user, company }) {
   if (!validaEmpresa) {
     return (window.location.href = "/Login/error");
   }
-
+  const imgCache = JSON.parse(localStorage.getItem("companyLogo"));
   const [fileList, setFileList] = useState([]);
   const [cardapio, setCardapio] = useState([]);
   const [modalNewAction, setModalNewAction] = useState(false);
@@ -127,15 +126,6 @@ export default function Dashboard({ atualizar, user, company }) {
       reader.readAsDataURL(fileList[0].originFileObj);
     }
   }, [fileList[0]]);
-
-  useEffect(() => {
-    const fetchLogo = async () => {
-      const img = await getImgLogo(companySelectd);
-      setLogo(img[0].imagem);
-    };
-
-    fetchLogo();
-  }, []);
 
   const insertImg = async (code) => {
     let body = {
@@ -686,12 +676,12 @@ export default function Dashboard({ atualizar, user, company }) {
                   justifyContent: "center",
                 }}
               >
-                {logo && (
+                {imgCache && (
                   <div id="myqrcode">
                     <QRCode
                       errorLevel="H"
                       value={`https://menu-digital.vercel.app/home/${companySelectd}/${company}`}
-                      icon={atob(logo) || ""}
+                      icon={atob(imgCache) || ""}
                       size={400}
                       iconSize={150}
                     />

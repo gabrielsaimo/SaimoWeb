@@ -26,11 +26,11 @@ import Users from "./Users";
 import LayoutSite from "./LayoutSite";
 import { useParams } from "react-router-dom";
 import "../../css/MenuDashboard.css";
-import { getImgLogo } from "../../services/config";
 import Company from "./Company";
 
 const MenuDashboard = () => {
   const { CompanyParams } = useParams();
+  const imgCache = JSON.parse(localStorage.getItem("companyLogo"));
   const [collapsed, setCollapsed] = useState(false);
   const [tela, setTela] = useState(1);
   const {
@@ -41,11 +41,9 @@ const MenuDashboard = () => {
   const [UserCategoria, setUserCategoria] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const { Header, Sider, Content } = Layout;
-  const [imgSrc, setImgSrc] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    getImgLogos();
     function handleResize() {
       setIsMobile(window.innerWidth < 768); // Defina aqui o ponto de quebra para dispositivos móveis
       setCollapsed(window.innerWidth < 768);
@@ -59,19 +57,6 @@ const MenuDashboard = () => {
       window.removeEventListener("resize", handleResize); // Remove o listener ao desmontar o componente
     };
   }, []);
-
-  const getImgLogos = async () => {
-    const idcompany = JSON.parse(
-      localStorage.getItem("dateUser")
-    ).user_profile_json;
-    idcompany.forEach(async (company) => {
-      const img = await getImgLogo(company.idcompany);
-
-      if (img && CompanyParams === company.company) {
-        setImgSrc(img[0]);
-      }
-    });
-  };
 
   const cachedContent = useMemo(
     () => ({
@@ -114,10 +99,10 @@ const MenuDashboard = () => {
             {userNome} - {UserCategoria}
           </div>
           <div style={{ cursor: "pointer" }} onClick={() => setShowModal(true)}>
-            {imgSrc ? (
+            {imgCache ? (
               <div className="company-card-container">
                 <img
-                  src={atob(imgSrc?.imagem)}
+                  src={atob(imgCache)}
                   alt="img"
                   style={{
                     width: 50,

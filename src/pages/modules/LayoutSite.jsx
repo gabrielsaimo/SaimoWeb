@@ -159,12 +159,49 @@ const SlideRenderer = () => {
     color: textbgColor,
   };
 
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
+  async function confirmDeleteImg(record) {
+    await DeleteImg(record, dateUser.company);
+    message.success("Imagem deletada com sucesso!");
+    setImgSrc(null);
+  }
+
   const items = [
     {
       key: "1",
       label: "Logo",
       children: (
         <div>
+          <div>
+            {totalImg < 1 && (
+              <ImgCrop>
+                <Upload
+                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                  listType="picture-card"
+                  fileList={fileList}
+                  onChange={(e) => onChange(e)}
+                  onPreview={onPreview}
+                  accept="image/*"
+                >
+                  {fileList.length < 1 && <p>+add Logo</p>}
+                </Upload>
+              </ImgCrop>
+            )}
+          </div>
           {imgSrc && (
             <>
               <img
@@ -356,25 +393,6 @@ const SlideRenderer = () => {
     if (code) await InsertImg(body);
   };
 
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
-
-  async function confirmDeleteImg(record) {
-    await DeleteImg(record, dateUser.company);
-    message.success("Imagem deletada com sucesso!");
-  }
   return (
     <div style={{ height: "85vh" }}>
       <Affix offsetTop={10} style={{ position: "fixed", right: 10 }}>
@@ -472,28 +490,7 @@ const SlideRenderer = () => {
             </>
           </ColorPicker>
         </div>
-
-        <div style={{ marginLeft: 16 }}>
-          {totalImg < 1 && (
-            <ImgCrop>
-              <Upload
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                listType="picture-card"
-                fileList={fileList}
-                onChange={(e) => onChange(e)}
-                onPreview={onPreview}
-                accept="image/*"
-              >
-                {fileList.length < 1 && (
-                  <p className="ant-empty-description">+add Imagem</p>
-                )}
-              </Upload>
-            </ImgCrop>
-          )}
-        </div>
       </div>
-
-      <div style={{ marginTop: 20 }}></div>
     </div>
   );
 };

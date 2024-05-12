@@ -109,7 +109,9 @@ export default function Company() {
             {companys?.user_profile_json.map((company) => (
               <div
                 key={company?.id}
-                onClick={() => CompanySelectd(company)}
+                onClick={() =>
+                  CompanySelectd(company, images[company?.idcompany])
+                }
                 className="company-card background-page"
               >
                 {images[company?.idcompany] ? (
@@ -131,7 +133,13 @@ export default function Company() {
             ))}
             {companys.categoria === "ADM" ||
             companys.categoria === "Gerência" ? (
-              <div style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginLeft: 22,
+                }}
+              >
                 <div
                   className="company-card background-page"
                   style={{ display: "flex", justifyContent: "center" }}
