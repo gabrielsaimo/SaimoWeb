@@ -9,6 +9,7 @@ import {
   Collapse,
   Affix,
 } from "antd";
+import "../../css/LayoutSite.css";
 import ImgCrop from "antd-img-crop";
 import React, { useEffect, useMemo, useState } from "react";
 import { DeleteImg, InsertImg } from "../../services/cardapio.ws";

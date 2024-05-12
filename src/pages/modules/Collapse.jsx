@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from "react";
-import { Collapse, Carousel, Spin } from "antd";
+import { Collapse, Carousel, Spin, Image, Input } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import LazyLoad from "react-lazyload";
 import "../../css/Collapse.css";
@@ -24,6 +24,7 @@ const CollapseMenu = () => {
   const [cardapioCategory, setCardapioCategory] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
   const [styles, setStyles] = useState("");
+  const [newCardapio, setNewCardapio] = useState([]);
 
   const getStylesUser = async () => {
     const resp = await getStyles(CompanyName);
@@ -52,10 +53,33 @@ const CollapseMenu = () => {
     color: styles.colorText,
   };
 
+  const searchNameCardapio = (text) => {
+    if (text === "") {
+      setNewCardapio(cardapio);
+      return;
+    }
+    const array = cardapio.filter(
+      (record) =>
+        !text ||
+        record["name"].toLowerCase().indexOf(text.toLowerCase()) > -1 ||
+        !text ||
+        record["description"].toLowerCase().indexOf(text.toLowerCase()) > -1 ||
+        !text ||
+        record["id"].toString().indexOf(text.toLowerCase()) > -1
+    );
+    setNewCardapio(array);
+
+    return array;
+  };
+
+  useEffect(() => {
+    setNewCardapio(cardapio);
+  }, [cardapio]);
+
   const memoizedImgSrc = useMemo(() => {
-    if (cardapio.length > 0 && imgSrc.length === 0) {
+    if (newCardapio.length > 0 && imgSrc.length === 0) {
       const images = [];
-      cardapio.forEach(async (item) => {
+      newCardapio.forEach(async (item) => {
         if (!item.ids) return;
         const img = await getImgCardapio(item.id, item.ids);
         setImgSrc((prevImgSrc) => [...prevImgSrc, img]);
@@ -64,47 +88,52 @@ const CollapseMenu = () => {
       return images;
     }
     return imgSrc;
-  }, [cardapio, imgSrc]);
+  }, [newCardapio, imgSrc]);
 
   const renderImageCarousel = (img, index, id) =>
     img[0]?.idreq === id && (
-      <div className="img" key={index} style={({ zIndex: 5 }, styleText)}>
+      <div className="img" key={index} style={{ zIndex: 5 }}>
         <LazyLoad key={index} height={200} offset={100}>
-          <Carousel
-            autoplay={true}
-            autoplaySpeed={2000}
-            showArrows={true}
-            Swiping={true}
-            draggable={true}
-            effect="fade"
-            dotPosition="bottom"
-            style={{
-              width: "80vw",
-              maxWidth: 200,
-              minWidth: "100px",
-            }}
-          >
-            {img
-              .filter((img1) => img1.idreq && img1.idreq === id)
-              .map((img1, index) => (
-                <Suspense key={index} fallback={<Spin />}>
-                  <div style={{ width: "80vw", maxWidth: 200 }}>
-                    <LazyLoadedImage
-                      src={atob(img1.imagem)}
-                      key={index}
-                      style={{
-                        borderRadius: 10,
-                        objectFit: "fill",
-                        minWidth: "100px",
-                      }}
-                      alt="img"
-                      width={"100%"}
-                      loading="lazy"
-                    />
-                  </div>
-                </Suspense>
-              ))}
-          </Carousel>
+          <Image.PreviewGroup>
+            <Carousel
+              autoplay={true}
+              autoplaySpeed={2000}
+              showArrows={true}
+              Swiping={true}
+              draggable={true}
+              effect="fade"
+              dotPosition="bottom"
+              style={{
+                width: "45vw",
+                maxWidth: 250,
+                minWidth: "100px",
+                color: "#fff",
+              }}
+            >
+              {img
+                .filter((img1) => img1.idreq && img1.idreq === id)
+                .map((img1, index) => (
+                  <Suspense key={index} fallback={<Spin />}>
+                    <div style={{ width: "45vw", maxWidth: 250 }}>
+                      <LazyLoadedImage
+                        src={atob(img1.imagem)}
+                        key={index}
+                        style={{
+                          borderRadius: 10,
+                          color: "#fff",
+                          minWidth: "100px",
+                          objectFit: "cover",
+                        }}
+                        alt="img"
+                        objectFit="cover"
+                        width={"100%"}
+                        loading="lazy"
+                      />
+                    </div>
+                  </Suspense>
+                ))}
+            </Carousel>
+          </Image.PreviewGroup>
         </LazyLoad>
       </div>
     );
@@ -148,20 +177,23 @@ const CollapseMenu = () => {
                   })`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: 150,
+                  minWidth: 360,
                   backgroundPositionX: "50%",
                   backgroundPositionY: -8,
                   flexWrap: "wrap",
                 }}
-                header={item1.name}
+                header={
+                  <text style={{ color: styles.colorText }}>{item1.name}</text>
+                }
               >
-                {cardapio
+                {newCardapio
                   .filter(
                     (categoria) =>
                       categoria.category === item1.name && categoria.active
                   )
                   .map((categoria, idx) => (
                     <div key={idx} className="border">
-                      <div style={{ display: "flex", flexWrap: "wrap" }}>
+                      <div style={{ display: "flex" }}>
                         {categoria.ids &&
                           memoizedImgSrc.map((img1, index) =>
                             renderImageCarousel(img1, index, categoria.id)
@@ -176,7 +208,24 @@ const CollapseMenu = () => {
                               >
                                 {categoria.name}
                               </p>
+                              <p
+                                className="name georgia-font"
+                                style={{
+                                  backgroundColor: "#FFFFFF70",
+                                  width: 40,
+                                  textAlign: "center",
+                                  height: 20,
+                                  fontSize: 12,
+                                  padding: 5,
+                                  color: styles.colorText,
+                                  borderRadius: 10,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                N° {categoria.id}
+                              </p>
                             </div>
+
                             <div className="flex" style={styleText}>
                               {categoria.description.length > 25 && (
                                 <>
@@ -237,7 +286,27 @@ const CollapseMenu = () => {
     });
   };
 
-  return <div style={{ margin: 5 }}>{renderCardapioItems()}</div>;
+  return (
+    <div style={{ margin: 5 }}>
+      {[
+        <div className="shearch">
+          <Input
+            type="text"
+            style={{
+              width: 300,
+              marginBottom: 10,
+              borderRadius: 10,
+              borderColor: styles.colorText,
+              color: styles.colorText,
+            }}
+            placeholder="Pesquisar"
+            onChange={(e) => searchNameCardapio(e.target.value)}
+          />
+        </div>,
+        renderCardapioItems(),
+      ]}
+    </div>
+  );
 };
 
 export default CollapseMenu;

@@ -1,11 +1,11 @@
 .border {
   border: 3px solid #3b3b3b;
   border-radius: 10px;
-  margin: 2px 15px 25px;
-  padding: 10px;
-  width: 46%;
-  min-width: 200px;
-  max-width: 200px;
+  margin: 2px 0px 25px;
+  padding: 5px;
+  max-width: 500px;
+  min-width: 330px;
+  width: 100%;
 }
 .ant-collapse-content-box {
   display: flex;
@@ -29,6 +29,10 @@
   font-weight: bold;
   color: transparent;
   margin-left: 10px;
+}
+
+.hh {
+  height: 1px;
 }
 
 .name {
