@@ -34,7 +34,8 @@
     "socket.io-client": "^4.7.0",
     "styled-components": "^5.3.6",
     "typescript": "^4.9.4",
-    "web-vitals": "^3.0.4"
+    "web-vitals": "^3.0.4",
+    "bun-vercel": "^1.0.0-alpha.5"
   },
   "scripts": {
     "start": "react-scripts start",
