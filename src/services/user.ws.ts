@@ -51,8 +51,13 @@ export const postStyles = async (data: any): Promise<any> => {
   return response.data;
 };
 
-export const getStyles = async (company: string): Promise<any[]> => {
-  const response = await api.get<User[]>(`/user/styles/${company}`);
+export const getStyles = async (
+  company: string,
+  idcompany: number
+): Promise<any[]> => {
+  const response = await api.get<User[]>(
+    `/user/styles/${idcompany}/${company}`
+  );
   return response.data;
 };
 

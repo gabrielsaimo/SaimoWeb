@@ -27,7 +27,7 @@ const CollapseMenu = () => {
   const [newCardapio, setNewCardapio] = useState([]);
 
   const getStylesUser = async () => {
-    const resp = await getStyles(CompanyName);
+    const resp = await getStyles(CompanyName, idcompany);
     setStyles(JSON.parse(resp[0].styles));
   };
   useEffect(() => {

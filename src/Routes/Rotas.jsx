@@ -24,15 +24,15 @@ export default function Rotas() {
       <Route path="/Login/:msn?" element={<Login />} />
       <Route path="/Register/:plan?" element={<Register />} />
       <Route path="/Forgot" element={<Forgot />} />
+      <Route path="/Delivery/:idcompany/:Company" element={<Delivery />} />
       <Route path="/Company" element={<Company />} />
       <Route path="/Dashboard/:CompanyParams" element={<MenuDashboard />} />
       <Route path="/Garçom/:Company" element={<Garçom />} />
       <Route path="/Catalogo/:idcompany/:Company" element={<App />} />
       <Route path="/Cardapio/:idcompany/:Company" element={<App />} />
-      <Route path="/Delivery/:Company" element={<Delivery />} />
       <Route path="/privacy-policy" element={<Polices />} />
-      <Route path="/*" element={<Error404 />}></Route>
-      <Route path="*" element={<Error404 />}></Route>
+      <Route path="/*" element={<Error404 />} />
+      <Route path="*" element={<Error404 />} />
       <Route path="/Cozinha/:Company" element={<Cozinha />}>
         "Cozinha"
       </Route>

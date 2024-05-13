@@ -65,7 +65,8 @@ export default function Dashboard({ atualizar, user, company }) {
   if (!validaEmpresa) {
     return (window.location.href = "/Login/error");
   }
-  const imgCache = JSON.parse(localStorage.getItem("companyLogo"));
+
+  const imgCache = localStorage.getItem("companyLogo");
   const [fileList, setFileList] = useState([]);
   const [cardapio, setCardapio] = useState([]);
   const [modalNewAction, setModalNewAction] = useState(false);
@@ -676,12 +677,12 @@ export default function Dashboard({ atualizar, user, company }) {
                   justifyContent: "center",
                 }}
               >
-                {imgCache && (
+                {imgCache !== "undefined" && (
                   <div id="myqrcode">
                     <QRCode
                       errorLevel="H"
                       value={`https://menu-digital.vercel.app/home/${companySelectd}/${company}`}
-                      icon={atob(imgCache) || ""}
+                      icon={atob(JSON.parse(imgCache)) || ""}
                       size={400}
                       iconSize={150}
                     />

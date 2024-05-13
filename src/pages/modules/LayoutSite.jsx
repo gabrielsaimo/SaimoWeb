@@ -64,6 +64,7 @@ const SlideRenderer = () => {
     const styles = `{"backgrondColor":"linear-gradient(90deg,${fundobgColor1} 0%,${fundobgColor2} 100%)","colorText":"${textbgColor}", "tema":"${temabgSelect}"}`;
     const data = {
       company: CompanyName.replace(/%20/g, " "),
+      idcompany: company.idcompany,
       styles: styles.toString().replace(/\\/g, ""),
     };
 

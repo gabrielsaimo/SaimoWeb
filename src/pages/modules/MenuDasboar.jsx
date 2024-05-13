@@ -30,7 +30,9 @@ import Company from "./Company";
 
 const MenuDashboard = () => {
   const { CompanyParams } = useParams();
-  const imgCache = JSON.parse(localStorage.getItem("companyLogo"));
+  const localing = localStorage.getItem("companyLogo");
+  const imgCache = localing;
+  console.log("🚀 ~ MenuDashboard ~ imgCache:", imgCache);
   const [collapsed, setCollapsed] = useState(false);
   const [tela, setTela] = useState(1);
   const {
@@ -99,10 +101,10 @@ const MenuDashboard = () => {
             {userNome} - {UserCategoria}
           </div>
           <div style={{ cursor: "pointer" }} onClick={() => setShowModal(true)}>
-            {imgCache ? (
+            {imgCache !== "undefined" ? (
               <div className="company-card-container">
                 <img
-                  src={atob(imgCache)}
+                  src={atob(JSON.parse(imgCache))}
                   alt="img"
                   style={{
                     width: 50,
