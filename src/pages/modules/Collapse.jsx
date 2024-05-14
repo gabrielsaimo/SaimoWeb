@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { Collapse, Carousel, Spin, Image, Input } from "antd";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CaretRightOutlined } from "@ant-design/icons";
 import LazyLoad from "react-lazyload";
 import "../../css/Collapse.css";
@@ -139,155 +140,176 @@ const CollapseMenu = () => {
     );
 
   const renderCardapioItems = () => {
-    return cardapioCategory.map((item1, index) => {
-      const key = index;
-      const filteredItems = newCardapio.filter(
-        (categoria) => categoria.category === item1.name && categoria.active
-      );
+    return (
+      <TransitionGroup>
+        {cardapioCategory.map((item1, index) => {
+          const key = index;
+          const filteredItems = newCardapio.filter(
+            (categoria) => categoria.category === item1.name && categoria.active
+          );
 
-      if (filteredItems.length === 0) {
-        return null;
-      }
+          if (filteredItems.length === 0) {
+            return null;
+          }
 
-      return (
-        <div key={key}>
-          <Suspense fallback={<Spin />}>
-            <Collapse
-              bordered={false}
-              header={item1.name}
-              easing="ease-in-out"
-              waitForAnimate={true}
-              defaultActiveKey={Array.from({ length: 1 }, (_, i) => String(i))}
-              destroyInactivePanel={false}
-              expandIconPosition="end"
-              expandIcon={({ isActive }) => (
-                <CaretRightOutlined rotate={isActive ? 90 : 0} />
-              )}
-              style={{
-                background: "transparent",
-              }}
-            >
-              <Panel
-                id={key}
-                style={{
-                  color: styles.colorText,
-                  fontWeight: "bold",
-                  backgroundImage: `url(${
-                    styles.tema == "Black"
-                      ? temaBlack
-                      : styles.tema === "White"
-                      ? temaWhite
-                      : styles.tema === "Blue"
-                      ? temaBlue
-                      : styles.tema === "Brown"
-                      ? temaBrown
-                      : temaBlack
-                  })`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: 150,
-                  minWidth: 360,
-                  backgroundPositionX: "50%",
-                  backgroundPositionY: -8,
-                  flexWrap: "wrap",
-                }}
-                header={
-                  <text style={{ color: styles.colorText }}>{item1.name}</text>
-                }
-              >
-                {filteredItems.map((categoria, idx) => (
-                  <div
-                    key={idx}
-                    className="border"
-                    style={{ border: `3px solid ${styles.borderColor}` }}
+          return (
+            <CSSTransition key={key} timeout={500} classNames="item">
+              <div key={key}>
+                <Suspense fallback={<Spin />}>
+                  <Collapse
+                    bordered={false}
+                    header={item1.name}
+                    easing="ease-in-out"
+                    waitForAnimate={true}
+                    defaultActiveKey={Array.from({ length: 1 }, (_, i) =>
+                      String(i)
+                    )}
+                    destroyInactivePanel={false}
+                    expandIconPosition="end"
+                    expandIcon={({ isActive }) => (
+                      <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                    )}
+                    style={{
+                      background: "transparent",
+                    }}
                   >
-                    <div style={{ display: "flex" }}>
-                      {categoria.ids &&
-                        memoizedImgSrc.map((img1, index) =>
-                          renderImageCarousel(img1, index, categoria.id)
-                        )}
-
-                      <div className="flex">
-                        <div style={{ width: "100%", display: "contents" }}>
-                          <div>
-                            <p
-                              className="p_1 name georgia-font"
-                              style={styleText}
-                            >
-                              {categoria.name}
-                            </p>
-                            <p
-                              className="name georgia-font"
-                              style={{
-                                backgroundColor: "#FFFFFF70",
-                                width: 40,
-                                textAlign: "center",
-                                height: 20,
-                                fontSize: 12,
-                                padding: 5,
-                                color: styles.colorText,
-                                borderRadius: 10,
-                                fontWeight: "bold",
-                              }}
-                            >
-                              N° {categoria.number}
-                            </p>
-                          </div>
-
-                          <div
-                            className="flex"
-                            style={{ color: styles.colorText, marginTop: 15 }}
-                          >
-                            {categoria.description.length > 25 && (
-                              <>
-                                <div className="sub" style={styleText}>
-                                  {categoria.sub}
-                                </div>
-                                <div className="description" style={styleText}>
-                                  {categoria.description}
-                                </div>
-                              </>
-                            )}
-                            {categoria.description.length <= 25 && (
-                              <>
-                                <div className="sub" style={styleText}>
-                                  {categoria.sub}
-                                </div>
-                                <div className="description2" style={styleText}>
-                                  {categoria.description}
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </div>
+                    <Panel
+                      id={key}
+                      style={{
+                        color: styles.colorText,
+                        fontWeight: "bold",
+                        backgroundImage: `url(${
+                          styles.tema == "Black"
+                            ? temaBlack
+                            : styles.tema === "White"
+                            ? temaWhite
+                            : styles.tema === "Blue"
+                            ? temaBlue
+                            : styles.tema === "Brown"
+                            ? temaBrown
+                            : temaBlack
+                        })`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: 150,
+                        minWidth: 360,
+                        backgroundPositionX: "50%",
+                        backgroundPositionY: -8,
+                        flexWrap: "wrap",
+                      }}
+                      header={
+                        <text style={{ color: styles.colorText }}>
+                          {item1.name}
+                        </text>
+                      }
+                    >
+                      {filteredItems.map((categoria, idx) => (
                         <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "end",
-                            minWidth: "100%",
-                            alignItems: "flex-end",
-                          }}
+                          key={idx}
+                          className="border"
+                          style={{ border: `3px solid ${styles.borderColor}` }}
                         >
-                          <p
-                            className="p_1 price georgia-bold-font"
-                            style={styleText}
-                          >
-                            {`R$ ${
-                              categoria.price % 1 !== 0
-                                ? categoria.price.replace(".", ",")
-                                : categoria.price + ",00"
-                            }`}
-                          </p>
+                          <div style={{ display: "flex" }}>
+                            {categoria.ids &&
+                              memoizedImgSrc.map((img1, index) =>
+                                renderImageCarousel(img1, index, categoria.id)
+                              )}
+
+                            <div className="flex">
+                              <div
+                                style={{ width: "100%", display: "contents" }}
+                              >
+                                <div>
+                                  <p
+                                    className="p_1 name georgia-font"
+                                    style={styleText}
+                                  >
+                                    {categoria.name}
+                                  </p>
+                                  <p
+                                    className="name georgia-font"
+                                    style={{
+                                      backgroundColor: "#FFFFFF70",
+                                      width: 40,
+                                      textAlign: "center",
+                                      height: 20,
+                                      fontSize: 12,
+                                      padding: 5,
+                                      color: styles.colorText,
+                                      borderRadius: 10,
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    N° {categoria.number}
+                                  </p>
+                                </div>
+
+                                <div
+                                  className="flex"
+                                  style={{
+                                    color: styles.colorText,
+                                    marginTop: 15,
+                                  }}
+                                >
+                                  {categoria.description.length > 25 && (
+                                    <>
+                                      <div className="sub" style={styleText}>
+                                        {categoria.sub}
+                                      </div>
+                                      <div
+                                        className="description"
+                                        style={styleText}
+                                      >
+                                        {categoria.description}
+                                      </div>
+                                    </>
+                                  )}
+                                  {categoria.description.length <= 25 && (
+                                    <>
+                                      <div className="sub" style={styleText}>
+                                        {categoria.sub}
+                                      </div>
+                                      <div
+                                        className="description2"
+                                        style={styleText}
+                                      >
+                                        {categoria.description}
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "end",
+                                  minWidth: "100%",
+                                  alignItems: "flex-end",
+                                }}
+                              >
+                                <p
+                                  className="p_1 price georgia-bold-font"
+                                  style={styleText}
+                                >
+                                  {`R$ ${
+                                    categoria.price % 1 !== 0
+                                      ? categoria.price.replace(".", ",")
+                                      : categoria.price + ",00"
+                                  }`}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </Panel>
-            </Collapse>
-          </Suspense>
-        </div>
-      );
-    });
+                      ))}
+                    </Panel>
+                  </Collapse>
+                </Suspense>
+              </div>
+            </CSSTransition>
+          );
+        })}
+      </TransitionGroup>
+    );
   };
 
   return (
