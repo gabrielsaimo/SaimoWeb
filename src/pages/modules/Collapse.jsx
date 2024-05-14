@@ -192,7 +192,11 @@ const CollapseMenu = () => {
                       categoria.category === item1.name && categoria.active
                   )
                   .map((categoria, idx) => (
-                    <div key={idx} className="border">
+                    <div
+                      key={idx}
+                      className="border"
+                      style={{ border: `3px solid ${styles.borderColor}` }}
+                    >
                       <div style={{ display: "flex" }}>
                         {categoria.ids &&
                           memoizedImgSrc.map((img1, index) =>
