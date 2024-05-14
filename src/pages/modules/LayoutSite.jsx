@@ -8,8 +8,10 @@ import {
   Select,
   Collapse,
   Affix,
+  Input,
 } from "antd";
 import "../../css/LayoutSite.css";
+import logo from "../../assets/logo.webp";
 import ImgCrop from "antd-img-crop";
 import React, { useEffect, useMemo, useState } from "react";
 import { DeleteImg, InsertImg } from "../../services/cardapio.ws";
@@ -89,6 +91,9 @@ const SlideRenderer = (atualizar) => {
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     setCoint(coint + 1);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
   const fundobgColor1 = useMemo(
     () =>
@@ -452,12 +457,28 @@ const SlideRenderer = (atualizar) => {
                       }}
                     />
                   )}
+                  <div className="shearch">
+                    <Input
+                      type="text"
+                      readOnly
+                      style={{
+                        width: 300,
+                        marginBottom: 10,
+                        borderRadius: 10,
+                        borderColor: TextStyle2,
+                        color: TextStyle2,
+                      }}
+                      placeholder="Pesquisar"
+                    />
+                  </div>
                   <Collapse
                     bordered={false}
-                    header={<p style={TextStyle2}>Categoria</p>}
+                    header={<p style={TextStyle2}>Catégoria</p>}
                     easing="ease-in-out"
                     waitForAnimate={true}
-                    defaultActiveKey={1}
+                    defaultActiveKey={Array.from({ length: 1 }, (_, i) =>
+                      String(i)
+                    )}
                     destroyInactivePanel={false}
                     expandIconPosition="end"
                     expandIcon={({ isActive }) => (
@@ -470,13 +491,111 @@ const SlideRenderer = (atualizar) => {
                   >
                     <Panel
                       id={1}
+                      style={{
+                        color: styles.colorText,
+                        fontWeight: "bold",
+                        backgroundImage: `url(${
+                          styles.tema == "Black"
+                            ? temaBlack
+                            : styles.tema === "White"
+                            ? temaWhite
+                            : styles.tema === "Blue"
+                            ? temaBlue
+                            : styles.tema === "Brown"
+                            ? temaBrown
+                            : temaBlack
+                        })`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: 150,
+                        minWidth: 334,
+                        backgroundPositionX: "50%",
+                        backgroundPositionY: -8,
+                        flexWrap: "wrap",
+                        textAlign: "center",
+                      }}
                       header={<text style={TextStyle2}>Categoria</text>}
                     >
-                      <p style={TextStyle2}>Texto do Site123</p>
+                      <div key={2} className="border_test">
+                        <div style={{ display: "flex" }}>
+                          <img
+                            src={logo}
+                            alt="img"
+                            style={{
+                              width: 150,
+                              marginRight: 5,
+                              marginBottom: 20,
+                              filter: "grayscale(100%)",
+                              borderRadius: 10,
+                            }}
+                          />
+
+                          <div className="flex">
+                            <div style={{ width: "100%", display: "contents" }}>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <p
+                                  className="p_1 name georgia-font"
+                                  style={TextStyle2}
+                                >
+                                  Prato
+                                </p>
+                                <p
+                                  className="name georgia-font"
+                                  style={{
+                                    backgroundColor: "#FFFFFF70",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    width: 40,
+                                    textAlign: "center",
+                                    height: 20,
+                                    fontSize: 12,
+                                    padding: 5,
+                                    color: styles.colorText,
+                                    borderRadius: 10,
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  N° 1
+                                </p>
+                              </div>
+
+                              <div className="flex" style={TextStyle2}>
+                                <div className="sub" style={TextStyle2}>
+                                  Subtitulo
+                                </div>
+                              </div>
+                              <div
+                                className="description2Teste"
+                                style={TextStyle2}
+                              >
+                                Descrição
+                              </div>
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "start",
+                                minWidth: "100%",
+                                alignItems: "flex-end",
+                              }}
+                            >
+                              <p
+                                className="p_1 price georgia-bold-font"
+                                style={TextStyle2}
+                              >
+                                R$ 00,00
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </Panel>
                   </Collapse>
-
-                  <p style={TextStyle2}>Texto do Site</p>
                 </div>
               </div>
             </>
