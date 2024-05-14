@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getImgLogo } from "../../services/config";
 import "../../css/Company.css";
 import { Button, Input, Modal, Spin } from "antd";
-import { PutEmpresa, admProfile } from "../../services/user.ws";
+import { PutEmpresa, admProfile, getStyles } from "../../services/user.ws";
 
 export default function Company() {
   const companys = JSON.parse(localStorage.getItem("dateUser"));
@@ -69,10 +69,17 @@ export default function Company() {
     }
   };
 
-  const CompanySelectd = (company, imgLogo) => {
+  const getStyle = async (company) => {
+    const Style = await getStyles(company.company, company.idcompany);
+    console.log("🚀 ~ getStyle ~ Style:", Style);
+    localStorage.setItem("styles", JSON.stringify(Style[0]));
+  };
+
+  const CompanySelectd = async (company, imgLogo) => {
     localStorage.setItem("companySelectd", JSON.stringify(company));
     localStorage.setItem("companyLogo", JSON.stringify(imgLogo));
-    window.location.href = "/dashboard/" + company.company;
+    localStorage.setItem("LastPage", "1");
+    await getStyle(company);
     if (company.active === false) {
       message.error("Usuário desativado");
     } else if (company.category === "ADM" || company.category === "Gerência") {

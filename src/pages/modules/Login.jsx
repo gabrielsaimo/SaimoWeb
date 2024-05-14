@@ -14,9 +14,7 @@ const Login = () => {
       localStorage.removeItem("token");
     } else if (msn === "logout") {
       message.success("Usuário deslogado", 5);
-      localStorage.removeItem("dateUser");
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("token");
+      localStorage.clear();
     }
   }, [msn]);
 

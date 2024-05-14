@@ -1,22 +1,11 @@
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-color: #282c34;
-    --secondary-color: #fff;
-    --low-grey-color: #5a5a5a;
-    --grey-color: #d3d3d3;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --primary-color: #fff;
-    --secondary-color: #282c34;
-    --link-color: #61dafb;
-    --low-grey-color: #d3d3d3;
-    --grey-color: #666;
-    --mid-gren: #4caf50;
-    --blue-color: #007bff;
-  }
+:root {
+  --primary-color: #282c34;
+  --secondary-color: #fff;
+  --low-grey-color: #5a5a5a;
+  --grey-color: #d3d3d3;
+  --blue-color: #007bff;
+  --mid-gren: #4caf50;
+  --link-color: #61dafb;
 }
 
 body {

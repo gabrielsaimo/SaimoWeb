@@ -32,9 +32,8 @@ const MenuDashboard = () => {
   const { CompanyParams } = useParams();
   const localing = localStorage.getItem("companyLogo");
   const imgCache = localing;
-  console.log("🚀 ~ MenuDashboard ~ imgCache:", imgCache);
   const [collapsed, setCollapsed] = useState(false);
-  const [tela, setTela] = useState(1);
+  const [tela, setTela] = useState(localStorage.getItem("LastPage") || 1);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -127,7 +126,7 @@ const MenuDashboard = () => {
           props={CompanyParams}
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={[localStorage.getItem("LastPage")]}
           className="menu"
           items={[
             {
@@ -142,6 +141,7 @@ const MenuDashboard = () => {
                   : true,
               onClick: () => {
                 setTela(1);
+                localStorage.setItem("LastPage", "1");
                 setCollapsed(false);
               },
             },
@@ -152,6 +152,7 @@ const MenuDashboard = () => {
               disabled: UserCategoria === "ADM" ? false : true,
               onClick: () => {
                 setTela(2);
+                localStorage.setItem("LastPage", "2");
                 setCollapsed(true);
               },
             },
@@ -161,6 +162,7 @@ const MenuDashboard = () => {
               label: "Pedidos",
               onClick: () => {
                 setTela(3);
+                localStorage.setItem("LastPage", "3");
                 setCollapsed(true);
               },
             },
@@ -176,6 +178,7 @@ const MenuDashboard = () => {
               label: "Usuários",
               onClick: () => {
                 setTela(4);
+                localStorage.setItem("LastPage", "4");
                 setCollapsed(true);
               },
             },
@@ -185,6 +188,7 @@ const MenuDashboard = () => {
               label: "Layout",
               onClick: () => {
                 setTela(5);
+                localStorage.setItem("LastPage", "5");
                 setCollapsed(true);
               },
             },

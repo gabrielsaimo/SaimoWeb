@@ -27,7 +27,7 @@ const genPresets = (presets = presetPalettes) =>
     colors,
   }));
 const { Panel } = Collapse;
-const SlideRenderer = () => {
+const SlideRenderer = (atualizar) => {
   const [fundoColor1, setFundoColor1] = useState("#1677ff");
   const [fundoColor2, setFundoColor2] = useState("#1677ff");
   const [textColor, setTextColor] = useState("#1677ff");
@@ -37,6 +37,7 @@ const SlideRenderer = () => {
   const [coint, setCoint] = useState(0);
   const random = Math.floor(Math.random() * 100000000);
   const dateUser = JSON.parse(localStorage.getItem("dateUser"));
+  const styles = JSON.parse(localStorage.getItem("styles"));
   const company = JSON.parse(localStorage.getItem("companySelectd"));
   const { token } = theme.useToken();
   const presets = genPresets({
@@ -49,8 +50,8 @@ const SlideRenderer = () => {
 
   const CompanyName = window.location.href.split("/").pop();
   useEffect(() => {
-    if (dateUser.styles) {
-      const stylesObj = JSON.parse(dateUser.styles);
+    if (styles.styles) {
+      const stylesObj = JSON.parse(styles.styles);
       setFundoColor1(stylesObj.backgrondColor.split(",")[1].replace("0%", ""));
       setFundoColor2(
         stylesObj.backgrondColor.split(",")[2].replace("100%)", "")
@@ -58,7 +59,7 @@ const SlideRenderer = () => {
       setTextColor(stylesObj.colorText);
       setTema(stylesObj.tema);
     }
-  }, [dateUser.styles]);
+  }, [styles.styles, atualizar]);
 
   const fetchData = async () => {
     const styles = `{"backgrondColor":"linear-gradient(90deg,${fundobgColor1} 0%,${fundobgColor2} 100%)","colorText":"${textbgColor}", "tema":"${temabgSelect}"}`;
@@ -215,7 +216,6 @@ const SlideRenderer = () => {
                 style={{
                   width: 300 - 21,
                   marginRight: 5,
-                  borderRadius: 500,
                   marginLeft: 16,
                 }}
               />
@@ -415,10 +415,20 @@ const SlideRenderer = () => {
         }}
       >
         <Collapse
-          items={items}
           defaultActiveKey={1}
           style={{ minWidth: 334, marginTop: 20, marginRight: 20 }}
-        />
+        >
+          {items.map((item) => (
+            <Panel
+              key={item.key}
+              style={{ backgroundColor: "#282c34 !important" }}
+              header={<text className="text">{item.label}</text>}
+            >
+              {item.children}
+            </Panel>
+          ))}
+        </Collapse>
+
         <div style={{ marginTop: 20 }}>
           <ColorPicker disabled style={{ minWidth: 334 }}>
             <>
@@ -438,7 +448,6 @@ const SlideRenderer = () => {
                       style={{
                         width: 150,
                         marginRight: 5,
-                        borderRadius: 500,
                         marginBottom: 20,
                       }}
                     />
@@ -461,28 +470,6 @@ const SlideRenderer = () => {
                   >
                     <Panel
                       id={1}
-                      style={
-                        TextStyle2 && {
-                          fontWeight: "bold",
-                          backgroundImage: `url(${
-                            Tema == "Black"
-                              ? temaBlack
-                              : Tema === "White"
-                              ? temaWhite
-                              : Tema === "Blue"
-                              ? temaBlue
-                              : Tema === "Brown"
-                              ? temaBrown
-                              : temaBlack
-                          })`,
-                          textAlign: "center",
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: 150,
-                          backgroundPositionX: "50%",
-                          backgroundPositionY: -8,
-                          flexWrap: "wrap",
-                        }
-                      }
                       header={<text style={TextStyle2}>Categoria</text>}
                     >
                       <p style={TextStyle2}>Texto do Site123</p>

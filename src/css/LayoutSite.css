@@ -1,3 +1,7 @@
 .ant-collapse-header-text {
   color: var(--secondary-color);
 }
+
+.ant-collapse-content.ant-collapse-content-active {
+  background-color: transparent;
+}
