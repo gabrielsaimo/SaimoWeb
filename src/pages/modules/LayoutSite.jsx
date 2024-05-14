@@ -82,6 +82,7 @@ const SlideRenderer = () => {
     };
     localStorage.setItem("dateUser", JSON.stringify(newDataUSer));
     message.success("Estilo salvo com sucesso!");
+    window.location.reload();
   };
 
   const onChange = ({ fileList: newFileList }) => {
@@ -179,7 +180,9 @@ const SlideRenderer = () => {
   async function confirmDeleteImg(record) {
     await DeleteImg(record, dateUser.company);
     message.success("Imagem deletada com sucesso!");
+    message.warning("Logue novamente para ver as alterações!");
     setImgSrc(null);
+    window.location.reload();
   }
 
   const items = [
