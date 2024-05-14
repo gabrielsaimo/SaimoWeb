@@ -1,10 +1,43 @@
 {
-  "short_name": "SaimoWeb",
-  "name": "SaimoWeb",
+  "protocol_handlers": [{ "protocol": "mailto", "url": "/newEmail?to=%s" }],
+  "shortcuts": [
+    {
+      "name": "Encanto",
+      "short_name": "Encanto",
+      "description": "Encanto Amapaense",
+      "url": "/Cardapio/2/Encanto%20Amapaense",
+      "icons": [
+        {
+          "src": "logo.webp",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "logo.webp",
+      "sizes": "2880x1800",
+      "type": "image/webp",
+      "description": "Home Screen"
+    }
+  ],
+  "short_name": "Menu Digital",
+  "name": "Menu Digital",
+  "orientation": "portrait",
+  "description": "",
+  "display_override": [],
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
+      "border_radius": "100%",
+      "type": "image/x-icon",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.webp",
+      "sizes": "144x144",
       "border_radius": "100%",
       "type": "image/x-icon",
       "purpose": "any maskable"
@@ -23,7 +56,7 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/carpadio/2/Encanto Amapaese",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
