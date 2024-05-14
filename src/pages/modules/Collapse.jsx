@@ -140,7 +140,15 @@ const CollapseMenu = () => {
 
   const renderCardapioItems = () => {
     return cardapioCategory.map((item1, index) => {
-      const key = item1.name;
+      const key = index;
+      const filteredItems = newCardapio.filter(
+        (categoria) => categoria.category === item1.name && categoria.active
+      );
+
+      if (filteredItems.length === 0) {
+        return null;
+      }
+
       return (
         <div key={key}>
           <Suspense fallback={<Spin />}>
@@ -186,105 +194,94 @@ const CollapseMenu = () => {
                   <text style={{ color: styles.colorText }}>{item1.name}</text>
                 }
               >
-                {newCardapio
-                  .filter(
-                    (categoria) =>
-                      categoria.category === item1.name && categoria.active
-                  )
-                  .map((categoria, idx) => (
-                    <div
-                      key={idx}
-                      className="border"
-                      style={{ border: `3px solid ${styles.borderColor}` }}
-                    >
-                      <div style={{ display: "flex" }}>
-                        {categoria.ids &&
-                          memoizedImgSrc.map((img1, index) =>
-                            renderImageCarousel(img1, index, categoria.id)
-                          )}
+                {filteredItems.map((categoria, idx) => (
+                  <div
+                    key={idx}
+                    className="border"
+                    style={{ border: `3px solid ${styles.borderColor}` }}
+                  >
+                    <div style={{ display: "flex" }}>
+                      {categoria.ids &&
+                        memoizedImgSrc.map((img1, index) =>
+                          renderImageCarousel(img1, index, categoria.id)
+                        )}
 
-                        <div className="flex">
-                          <div style={{ width: "100%", display: "contents" }}>
-                            <div>
-                              <p
-                                className="p_1 name georgia-font"
-                                style={styleText}
-                              >
-                                {categoria.name}
-                              </p>
-                              <p
-                                className="name georgia-font"
-                                style={{
-                                  backgroundColor: "#FFFFFF70",
-                                  width: 40,
-                                  textAlign: "center",
-                                  height: 20,
-                                  fontSize: 12,
-                                  padding: 5,
-                                  color: styles.colorText,
-                                  borderRadius: 10,
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                N° {categoria.number}
-                              </p>
-                            </div>
-
-                            <div
-                              className="flex"
-                              style={{ color: styles.colorText, marginTop: 15 }}
-                            >
-                              {categoria.description.length > 25 && (
-                                <>
-                                  <div className="sub" style={styleText}>
-                                    {categoria.sub}
-                                  </div>
-                                  <div
-                                    className="description"
-                                    style={styleText}
-                                  >
-                                    {categoria.description}
-                                  </div>
-                                </>
-                              )}
-                              {categoria.description.length <= 25 && (
-                                <>
-                                  <div className="sub" style={styleText}>
-                                    {categoria.sub}
-                                  </div>
-                                  <div
-                                    className="description2"
-                                    style={styleText}
-                                  >
-                                    {categoria.description}
-                                  </div>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "end",
-                              minWidth: "100%",
-                              alignItems: "flex-end",
-                            }}
-                          >
+                      <div className="flex">
+                        <div style={{ width: "100%", display: "contents" }}>
+                          <div>
                             <p
-                              className="p_1 price georgia-bold-font"
+                              className="p_1 name georgia-font"
                               style={styleText}
                             >
-                              {`R$ ${
-                                categoria.price % 1 !== 0
-                                  ? categoria.price.replace(".", ",")
-                                  : categoria.price + ",00"
-                              }`}
+                              {categoria.name}
+                            </p>
+                            <p
+                              className="name georgia-font"
+                              style={{
+                                backgroundColor: "#FFFFFF70",
+                                width: 40,
+                                textAlign: "center",
+                                height: 20,
+                                fontSize: 12,
+                                padding: 5,
+                                color: styles.colorText,
+                                borderRadius: 10,
+                                fontWeight: "bold",
+                              }}
+                            >
+                              N° {categoria.number}
                             </p>
                           </div>
+
+                          <div
+                            className="flex"
+                            style={{ color: styles.colorText, marginTop: 15 }}
+                          >
+                            {categoria.description.length > 25 && (
+                              <>
+                                <div className="sub" style={styleText}>
+                                  {categoria.sub}
+                                </div>
+                                <div className="description" style={styleText}>
+                                  {categoria.description}
+                                </div>
+                              </>
+                            )}
+                            {categoria.description.length <= 25 && (
+                              <>
+                                <div className="sub" style={styleText}>
+                                  {categoria.sub}
+                                </div>
+                                <div className="description2" style={styleText}>
+                                  {categoria.description}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "end",
+                            minWidth: "100%",
+                            alignItems: "flex-end",
+                          }}
+                        >
+                          <p
+                            className="p_1 price georgia-bold-font"
+                            style={styleText}
+                          >
+                            {`R$ ${
+                              categoria.price % 1 !== 0
+                                ? categoria.price.replace(".", ",")
+                                : categoria.price + ",00"
+                            }`}
+                          </p>
                         </div>
                       </div>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </Panel>
             </Collapse>
           </Suspense>
