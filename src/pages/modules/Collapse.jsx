@@ -354,7 +354,11 @@ const CollapseMenu = () => {
         items={cardapioCategory.map((item, index) => ({
           href: `#${item.name}`,
           key: `${index}`,
-          title: `${item.name}`,
+          title: (
+            <text
+              style={{ color: styles.colorText, fontWeight: "bold" }}
+            >{`${item.name}`}</text>
+          ),
         }))}
       />
 
