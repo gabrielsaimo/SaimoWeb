@@ -222,11 +222,14 @@ const CollapseMenu = () => {
                                   fontWeight: "bold",
                                 }}
                               >
-                                N° {categoria.id}
+                                N° {categoria.number}
                               </p>
                             </div>
 
-                            <div className="flex" style={styleText}>
+                            <div
+                              className="flex"
+                              style={{ color: styles.colorText, marginTop: 15 }}
+                            >
                               {categoria.description.length > 25 && (
                                 <>
                                   <div className="sub" style={styleText}>
@@ -297,7 +300,6 @@ const CollapseMenu = () => {
               marginBottom: 10,
               borderRadius: 10,
               borderColor: styles.colorText,
-              color: styles.colorText,
             }}
             placeholder="Pesquisar"
             onChange={(e) => searchNameCardapio(e.target.value)}

@@ -205,7 +205,7 @@ h1 {
 }
 
 svg {
-  fill: var(--secondary-color);
+  fill: #37599f;
 }
 
 @keyframes gradient {

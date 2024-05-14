@@ -75,6 +75,7 @@ export default function Dashboard({ atualizar, user, company }) {
   const [search, setSearch] = useState("");
   const [id, setId] = useState("");
   const [name, setName] = useState("");
+  const [number, setNumber] = useState(0);
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [sub, setSub] = useState("");
@@ -248,6 +249,7 @@ export default function Dashboard({ atualizar, user, company }) {
     setSelectedTaskId(task.id);
     setId(task.id);
     setName(task.name);
+    setNumber(task.number);
     setPrice(task.price);
     setDescription(task.description);
     setSub(task.sub);
@@ -273,6 +275,7 @@ export default function Dashboard({ atualizar, user, company }) {
         imagem: imgByte,
         highlight,
         category,
+        number,
         update_at: new Date(),
         update_by: JSON.parse(cachedData).name,
         idcompany: companySelectd,
@@ -290,6 +293,7 @@ export default function Dashboard({ atualizar, user, company }) {
         imagem: imgByte,
         highlight,
         category,
+        number,
         update_at: new Date(),
         update_by: JSON.parse(cachedData).name,
         idcompany: companySelectd,
@@ -313,6 +317,7 @@ export default function Dashboard({ atualizar, user, company }) {
     setSelectedTaskId(null);
     setId("");
     setName("");
+    setNumber(0);
     setPrice("");
     setDescription("");
     setTotalImg(0);
@@ -912,6 +917,20 @@ export default function Dashboard({ atualizar, user, company }) {
       >
         <Row justify="center">
           <Col span={20}>
+            <div style={{ display: "flex", alignItems: "baseline" }}>
+              <Typography.Title level={5} style={{ width: 150 }}>
+                N°
+              </Typography.Title>
+
+              <Input
+                style={{ width: "100%", margin: "10px 0" }}
+                size="large"
+                type="number"
+                placeholder="N°"
+                value={number !== 0 ? number : undefined}
+                onChange={(e) => setNumber(e.target.value)}
+              />
+            </div>
             <div style={{ display: "flex", alignItems: "baseline" }}>
               <Typography.Title level={5} style={{ width: 150 }}>
                 Nome
