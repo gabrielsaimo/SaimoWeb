@@ -684,7 +684,7 @@ export default function Dashboard({ atualizar, user, company }) {
                       value={`https://menu-digital.vercel.app/home/${companySelectd}/${company}`}
                       icon={atob(JSON.parse(imgCache)) || ""}
                       size={400}
-                      iconSize={150}
+                      iconSize={155}
                     />
                   </div>
                 )}

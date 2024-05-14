@@ -90,9 +90,7 @@ function UseHome() {
               style={{
                 width: 300,
                 marginRight: 5,
-                borderRadius: 500,
                 marginLeft: 16,
-                border: "solid 1px #000000",
               }}
             />
           ) : (
