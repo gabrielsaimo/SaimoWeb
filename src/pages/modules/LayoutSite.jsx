@@ -30,16 +30,19 @@ const genPresets = (presets = presetPalettes) =>
   }));
 const { Panel } = Collapse;
 const SlideRenderer = (atualizar) => {
+  const styles = JSON.parse(localStorage.getItem("styles"));
+
   const [fundoColor1, setFundoColor1] = useState("#1677ff");
   const [fundoColor2, setFundoColor2] = useState("#1677ff");
   const [textColor, setTextColor] = useState("#1677ff");
+  const [BorderColor, setBorderColor] = useState("#1677ff");
   const [Tema, setTema] = useState("");
   const [fileList, setFileList] = useState([]);
   const [totalImg, setTotalImg] = useState(0);
   const [coint, setCoint] = useState(0);
   const random = Math.floor(Math.random() * 100000000);
   const dateUser = JSON.parse(localStorage.getItem("dateUser"));
-  const styles = JSON.parse(localStorage.getItem("styles"));
+
   const company = JSON.parse(localStorage.getItem("companySelectd"));
   const { token } = theme.useToken();
   const presets = genPresets({
@@ -52,19 +55,21 @@ const SlideRenderer = (atualizar) => {
 
   const CompanyName = window.location.href.split("/").pop();
   useEffect(() => {
-    if (styles.styles) {
+    if (styles) {
       const stylesObj = JSON.parse(styles.styles);
       setFundoColor1(stylesObj.backgrondColor.split(",")[1].replace("0%", ""));
       setFundoColor2(
         stylesObj.backgrondColor.split(",")[2].replace("100%)", "")
       );
       setTextColor(stylesObj.colorText);
+      setBorderColor(stylesObj.borderColor || "black");
       setTema(stylesObj.tema);
     }
   }, [styles.styles, atualizar]);
 
   const fetchData = async () => {
-    const styles = `{"backgrondColor":"linear-gradient(90deg,${fundobgColor1} 0%,${fundobgColor2} 100%)","colorText":"${textbgColor}", "tema":"${temabgSelect}"}`;
+    const styles = `{"backgrondColor":"linear-gradient(90deg,${fundobgColor1} 0%,${fundobgColor2} 100%)","colorText":"${textbgColor}", "tema":"${Tema}", "borderColor":"${BorderbgColor}"} `;
+
     const data = {
       company: CompanyName.replace(/%20/g, " "),
       idcompany: company.idcompany,
@@ -80,10 +85,15 @@ const SlideRenderer = (atualizar) => {
       idcompany: dateUser.idcompany,
       user_profile_json: dateUser.user_profile_json,
       company: dateUser.company,
-
       styles: styles.toString().replace(/\\/g, ""),
     };
     localStorage.setItem("dateUser", JSON.stringify(newDataUSer));
+    localStorage.setItem(
+      "styles",
+      JSON.stringify({
+        styles: styles.toString().replace(/\\/g, ""),
+      })
+    );
     message.success("Estilo salvo com sucesso!");
     window.location.reload();
   };
@@ -109,6 +119,11 @@ const SlideRenderer = (atualizar) => {
   const textbgColor = useMemo(
     () => (typeof textColor === "string" ? textColor : textColor.toHexString()),
     [textColor]
+  );
+  const BorderbgColor = useMemo(
+    () =>
+      typeof BorderColor === "string" ? BorderColor : BorderColor.toHexString(),
+    [BorderColor]
   );
 
   const temabgSelect = useMemo(
@@ -259,14 +274,14 @@ const SlideRenderer = (atualizar) => {
       children: (
         <div>
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            cor 1
+            <text className="text"> Cor 1</text>
             <ColorPicker
               value={fundoColor1}
               presets={presets}
               allowClear
               onChange={setFundoColor1}
             />
-            cor 2
+            <text className="text">Cor 2</text>
             <ColorPicker
               value={fundoColor2}
               presets={presets}
@@ -367,6 +382,22 @@ const SlideRenderer = (atualizar) => {
         </div>
       ),
     },
+    {
+      key: "5",
+      label: "Borda do Card",
+      children: (
+        <ColorPicker value={BorderColor} onChange={setBorderColor}>
+          <div
+            style={{
+              width: 100,
+              height: 10,
+              backgroundColor: BorderbgColor,
+              borderRadius: 10,
+            }}
+          />
+        </ColorPicker>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -405,11 +436,6 @@ const SlideRenderer = (atualizar) => {
 
   return (
     <div style={{ height: "85vh" }}>
-      <Affix offsetTop={10} style={{ position: "fixed", right: 10 }}>
-        <Button type="primary" onClick={() => fetchData()}>
-          Salvar
-        </Button>
-      </Affix>
       <div
         style={{
           display: "flex",
@@ -419,6 +445,28 @@ const SlideRenderer = (atualizar) => {
           flex: 1,
         }}
       >
+        <Affix
+          offsetTop={10}
+          style={{
+            position: "fixed",
+            left: "50%",
+            bottom: 10,
+            transform: "translate(-50%, 0)",
+            zIndex: 1,
+          }}
+        >
+          <Button
+            type="primary"
+            onClick={() => fetchData()}
+            style={{
+              width: "100vw",
+              maxWidth: 450,
+              height: 50,
+            }}
+          >
+            Salvar
+          </Button>
+        </Affix>
         <Collapse
           defaultActiveKey={1}
           style={{ minWidth: 334, marginTop: 20, marginRight: 20 }}
@@ -465,7 +513,7 @@ const SlideRenderer = (atualizar) => {
                         width: 300,
                         marginBottom: 10,
                         borderRadius: 10,
-                        borderColor: TextStyle2,
+                        borderColor: BorderbgColor,
                         color: TextStyle2,
                       }}
                       placeholder="Pesquisar"
@@ -495,13 +543,13 @@ const SlideRenderer = (atualizar) => {
                         color: styles.colorText,
                         fontWeight: "bold",
                         backgroundImage: `url(${
-                          styles.tema == "Black"
+                          temabgSelect == "Black"
                             ? temaBlack
-                            : styles.tema === "White"
+                            : temabgSelect === "White"
                             ? temaWhite
-                            : styles.tema === "Blue"
+                            : temabgSelect === "Blue"
                             ? temaBlue
-                            : styles.tema === "Brown"
+                            : temabgSelect === "Brown"
                             ? temaBrown
                             : temaBlack
                         })`,
@@ -515,7 +563,11 @@ const SlideRenderer = (atualizar) => {
                       }}
                       header={<text style={TextStyle2}>Categoria</text>}
                     >
-                      <div key={2} className="border_test">
+                      <div
+                        key={2}
+                        className="border_test"
+                        style={{ border: `3px solid ${BorderbgColor}` }}
+                      >
                         <div style={{ display: "flex" }}>
                           <img
                             src={logo}
@@ -555,7 +607,7 @@ const SlideRenderer = (atualizar) => {
                                     height: 20,
                                     fontSize: 12,
                                     padding: 5,
-                                    color: styles.colorText,
+                                    color: textbgColor,
                                     borderRadius: 10,
                                     fontWeight: "bold",
                                   }}

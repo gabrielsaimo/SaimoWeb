@@ -86,6 +86,9 @@ td.ant-table-cell.ant-table-cell-row-hover {
   background-color: var(--secondary-color) !important;
   color: var(--primary-color) !important;
 }
+.ant-btn-dashed {
+  color: var(--primary-color) !important;
+}
 
 .ant-drawer-body {
   background-color: var(--primary-color) !important;
@@ -93,12 +96,18 @@ td.ant-table-cell.ant-table-cell-row-hover {
 }
 
 .ant-btn {
-  color: var(--secondary-color) !important;
+  color: var(--secondary-color);
   border: 1px solid var(--secondary-color);
 }
 .ant-btn-default {
   color: var(--primary-color) !important;
   border: 1px solid var(--primary-color);
+}
+.ant-tag-gold {
+  background: #d3d335 !important;
+}
+.anticon-star {
+  color: red !important;
 }
 
 label.ant-form-item-required,

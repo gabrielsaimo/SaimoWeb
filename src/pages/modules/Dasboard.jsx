@@ -575,31 +575,7 @@ export default function Dashboard({ atualizar, user, company }) {
     setOpenPop(newOpen);
   };
 
-  const content1 = (
-    <div>
-      <Button
-        type="primary"
-        title="Cardápio"
-        onClick={() =>
-          window.open(`/Cardapio/${companySelectd}/${company}`, "_blank")
-        }
-      >
-        Cardápio
-      </Button>
-      <Button
-        type="primary"
-        style={{ marginLeft: 10 }}
-        title="Cardápio"
-        onClick={() =>
-          window.open(`/Catalogo/${companySelectd}/${company}`, "_blank")
-        }
-      >
-        Catálogo
-      </Button>
-    </div>
-  );
-
-  const content2 = (
+  const content = (
     <div>
       <Button
         type="primary"
@@ -652,14 +628,21 @@ export default function Dashboard({ atualizar, user, company }) {
           content={
             <>
               <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                <Popover
-                  content={content1}
-                  title={<label className="text">Ver Como</label>}
+                <Button
+                  type="primary"
+                  title="Cardápio"
+                  onClick={() =>
+                    window.open(
+                      `/Cardapio/${companySelectd}/${company}`,
+                      "_blank"
+                    )
+                  }
                 >
-                  <Button type="primary">Ver Como</Button>
-                </Popover>
+                  Ver Cardápio
+                </Button>
+
                 <Popover
-                  content={content2}
+                  content={content}
                   title={<label className="text">Entrar Como</label>}
                 >
                   <Button type="primary" style={{ marginLeft: 10 }}>
