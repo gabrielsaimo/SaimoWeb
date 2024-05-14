@@ -50,7 +50,6 @@ function App() {
           style={{
             width: "100vw",
             maxWidth: 300,
-            borderRadius: "100%",
             marginTop: "50px",
           }}
           loading="eager"
