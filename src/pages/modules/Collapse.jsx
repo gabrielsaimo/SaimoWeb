@@ -66,7 +66,7 @@ const CollapseMenu = () => {
         !text ||
         record["description"].toLowerCase().indexOf(text.toLowerCase()) > -1 ||
         !text ||
-        record["id"].toString().indexOf(text.toLowerCase()) > -1
+        record["number"].toString().indexOf(text.toLowerCase()) > -1
     );
     setNewCardapio(array);
 
