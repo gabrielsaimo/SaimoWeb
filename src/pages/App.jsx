@@ -4,7 +4,6 @@ import { Affix, FloatButton, Space, Spin } from "antd";
 import { useParams } from "react-router-dom";
 import "../css/App.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Menu from "./modules/BottonMenu";
 import Footer from "./modules/Footer";
 import SlideRenderer from "./Components/slide";
 import { getImgLogo } from "../services/config";
@@ -19,8 +18,8 @@ function App() {
   const [styles, setStyles] = useState("");
 
   useEffect(() => {
-    getImgLogos(idcompany);
     getStylesUser();
+    getImgLogos(idcompany);
   }, []);
 
   const getStylesUser = async () => {
@@ -57,14 +56,6 @@ function App() {
           onClick={() => handleLogoClick()}
         />
       )}
-      <div style={{ display: "flex" }}>
-        <Affix
-          offsetTop={10}
-          style={{ position: "fixed", right: 10, top: 10, zIndex: 9 }}
-        >
-          <Menu props={(idcompany, Company)} />
-        </Affix>
-      </div>
 
       <Suspense fallback={<Spin />}>
         <SlideRenderer index={contar} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from "react";
-import { Collapse, Carousel, Spin, Image, Input } from "antd";
+import { Collapse, Carousel, Spin, Image, Input, Anchor, Affix } from "antd";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CaretRightOutlined } from "@ant-design/icons";
 import LazyLoad from "react-lazyload";
@@ -174,7 +174,7 @@ const CollapseMenu = () => {
                     }}
                   >
                     <Panel
-                      id={key}
+                      id={item1.name}
                       style={{
                         color: styles.colorText,
                         fontWeight: "bold",
@@ -314,8 +314,13 @@ const CollapseMenu = () => {
 
   return (
     <div style={{ margin: 5 }}>
-      {[
-        <div className="shearch">
+      <Affix offsetTop={10}>
+        <div
+          style={{
+            background: styles.backgrondColor,
+            borderRadius: 30,
+          }}
+        >
           <Input
             type="text"
             style={{
@@ -323,13 +328,37 @@ const CollapseMenu = () => {
               marginBottom: 10,
               borderRadius: 10,
               borderColor: styles.colorText,
+              marginTop: 50,
             }}
             placeholder="Pesquisar"
             onChange={(e) => searchNameCardapio(e.target.value)}
           />
-        </div>,
-        renderCardapioItems(),
-      ]}
+        </div>
+      </Affix>
+      <Anchor
+        affix={true}
+        direction="horizontal"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          background: styles.backgrondColor,
+          width: "100%",
+          zIndex: 10,
+          padding: 10,
+        }}
+        replace
+        onChange={(e) => {
+          console.log(e);
+        }}
+        items={cardapioCategory.map((item, index) => ({
+          href: `#${item.name}`,
+          key: `${index}`,
+          title: `${item.name}`,
+        }))}
+      />
+
+      {renderCardapioItems()}
     </div>
   );
 };
