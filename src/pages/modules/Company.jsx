@@ -19,6 +19,7 @@ export default function Company() {
         setAcont(0);
       } else {
         const img = await getImgLogo(company.idcompany);
+        console.log("🚀 ~ companys.user_profile_json.forEach ~ img:", img)
         setAcont(acont + 1);
         setImages((prevImages) => ({
           ...prevImages,
@@ -71,7 +72,6 @@ export default function Company() {
 
   const getStyle = async (company) => {
     const Style = await getStyles(company.company, company.idcompany);
-    console.log("🚀 ~ getStyle ~ Style:", Style);
     localStorage.setItem("styles", JSON.stringify(Style[0]));
   };
 

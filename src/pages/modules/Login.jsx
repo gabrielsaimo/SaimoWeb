@@ -15,6 +15,9 @@ const Login = () => {
     } else if (msn === "logout") {
       message.success("Usuário deslogado", 5);
       localStorage.clear();
+    } else if (msn === "token") {
+      message.success("Token expirado", 5);
+      localStorage.clear();
     }
   }, [msn]);
 

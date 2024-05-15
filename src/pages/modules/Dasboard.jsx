@@ -53,6 +53,8 @@ import { getCategoty } from "../../services/category.ws";
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
   const cachedData = localStorage.getItem("dateUser");
+  if (localStorage.getItem("companySelectd") === null)
+    return (window.location.href = "/Login/token");
   const companySelectd = JSON.parse(
     localStorage.getItem("companySelectd")
   ).idcompany;
@@ -217,7 +219,7 @@ export default function Dashboard({ atualizar, user, company }) {
   }
 
   async function confirmDeleteImg(record) {
-    await DeleteImg(record, company);
+    await DeleteImg(record.id, record.idreq);
     message.success("Imagem deletada com sucesso!");
     gtCardapio();
     setActionCardapio(!actionCardapio);
@@ -838,7 +840,7 @@ export default function Dashboard({ atualizar, user, company }) {
 
                               <Popconfirm
                                 title="Tem certeza que deseja excluir essa imagem?"
-                                onConfirm={() => confirmDeleteImg(img.id)}
+                                onConfirm={() => confirmDeleteImg(img)}
                                 okText="Excluir"
                                 okButtonProps={{ danger: true }}
                                 cancelText="Cancelar"

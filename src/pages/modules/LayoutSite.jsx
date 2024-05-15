@@ -77,6 +77,7 @@ const SlideRenderer = (atualizar) => {
     };
 
     await postStyles(data);
+    message.success("Estilo salvo com sucesso!");
     const newDataUSer = {
       id: dateUser.id,
       name: dateUser.name,
@@ -94,7 +95,7 @@ const SlideRenderer = (atualizar) => {
         styles: styles.toString().replace(/\\/g, ""),
       })
     );
-    message.success("Estilo salvo com sucesso!");
+
     window.location.reload();
   };
 
@@ -199,7 +200,7 @@ const SlideRenderer = (atualizar) => {
   };
 
   async function confirmDeleteImg(record) {
-    await DeleteImg(record, dateUser.company);
+    await DeleteImg(record.id, record.idreq);
     message.success("Imagem deletada com sucesso!");
     message.warning("Logue novamente para ver as alterações!");
     setImgSrc(null);
@@ -243,7 +244,7 @@ const SlideRenderer = (atualizar) => {
                 title="Tem certeza que deseja excluir essa imagem?"
                 okText="Excluir"
                 okButtonProps={{ danger: true }}
-                onConfirm={() => confirmDeleteImg(idImg)}
+                onConfirm={() => confirmDeleteImg(imgSrc)}
                 cancelText="Cancelar"
               >
                 <Button

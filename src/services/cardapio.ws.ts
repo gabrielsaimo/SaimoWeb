@@ -47,9 +47,9 @@ export const InsertImg = async (data: any): Promise<any> => {
   return response.data;
 };
 
-export const DeleteImg = async (id: number, Company: string): Promise<any> => {
+export const DeleteImg = async (id: number, Company: number): Promise<any> => {
   const response = await api.delete<any>("/cardapio/deleteimagem/" + id, {
-    data: { Company: Company },
+    data: { idreq: Company },
   });
   return response.data;
 };

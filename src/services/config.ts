@@ -7,7 +7,9 @@ interface config {
   style: string;
 }
 
-const handleResponse = (response: AxiosResponse) => response.data;
+const handleResponse = (response: AxiosResponse) => {
+  return response.data;
+};
 
 export const getConfig = async (Company: any): Promise<config[]> => {
   const response = await api.get<config[]>("/config/" + Company);
@@ -25,11 +27,13 @@ export const putConfig = async (data: config): Promise<config> => {
 };
 
 export const deleteConfig = async (data: config): Promise<void> => {
-  await api.delete(`/config/${data.id}`);
+  const response = await api.delete(`/config/${data.id}`);
+  return handleResponse(response);
 };
 
 export const getImgLogo = async (idcomapany: number): Promise<any> => {
-  const response = await api.get<any>("/cardapio/logo/" + idcomapany);
+  const response = await api.get<any>("/cardapio/companylogo/" + idcomapany);
+
   return response.data;
 };
 
@@ -40,12 +44,5 @@ export const getlogoName = async (comapany: any): Promise<any> => {
 
 export const InsertImg = async (data: any): Promise<any> => {
   const response = await api.post<any>("/cardapio/InsertImg", data);
-  return response.data;
-};
-
-export const DeleteImg = async (id: number, Company: string): Promise<any> => {
-  const response = await api.delete<any>("/cardapio/deleteimagem/" + id, {
-    data: { Company: Company },
-  });
   return response.data;
 };
