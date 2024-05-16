@@ -24,8 +24,8 @@
 
 .card-primary {
   background: var(--primary-color) !important;
-  width: 340px;
-  min-height: 450px;
+  width: 350px;
+  min-height: 570px;
 }
 
 .ant-modal-content {

@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 import { MenuOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.webp";
+import logo_encanto_meio_do_mundo from "../../assets/encantomeiodomundo.webp";
+import logo_encanto_amapaense from "../../assets/encantoamapaense.webp";
 import "../../css/Home.css";
 import Atropos from "atropos/react";
 import "atropos/css";
@@ -162,6 +164,39 @@ const Home = () => {
             pedidos e melhora a comunicação entre a equipe de serviço e a
             cozinha.
           </Paragraph>
+          <Title level={2} className="title">
+            Sistema de Reservas
+          </Title>
+          <Paragraph className="paragraph">
+            Nosso sistema de reservas permite que seus clientes reservem uma
+            mesa no seu restaurante com facilidade. Com uma interface intuitiva
+            e opções de reserva flexíveis, seus clientes podem reservar uma mesa
+            com apenas alguns cliques. Além disso, nosso sistema de reservas
+            ajuda a reduzir o tempo de espera e a melhorar a experiência do
+            cliente no restaurante.
+          </Paragraph>
+          <Title level={2} className="title">
+            Catálogo de Produtos
+          </Title>
+          <Paragraph className="paragraph">
+            Nosso Carpádio Digital permite que você exiba seus pratos e bebidas
+            de forma atraente e informativa. Com fotos de alta qualidade,
+            descrições detalhadas e preços claros, seus clientes podem
+            facilmente navegar pelo seu menu e fazer pedidos com confiança. Além
+            disso, nosso catálogo de produtos é totalmente personalizável, para
+            que você possa adicionar, remover ou editar itens conforme
+            necessário.
+          </Paragraph>
+          <Title level={2} className="title">
+            E Por Fim O Catálogo
+          </Title>
+          <Paragraph className="paragraph">
+            Não Trabalhamos Apenas Com Cardápio Digital Também Trabalhamos Com
+            Catálogo Digital Para Que Você Possa Exibir Seus Produtos De Forma
+            Atraente E Informativa. Não Importa Se Você Tem Uma Loja De Roupas,
+            Uma Loja De Eletrônicos Ou Uma Livraria, Nosso Catálogo Digital Pode
+            Ajudá-lo A Atrair Mais Clientes E Aumentar As Vendas.
+          </Paragraph>
 
           <Title level={2} className="title">
             Clientes Satisfeitos
@@ -171,8 +206,8 @@ const Home = () => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              gap: "20px",
-              padding: "15px",
+              gap: "10px",
+              padding: "10px",
             }}
           >
             <Atropos
@@ -181,17 +216,18 @@ const Home = () => {
               shadowOffset={130}
               rotateX={130}
               rotateY={130}
-              style={{ width: 340, margin: "10px" }}
+              style={{ width: 351, margin: "10px" }}
             >
               <Card
                 hoverable
                 className="card-primary"
+                style={{ padding: 2 }}
                 cover={
                   <img
                     data-atropos-offset={"8"}
-                    style={{ padding: "20px" }}
+                    style={{ padding: "60px" }}
                     alt="example"
-                    src="https://encanto-amapaense.vercel.app/static/media/logo.252e91a12b95b5f50141.webp"
+                    src={logo_encanto_amapaense}
                   />
                 }
               >
@@ -213,7 +249,55 @@ const Home = () => {
                   data-atropos-offset={"6"}
                   style={{ marginTop: "20px" }}
                   type="primary"
-                  href="https://encanto-amapaense.vercel.app/"
+                  href={`https://menu-digital.vercel.app/Cardapio/2/Encanto%20Amapaense`}
+                >
+                  Ver Cardapio
+                </Button>
+              </Card>
+            </Atropos>
+            <Atropos
+              activeOffset={100}
+              shadowScale={1}
+              shadowOffset={130}
+              rotateX={130}
+              rotateY={130}
+              style={{ width: 350, margin: "10px" }}
+            >
+              <Card
+                hoverable
+                className="card-primary"
+                cover={
+                  <img
+                    data-atropos-offset={"8"}
+                    style={{
+                      padding: "50px",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                    alt="example"
+                    src={logo_encanto_meio_do_mundo}
+                  />
+                }
+              >
+                <Meta
+                  title={
+                    <h3 className="title" data-atropos-offset={"-2"}>
+                      Encanto meio do mundo
+                    </h3>
+                  }
+                  data-atropos-offset={"-4"}
+                  description={
+                    <p className="title">
+                      O Restaurante Encanto meio do mundo ja inalguou com o menu
+                      digital e foi um sucesso!
+                    </p>
+                  }
+                />
+                <Button
+                  data-atropos-offset={"6"}
+                  style={{ marginTop: "20px" }}
+                  type="primary"
+                  href="https://menu-digital.vercel.app/Cardapio/2/Encanto%20Amapaense"
                 >
                   Ver Cardapio
                 </Button>
