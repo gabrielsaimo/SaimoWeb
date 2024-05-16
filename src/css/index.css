@@ -123,6 +123,7 @@ label.ant-form-item-required,
 .ant-drawer-title,
 .ant-anchor-link-title,
 .ant-upload,
+label,
 h5,
 h1 {
   color: var(--secondary-color) !important;

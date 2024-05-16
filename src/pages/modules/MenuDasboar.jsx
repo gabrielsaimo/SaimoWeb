@@ -6,6 +6,7 @@ import {
   MenuFoldOutlined,
   MenuOutlined,
   PieChartOutlined,
+  SettingOutlined,
   TagOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -27,6 +28,7 @@ import LayoutSite from "./LayoutSite";
 import { useParams } from "react-router-dom";
 import "../../css/MenuDashboard.css";
 import Company from "./Company";
+import Configs from "./Configs";
 
 const MenuDashboard = () => {
   const { CompanyParams } = useParams();
@@ -66,6 +68,7 @@ const MenuDashboard = () => {
       3: <Pedidos atualizar={true} user={dateUser} />,
       4: <Users atualizar={true} user={dateUser} />,
       5: <LayoutSite atualizar={true} user={dateUser} />,
+      6: <Configs atualizar={true} user={dateUser} />,
     }),
     [dateUser, CompanyParams]
   );
@@ -153,7 +156,6 @@ const MenuDashboard = () => {
               onClick: () => {
                 setTela(2);
                 localStorage.setItem("LastPage", "2");
-                setCollapsed(true);
               },
             },
             {
@@ -163,7 +165,6 @@ const MenuDashboard = () => {
               onClick: () => {
                 setTela(3);
                 localStorage.setItem("LastPage", "3");
-                setCollapsed(true);
               },
             },
             {
@@ -179,7 +180,6 @@ const MenuDashboard = () => {
               onClick: () => {
                 setTela(4);
                 localStorage.setItem("LastPage", "4");
-                setCollapsed(true);
               },
             },
             {
@@ -189,12 +189,19 @@ const MenuDashboard = () => {
               onClick: () => {
                 setTela(5);
                 localStorage.setItem("LastPage", "5");
-                setCollapsed(true);
               },
             },
-
             {
               key: "6",
+              icon: <SettingOutlined />,
+              label: "Configurações",
+              onClick: () => {
+                setTela(6);
+                localStorage.setItem("LastPage", "6");
+              },
+            },
+            {
+              key: "7",
               icon: <LogoutOutlined />,
               label: "Sair",
               onClick: () => {
@@ -228,6 +235,8 @@ const MenuDashboard = () => {
               ? "Usuários"
               : tela === 5
               ? "Layout"
+              : tela === 6
+              ? "Congifurações"
               : "Sair"}
           </Typography.Title>
         </Header>
