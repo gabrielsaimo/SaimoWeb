@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { getImgLogo } from "../../services/config";
 import "../../css/Company.css";
-import { Button, Input, Modal, Popconfirm, Select, Spin } from "antd";
-import { PutEmpresa, admProfile, getStyles } from "../../services/user.ws";
+import { Button, Input, Modal, Popconfirm, Select, Spin, message } from "antd";
+import {
+  PutEmpresa,
+  admProfile,
+  deleteCompany,
+  getStyles,
+} from "../../services/user.ws";
 import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
 
 export default function Company({ config }) {
@@ -96,6 +101,58 @@ export default function Company({ config }) {
       setVisible(false);
     }
   };
+  const modalDelete = (idcompany) => {
+    Modal.warning({
+      title: [
+        <p>☠️Todos os dados dessa Empresa serão excluidos!!!☠️</p>,
+        <p>Esse processo é irreversível!!!☠️</p>,
+      ],
+
+      footer: [
+        <Button
+          key="back"
+          onClick={() => {
+            Modal.destroyAll();
+          }}
+        >
+          Cancelar
+        </Button>,
+        ,
+        <Button
+          key="submit"
+          type="primary"
+          style={{ marginLeft: 10 }}
+          danger
+          onClick={() => confirmDeleteImg(idcompany)}
+        >
+          ☠️Excluir☠️
+        </Button>,
+      ],
+    });
+  };
+
+  const confirmDeleteImg = async (idcompany, index) => {
+    await deleteCompany(idcompany);
+
+    let body = [];
+    companys.user_profile_json.map((company) => {
+      if (company.idcompany !== idcompany) {
+        body.push(company);
+      }
+    });
+    const newDataUSer = {
+      id: companys.id,
+      name: companys.name,
+      categoria: companys.categoria,
+      active: companys.active,
+      idcompany: companys.idcompany,
+      user_profile_json: body,
+      company: companys.company,
+      styles: companys.styles,
+    };
+    localStorage.setItem("dateUser", JSON.stringify(newDataUSer));
+    window.location.reload();
+  };
 
   return (
     <div
@@ -116,7 +173,7 @@ export default function Company({ config }) {
               overflowX: "auto",
             }}
           >
-            {companys?.user_profile_json.map((company) => (
+            {companys?.user_profile_json.map((company, index) => (
               <div
                 key={company?.id}
                 onClick={() =>
@@ -144,7 +201,7 @@ export default function Company({ config }) {
                     title="Tem certeza que deseja excluir essa imagem?"
                     okText="Excluir"
                     okButtonProps={{ danger: true }}
-                    onConfirm={() => confirmDeleteImg(imgSrc)}
+                    onConfirm={() => modalDelete(company?.idcompany)}
                     cancelText="Cancelar"
                   >
                     <Button

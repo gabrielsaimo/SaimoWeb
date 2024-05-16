@@ -115,3 +115,8 @@ export const postEmail = async (data: any): Promise<any> => {
   const response = await api.post<any>("/user/emails", data);
   return response.data;
 };
+
+export const deleteCompany = async (id: number): Promise<any> => {
+  const response = await api.delete<any>("/user/company/" + id);
+  return response.data;
+};
