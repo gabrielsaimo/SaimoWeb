@@ -411,6 +411,8 @@ const SlideRenderer = (atualizar) => {
       setImgSrc(img[0]);
       setIdImg(img[0]?.id);
       setTotalImg(img.length);
+    } else {
+      message.info("Logo não encontrada!");
     }
   };
 

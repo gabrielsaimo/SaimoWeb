@@ -10,6 +10,7 @@ import {
   Row,
   Select,
   Table,
+  Typography,
 } from "antd";
 import {
   DeleteOutlined,
@@ -33,7 +34,8 @@ export default function Category() {
   const [action, setAction] = useState(false);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState(true);
+  console.log("🚀 ~ Category ~ active:", active);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
@@ -44,8 +46,10 @@ export default function Category() {
     localStorage.getItem("companySelectd")
   ).idcompany;
   const handleOk = () => {
+    message.loading({ content: "Salvando...", key: "updatable" });
     setLoading(true);
     handleSave();
+
     setTimeout(() => {
       setLoading(false);
       closeModal();
@@ -92,7 +96,7 @@ export default function Category() {
           company: Company,
         });
         setTimeout(() => {
-          message.success("Item salvo com sucesso!");
+          message.success("Categoria salva com sucesso!");
         }, 1000);
       }
       fetchData();
@@ -135,7 +139,7 @@ export default function Category() {
     setSelectedTaskId(null);
     setId("");
     setName("");
-    setActive("");
+    setActive(1);
   }
 
   function closeModal() {
@@ -252,28 +256,40 @@ export default function Category() {
           </Button>,
         ]}
       >
-        <Row justify="center" gutter={20}>
+        <Row justify="center">
           <Col span={12}>
-            <Input
-              style={{ width: "100%", margin: "10px 0" }}
-              size="large"
-              placeholder="Nome"
-              value={name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <Select
-              style={{ width: "100%", margin: "10px 0" }}
-              size="large"
-              dropdownMatchSelectWidth={false}
-              showSearch
-              placeholder="Ativo"
-              optionFilterProp="children"
-              onChange={(value) => setActive(value)}
-              value={active !== "" ? active : undefined}
-            >
-              <Option value={true}>Sim</Option>
-              <Option value={false}>Não</Option>
-            </Select>
+            <div style={{ display: "flex", alignItems: "baseline" }}>
+              <Typography.Title level={5} style={{ width: 170 }}>
+                Nome
+              </Typography.Title>
+
+              <Input
+                style={{ width: 350, margin: "10px 0" }}
+                size="large"
+                placeholder="Nome"
+                value={
+                  name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+                }
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div style={{ display: "flex", alignItems: "baseline" }}>
+              <Typography.Title level={5} style={{ width: 170 }}>
+                Ativo?
+              </Typography.Title>
+              <Select
+                style={{ width: 380, margin: "10px 0" }}
+                size="large"
+                showSearch
+                placeholder="Ativo"
+                optionFilterProp="children"
+                onChange={(value) => setActive(value)}
+                defaultValue={active}
+              >
+                <Option value={true}>Sim</Option>
+                <Option value={false}>Não</Option>
+              </Select>
+            </div>
           </Col>
         </Row>
       </Modal>

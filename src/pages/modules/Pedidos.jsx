@@ -1,4 +1,12 @@
-import { Badge, Button, Card, Descriptions, Drawer, notification } from "antd";
+import {
+  Badge,
+  Button,
+  Card,
+  Descriptions,
+  Drawer,
+  message,
+  notification,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { getPedidoId, getPedidosAdm } from "../../services/Pedidos.ws";
 import { getCardapio } from "../../services/cardapio.ws";
@@ -35,9 +43,7 @@ export default function Pedidos(atualizar) {
 
   useEffect(() => {
     getPedidoss();
-  }, [pedidos]);
-
-  useEffect(() => {
+    getPedido();
     const socket = io("http://192.168.12.11:3020"); // Substitua 'http://localhost:3000' pela URL correta do seu servidor
 
     socket.on("notification", (data) => {
@@ -50,11 +56,9 @@ export default function Pedidos(atualizar) {
     };
   }, []);
 
-  useEffect(() => {
-    getPedido();
-  }, [atualizar]);
   const getPedido = async () => {
     const pedidos = await getPedidosAdm(companySelectd.idcompany);
+    if (pedidos.length === 0) return message.error("Nenhum Pedido encontrado");
     setPedido(pedidos);
   };
 
@@ -144,6 +148,7 @@ export default function Pedidos(atualizar) {
       </Drawer>
       <h1>Atualizado as {dataFormatada}</h1>
       {contextHolder}
+
       {pedidos.map((pedido) => (
         <div style={{ marginBottom: 10 }}>
           <Card style={{ width: "100%" }}>

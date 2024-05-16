@@ -96,175 +96,180 @@ const MenuDashboard = () => {
     window.location.href = window.location.origin + "/login/logout";
   };
   return (
-    <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="user-info">
-          <div className="user-name">
-            {userNome} - {UserCategoria}
-          </div>
-          <div style={{ cursor: "pointer" }} onClick={() => setShowModal(true)}>
-            {imgCache !== "undefined" ? (
-              <div className="company-card-container">
-                <img
-                  src={atob(JSON.parse(imgCache))}
-                  alt="img"
-                  style={{
-                    width: 50,
-                    marginRight: 5,
-                    borderRadius: 10,
-                    marginLeft: 16,
-                    border: "solid 1px #000000",
-                  }}
-                />
-                <b style={{ color: "#FFF" }}>
-                  {collapsed ? null : CompanyParams}
-                </b>
-              </div>
-            ) : (
-              <Spin />
-            )}
-          </div>
-        </div>
-        <Menu
-          props={CompanyParams}
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={[localStorage.getItem("LastPage")]}
-          className="menu"
-          items={[
-            {
-              key: "1",
-              icon: <BookOutlined />,
-              label: "Catalogo",
-              disabled:
-                UserCategoria === "Gerência"
-                  ? false
-                  : UserCategoria === "ADM"
-                  ? false
-                  : true,
-              onClick: () => {
-                setTela(1);
-                localStorage.setItem("LastPage", "1");
-                setCollapsed(false);
-              },
-            },
-            {
-              key: "2",
-              icon: <PieChartOutlined />,
-              label: "Relatorios",
-              disabled: UserCategoria === "ADM" ? false : true,
-              onClick: () => {
-                setTela(2);
-                localStorage.setItem("LastPage", "2");
-              },
-            },
-            {
-              key: "3",
-              icon: <TagOutlined />,
-              label: "Pedidos",
-              onClick: () => {
-                setTela(3);
-                localStorage.setItem("LastPage", "3");
-              },
-            },
-            {
-              key: "4",
-              icon: <UserOutlined />,
-              disabled:
-                UserCategoria === "Gerência"
-                  ? false
-                  : UserCategoria === "ADM"
-                  ? false
-                  : true,
-              label: "Usuários",
-              onClick: () => {
-                setTela(4);
-                localStorage.setItem("LastPage", "4");
-              },
-            },
-            {
-              key: "5",
-              icon: <BgColorsOutlined />,
-              label: "Layout",
-              onClick: () => {
-                setTela(5);
-                localStorage.setItem("LastPage", "5");
-              },
-            },
-            {
-              key: "6",
-              icon: <SettingOutlined />,
-              label: "Configurações",
-              onClick: () => {
-                setTela(6);
-                localStorage.setItem("LastPage", "6");
-              },
-            },
-            {
-              key: "7",
-              icon: <LogoutOutlined />,
-              label: "Sair",
-              onClick: () => {
-                logout();
-              },
-            },
-          ]}
-        />
-      </Sider>
+    <>
       <Layout>
-        <Header
-          className="header"
-          style={{
-            background: colorBgContainer,
-          }}
-        >
-          <Button
-            icon={collapsed ? <MenuOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            className="menu-button"
+        <Sider trigger={null} collapsible collapsed={collapsed}>
+          <div className="user-info">
+            <div className="user-name">
+              {userNome} - {UserCategoria}
+            </div>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => setShowModal(true)}
+            >
+              {imgCache !== "undefined" ? (
+                <div className="company-card-container">
+                  <img
+                    src={atob(JSON.parse(imgCache))}
+                    alt="img"
+                    style={{
+                      width: 50,
+                      marginRight: 5,
+                      borderRadius: 10,
+                      marginLeft: 16,
+                      border: "solid 1px #000000",
+                    }}
+                  />
+                  <b style={{ color: "#FFF" }}>
+                    {collapsed ? null : CompanyParams}
+                  </b>
+                </div>
+              ) : (
+                <Spin />
+              )}
+            </div>
+          </div>
+          <Menu
+            props={CompanyParams}
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={[localStorage.getItem("LastPage")]}
+            className="menu"
+            items={[
+              {
+                key: "1",
+                icon: <BookOutlined />,
+                label: "Catalogo",
+                disabled:
+                  UserCategoria === "Gerência"
+                    ? false
+                    : UserCategoria === "ADM"
+                    ? false
+                    : true,
+                onClick: () => {
+                  setTela(1);
+                  localStorage.setItem("LastPage", "1");
+                  setCollapsed(false);
+                },
+              },
+              {
+                key: "2",
+                icon: <PieChartOutlined />,
+                label: "Relatorios",
+                disabled: UserCategoria === "ADM" ? false : true,
+                onClick: () => {
+                  setTela(2);
+                  localStorage.setItem("LastPage", "2");
+                },
+              },
+              {
+                key: "3",
+                icon: <TagOutlined />,
+                label: "Pedidos",
+                onClick: () => {
+                  setTela(3);
+                  localStorage.setItem("LastPage", "3");
+                },
+              },
+              {
+                key: "4",
+                icon: <UserOutlined />,
+                disabled:
+                  UserCategoria === "Gerência"
+                    ? false
+                    : UserCategoria === "ADM"
+                    ? false
+                    : true,
+                label: "Usuários",
+                onClick: () => {
+                  setTela(4);
+                  localStorage.setItem("LastPage", "4");
+                },
+              },
+              {
+                key: "5",
+                icon: <BgColorsOutlined />,
+                label: "Layout",
+                onClick: () => {
+                  setTela(5);
+                  localStorage.setItem("LastPage", "5");
+                },
+              },
+              {
+                key: "6",
+                icon: <SettingOutlined />,
+                label: "Configurações",
+                onClick: () => {
+                  setTela(6);
+                  localStorage.setItem("LastPage", "6");
+                },
+              },
+              {
+                key: "7",
+                icon: <LogoutOutlined />,
+                label: "Sair",
+                onClick: () => {
+                  logout();
+                },
+              },
+            ]}
           />
+        </Sider>
+        <Layout>
+          <Header
+            className="header"
+            style={{
+              background: colorBgContainer,
+            }}
+          >
+            <Button
+              icon={collapsed ? <MenuOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              className="menu-button"
+            />
 
-          <Typography.Title level={3} className="title">
-            {tela === 1
-              ? "Catalogo"
-              : tela === 2
-              ? "Relatórios"
-              : tela === 3
-              ? "Pedidos"
-              : tela === 4
-              ? "Usuários"
-              : tela === 5
-              ? "Layout"
-              : tela === 6
-              ? "Congifurações"
-              : "Sair"}
-          </Typography.Title>
-        </Header>
-        <Content
-          className="content"
-          style={{
-            background: colorBgContainer,
-          }}
+            <Typography.Title level={3} className="title">
+              {tela === 1
+                ? "Catalogo"
+                : tela === 2
+                ? "Relatórios"
+                : tela === 3
+                ? "Pedidos"
+                : tela === 4
+                ? "Usuários"
+                : tela === 5
+                ? "Layout"
+                : tela === 6
+                ? "Congifurações"
+                : "Sair"}
+            </Typography.Title>
+          </Header>
+          <Content
+            className="content"
+            style={{
+              background: colorBgContainer,
+            }}
+          >
+            {cachedContent[tela]}
+          </Content>
+        </Layout>
+        <Modal
+          open={showModal}
+          footer={false}
+          onCancel={() => setShowModal(false)}
+          width={380}
+        ></Modal>
+        <Drawer
+          placement={"top"}
+          closable={false}
+          size="large"
+          onClose={() => setShowModal(false)}
+          open={showModal}
         >
-          {cachedContent[tela]}
-        </Content>
+          <Company />
+        </Drawer>
       </Layout>
-      <Modal
-        open={showModal}
-        footer={false}
-        onCancel={() => setShowModal(false)}
-        width={380}
-      ></Modal>
-      <Drawer
-        placement={"top"}
-        closable={false}
-        size="large"
-        onClose={() => setShowModal(false)}
-        open={showModal}
-      >
-        <Company />
-      </Drawer>
-    </Layout>
+    </>
   );
 };
 export default MenuDashboard;

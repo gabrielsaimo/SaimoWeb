@@ -129,7 +129,7 @@ const Emails = () => {
       <Button type="primary" onClick={() => setVisibleEmail(true)}>
         Novo
       </Button>
-      <Table columns={columnsEmail} dataSource={emails} />;
+      <Table columns={columnsEmail} dataSource={emails} />
       <Modal
         title="Novo Email"
         open={visibleEmail}

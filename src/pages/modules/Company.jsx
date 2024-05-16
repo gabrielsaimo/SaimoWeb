@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { getImgLogo } from "../../services/config";
 import "../../css/Company.css";
-import { Button, Input, Modal, Spin } from "antd";
+import { Button, Input, Modal, Popconfirm, Select, Spin } from "antd";
 import { PutEmpresa, admProfile, getStyles } from "../../services/user.ws";
+import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
 
-export default function Company() {
+export default function Company({ config }) {
   const companys = JSON.parse(localStorage.getItem("dateUser"));
   const [images, setImages] = useState({});
   const [acont, setAcont] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [CompanyName, setCompanyName] = useState("");
+  const [modo, setModo] = useState(1);
   if (companys === null) {
     window.location.href = "/login/logout";
   }
@@ -19,7 +21,6 @@ export default function Company() {
         setAcont(0);
       } else {
         const img = await getImgLogo(company.idcompany);
-        console.log("🚀 ~ companys.user_profile_json.forEach ~ img:", img)
         setAcont(acont + 1);
         setImages((prevImages) => ({
           ...prevImages,
@@ -32,6 +33,7 @@ export default function Company() {
   const addCompany = async () => {
     const data = {
       company: CompanyName,
+      modo: modo,
     };
     const response = await PutEmpresa(data);
     if (response) {
@@ -46,12 +48,13 @@ export default function Company() {
       let body2 = [];
       resp.map((company) => {
         body2.push(...companys.user_profile_json, {
-          company: company.company,
           id_user: company.id_user,
           id: company.id,
-          idcompany: company.idcompany,
+          company: company.company,
           category: company.category,
+          idcompany: company.idcompany,
           Permission: company.Permission,
+          modo: company.modo,
         });
       });
 
@@ -117,7 +120,9 @@ export default function Company() {
               <div
                 key={company?.id}
                 onClick={() =>
-                  CompanySelectd(company, images[company?.idcompany])
+                  !config
+                    ? CompanySelectd(company, images[company?.idcompany])
+                    : null
                 }
                 className="company-card background-page"
               >
@@ -134,12 +139,40 @@ export default function Company() {
                     <Spin />
                   </div>
                 )}
+                {config && (
+                  <Popconfirm
+                    title="Tem certeza que deseja excluir essa imagem?"
+                    okText="Excluir"
+                    okButtonProps={{ danger: true }}
+                    onConfirm={() => confirmDeleteImg(imgSrc)}
+                    cancelText="Cancelar"
+                  >
+                    <Button
+                      style={{
+                        backgroundColor: "#fc5f5f",
+                        width: 20,
+                        position: "absolute",
+                        marginLeft: 218,
+                        marginTop: -11,
+                      }}
+                    >
+                      <DeleteOutlined
+                        size={24}
+                        style={{
+                          color: "#fff",
+                          marginLeft: -7,
+                        }}
+                      />
+                    </Button>
+                  </Popconfirm>
+                )}
+
                 <h3 className="title-company">{company?.company}</h3>
                 <p className="title-company">{company?.category}</p>
               </div>
             ))}
-            {companys.categoria === "ADM" ||
-            companys.categoria === "Gerência" ? (
+            {(companys.categoria === "ADM" ||
+              companys.categoria === "Gerência") & !config ? (
               <div
                 style={{
                   display: "flex",
@@ -221,13 +254,38 @@ export default function Company() {
         }}
         okText={"Adicionar"}
       >
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
           <p>Nome</p>
           <Input
             style={{ width: 200 }}
             type="text"
             onChange={(e) => setCompanyName(e.target.value)}
           />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+            marginTop: 10,
+          }}
+        >
+          <p>Tipo</p>
+
+          <Select
+            style={{ width: 200 }}
+            defaultValue={1}
+            onChange={(e) => setModo(e)}
+          >
+            <Select.Option value={1}>Cardapio</Select.Option>
+            <Select.Option value={2}>Catálogo</Select.Option>
+          </Select>
         </div>
       </Modal>
     </div>

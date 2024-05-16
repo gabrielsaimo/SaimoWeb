@@ -9,6 +9,7 @@ import {
   Space,
   Table,
   Typography,
+  message,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import {
@@ -44,6 +45,7 @@ export default function Users(atualizar) {
 
   const gtUser = () => {
     getUsers(idcompany).then((users) => {
+      if (users.length === 0) return message.error("Nenhum usuário encontrado");
       setData(users);
     });
   };

@@ -55,9 +55,9 @@ export default function Dashboard({ atualizar, user, company }) {
   const cachedData = localStorage.getItem("dateUser");
   if (localStorage.getItem("companySelectd") === null)
     return (window.location.href = "/Login/token");
-  const companySelectd = JSON.parse(
-    localStorage.getItem("companySelectd")
-  ).idcompany;
+
+  const companySelectd = JSON.parse(localStorage.getItem("companySelectd"));
+
   if (cachedData === null) return (window.location.href = "/Login");
 
   const validaEmpresa = JSON.parse(cachedData).user_profile_json.some(
@@ -102,7 +102,6 @@ export default function Dashboard({ atualizar, user, company }) {
   const [coint, setCoint] = useState(0);
   const [open, setOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState([]);
-  const [logo, setLogo] = useState();
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     setCoint(coint + 1);
@@ -200,13 +199,25 @@ export default function Dashboard({ atualizar, user, company }) {
   }, [search, cardapio, filteredStatus, uptela]);
 
   const gtCardapio = async () => {
-    const cardapioCollection = await getCardapio(companySelectd, company);
+    const cardapioCollection = await getCardapio(
+      companySelectd.idcompany,
+      company
+    );
+    if (cardapioCollection.length === 0)
+      return message.warning("Nenhum Item Encontrado");
+
     const cardapios = cardapioCollection;
     setCardapio(cardapios.sort((a, b) => a.id - b.id));
   };
 
   const getCardapiocategory = async () => {
-    const cardapioCollection = await getCategoty(companySelectd, company);
+    const cardapioCollection = await getCategoty(
+      companySelectd.idcompany,
+      company
+    );
+    if (cardapioCollection.length === 0)
+      return message.warning("Nenhuma Categoria Encontrada");
+
     const categoty = cardapioCollection;
 
     setCardapioCategory(categoty.sort((a, b) => a.id - b.id));
@@ -280,7 +291,7 @@ export default function Dashboard({ atualizar, user, company }) {
         number,
         update_at: new Date(),
         update_by: JSON.parse(cachedData).name,
-        idcompany: companySelectd,
+        idcompany: companySelectd.idcompany,
         company: company,
       });
       message.success("Item atualizado com sucesso!");
@@ -298,7 +309,7 @@ export default function Dashboard({ atualizar, user, company }) {
         number,
         update_at: new Date(),
         update_by: JSON.parse(cachedData).name,
-        idcompany: companySelectd,
+        idcompany: companySelectd.idcompany,
         company: company,
       });
       message.success("Item salvo com sucesso!");
@@ -342,6 +353,13 @@ export default function Dashboard({ atualizar, user, company }) {
       clearSelecteds();
     }
   }
+
+  function closeModalCategory() {
+    setModalCategory(false);
+    getCardapio(companySelectd.idcompany, companySelectd.company);
+    getCardapiocategory(companySelectd.idcompany, companySelectd.company);
+  }
+
   const memoizedImgSrc = useMemo(() => {
     if (cardapio.length > 0 && imgSrc.length === 0) {
       const images = [];
@@ -588,7 +606,7 @@ export default function Dashboard({ atualizar, user, company }) {
         type="primary"
         style={{ width: 200 }}
         onClick={() =>
-          window.open(`/home/${companySelectd}/${company}`, "_blank")
+          window.open(`/home/${companySelectd.idcompany}/${company}`, "_blank")
         }
       >
         Pagina Inicial
@@ -640,12 +658,14 @@ export default function Dashboard({ atualizar, user, company }) {
                   title="Cardápio"
                   onClick={() =>
                     window.open(
-                      `/Cardapio/${companySelectd}/${company}`,
+                      `/${
+                        companySelectd.modo === 1 ? "Cardapio" : "Catalogo"
+                      }/${companySelectd.idcompany}/${company}`,
                       "_blank"
                     )
                   }
                 >
-                  Ver Cardápio
+                  Ver {companySelectd.modo === 1 ? "Cardápio" : "Catálogo"}
                 </Button>
 
                 <Popover
@@ -667,14 +687,22 @@ export default function Dashboard({ atualizar, user, company }) {
                   justifyContent: "center",
                 }}
               >
-                {imgCache !== "undefined" && (
+                {imgCache !== "undefined" ? (
                   <div id="myqrcode">
                     <QRCode
                       errorLevel="H"
-                      value={`https://menu-digital.vercel.app/home/${companySelectd}/${company}`}
-                      icon={atob(JSON.parse(imgCache)) || ""}
+                      value={`https://menu-digital.vercel.app/home/${companySelectd.idcompany}/${company}`}
+                      icon={atob(JSON.parse(imgCache)) || null}
                       size={400}
                       iconSize={155}
+                    />
+                  </div>
+                ) : (
+                  <div id="myqrcode">
+                    <QRCode
+                      errorLevel="H"
+                      value={`https://menu-digital.vercel.app/home/${companySelectd.idcompany}/${company}`}
+                      size={400}
                     />
                   </div>
                 )}
@@ -716,6 +744,7 @@ export default function Dashboard({ atualizar, user, company }) {
                   style={{
                     width: "100%",
                     display: "flex",
+                    justifyContent: "space-between",
                   }}
                 >
                   <Button
@@ -724,11 +753,21 @@ export default function Dashboard({ atualizar, user, company }) {
                     onClick={handleShowModalNewAction}
                     ref={ref1}
                   >
-                    Novo
+                    Novo Item
                   </Button>
                 </div>
               </Col>
-              <Col ref={ref2} span={12}>
+              <Col span={24}>
+                <Button
+                  ref={ref4}
+                  icon={<PlusOutlined />}
+                  type="primary"
+                  onClick={() => setModalCategory(!modalCategory)}
+                >
+                  Categoria
+                </Button>
+              </Col>
+              <Col ref={ref2} span={24}>
                 <div
                   style={{
                     width: "100%",
@@ -1036,19 +1075,6 @@ export default function Dashboard({ atualizar, user, company }) {
                   </Option>
                 ))}
               </Select>
-              <Button
-                ref={ref4}
-                style={{ backgroundColor: "yellow", width: 20 }}
-                onClick={() => setModalCategory(!modalCategory)}
-              >
-                <EditOutlined
-                  size={24}
-                  style={{
-                    color: "#000",
-                    marginLeft: -7,
-                  }}
-                />
-              </Button>
             </div>
 
             <div>
@@ -1121,10 +1147,12 @@ export default function Dashboard({ atualizar, user, company }) {
       </Modal>
       <Modal
         open={modalCategory}
-        okText={"Ok"}
-        onOk={closeModal}
-        onCancel={closeModal}
+        okText={"Salvar"}
+        onOk={closeModalCategory}
+        onCancel={closeModalCategory}
         title={"Categoria"}
+        closable={false}
+        footer={null}
       >
         <Category />
       </Modal>

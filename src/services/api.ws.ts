@@ -1,4 +1,5 @@
 import axios from "axios";
+import { message } from "antd";
 
 const bearerToken = localStorage.getItem("access_token");
 
@@ -19,6 +20,9 @@ api.interceptors.response.use(
     // Se a resposta tiver um status 401, redirecione para a página de login
     if (error.response && error.response.status === 401) {
       window.location.href = "/login/token";
+    }
+    if (error.response && error.response.status === 500) {
+      message.error("Erro interno no servidor");
     }
 
     // Se a resposta tiver um status diferente de 401, apenas rejeite o erro
