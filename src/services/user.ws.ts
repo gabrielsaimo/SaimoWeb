@@ -100,3 +100,18 @@ export const admProfile = async (data: any): Promise<any> => {
   const response = await api.put<any>("/user/admProfile", data);
   return response.data;
 };
+
+export const getEmails = async (idcompany: number): Promise<any> => {
+  const response = await api.get<any>("/user/emails/" + idcompany);
+  return response.data;
+};
+
+export const putEmail = async (data: any): Promise<any> => {
+  const response = await api.put<any>("/user/email", data);
+  return response.data;
+};
+
+export const postEmail = async (data: any): Promise<any> => {
+  const response = await api.post<any>("/user/emails", data);
+  return response.data;
+};

@@ -1,41 +1,62 @@
 import React, { useEffect } from "react";
-import { Table, Button, Select, Modal, Form, Input } from "antd";
+import { Table, Button, Select, Modal, Form, Input, message } from "antd";
 
 import { DeleteOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
-
+import { getEmails, postEmail, putEmail } from "../../services/user.ws";
 const Emails = () => {
   const [emails, setEmails] = React.useState([]);
   const [visibleEmail, setVisibleEmail] = React.useState(false);
   const [email, setEmail] = React.useState({});
   const [loading, setLoading] = React.useState(false);
+  const idcompany = JSON.parse(
+    localStorage.getItem("companySelectd")
+  ).idcompany;
   const [form] = Form.useForm();
   useEffect(() => {
-    getEmails();
+    getEmailsCompnay();
   }, []);
 
-  const getEmails = async () => {
-    /*const response = await getEmail();
+  const getEmailsCompnay = async () => {
+    const response = await getEmails(idcompany);
     if (response.length === 0) {
+      message.error("Nenhum Email encontrado");
     } else {
       setEmails(response);
-    }*/
-  };
-  const postEmails = async (type, id) => {
-    /* setLoadingEmail(true);
-    const body = {
-      id: id,
-      type: type.join(","),
-    };
-    await postEmail(body);
-    setLoadingEmail(false);
-    message.success("Atualizado com sucesso");*/
+    }
   };
 
   const createEmail = async () => {
-    // limpar formes
+    const body = {
+      name: form.getFieldValue("Nome"),
+      type: form.getFieldValue("Systema").join(","),
+      email: form.getFieldValue("Email"),
+      active: true,
+      idcompany: idcompany,
+    };
+    await putEmail(body);
+    setVisibleEmail(false);
+    form.resetFields();
+  };
 
-    window.location.reload();
+  const updateEmail = async (id, value) => {
+    const body = {
+      id: id,
+      type: value.join(","),
+    };
+    await postEmail(body);
+    message.success("Sistema Atualizado");
+  };
+
+  const confirmDeleteEmail = async (record) => {
+    console.log("🚀 ~ confirmDeleteEmail ~ body:");
+    const body = {
+      id: record.id,
+      active: false,
+    };
+
+    getEmailsCompnay();
+    message.success("Email Excluido");
   };
 
   const columnsEmail = [
@@ -52,8 +73,8 @@ const Emails = () => {
     },
     {
       title: "Email",
-      dataIndex: "mail",
-      key: "mail",
+      dataIndex: "email",
+      key: "email",
     },
     {
       title: "Systema",
@@ -64,7 +85,9 @@ const Emails = () => {
           mode="multiple"
           placeholder="Selecione"
           defaultValue={record.type.split(",") || []}
-          onChange={(e) => postEmails(e, record.id)}
+          onChange={(value) => {
+            updateEmail(record.id, value);
+          }}
         >
           <Select.Option value="Delivery">Delivery</Select.Option>
           <Select.Option value="Venda">Venda</Select.Option>
@@ -128,7 +151,16 @@ const Emails = () => {
             initialValues={{ remember: true }}
             onFinish={() => createEmail()}
           >
-            <Form.Item label="Primeiro Nome" name="Nome">
+            <Form.Item
+              label="Nome"
+              name="Nome"
+              rules={[
+                {
+                  required: true,
+                  message: "insira um nome",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
             <Form.Item
@@ -154,15 +186,7 @@ const Emails = () => {
               </Select>
             </Form.Item>
             <Form.Item>
-              <Button
-                htmlType="submit"
-                type="primary"
-                disabled={
-                  !form.getFieldValue("Email") ||
-                  !form.getFieldValue("Nome") ||
-                  !form.getFieldValue("Systema")
-                }
-              >
+              <Button htmlType="submit" type="primary">
                 Salvar
               </Button>
             </Form.Item>
