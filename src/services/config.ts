@@ -37,6 +37,12 @@ export const getImgLogo = async (idcomapany: number): Promise<any> => {
   return response.data;
 };
 
+export const getImgLogoPublic = async (idcomapany: number): Promise<any> => {
+  const response = await api.get<any>("/cardapio/logo/" + idcomapany);
+
+  return response.data;
+};
+
 export const getlogoName = async (comapany: any): Promise<any> => {
   const response = await api.get<any>("/cardapio/logoName/" + comapany);
   return response.data;

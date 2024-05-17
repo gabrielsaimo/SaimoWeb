@@ -9,6 +9,7 @@ import {
   Collapse,
   Affix,
   Input,
+  Divider,
 } from "antd";
 import "../../css/LayoutSite.css";
 import logo from "../../assets/logo.webp";
@@ -35,6 +36,20 @@ const SlideRenderer = (atualizar) => {
   const [fundoColor1, setFundoColor1] = useState("#1677ff");
   const [fundoColor2, setFundoColor2] = useState("#1677ff");
   const [textColor, setTextColor] = useState("#1677ff");
+  const [texteColorGeral, setTexteColorGeral] = useState("#1677ff");
+  const [texteColorCategoria, setTexteColorCategoria] = useState("#1677ff");
+  const [texteColorNome, setTexteColorNome] = useState("#1677ff");
+  const [texteColorDescricao, setTexteColorDescricao] = useState("#1677ff");
+  const [texteColorSub, setTexteColorSub] = useState("#1677ff");
+  const [texteColorPreco, setTexteColorPreco] = useState("#1677ff");
+
+  const [fonteGeral, setFonteGeral] = useState("Georgia");
+  const [fonteCategoria, setFonteCategoria] = useState("Georgia");
+  const [fonteNome, setFonteNome] = useState("Georgia");
+  const [fonteDescricao, setFonteDescricao] = useState("Georgia");
+  const [fonteSub, setFonteSub] = useState("Georgia");
+  const [fontePreco, setFontePreco] = useState("Georgia");
+
   const [BorderColor, setBorderColor] = useState("#1677ff");
   const [Tema, setTema] = useState("");
   const [fileList, setFileList] = useState([]);
@@ -62,13 +77,50 @@ const SlideRenderer = (atualizar) => {
         stylesObj.backgrondColor.split(",")[2].replace("100%)", "")
       );
       setTextColor(stylesObj.colorText);
+      if (stylesObj.ColorCategoria) {
+        if (
+          stylesObj.ColorGeral === stylesObj.ColorNome &&
+          stylesObj.ColorGeral === stylesObj.ColorDescricao &&
+          stylesObj.ColorGeral === stylesObj.ColorSub &&
+          stylesObj.ColorGeral === stylesObj.ColorPreco &&
+          stylesObj.ColorGeral === stylesObj.ColorCategoria
+        ) {
+          GeralColor(stylesObj.ColorCategoria);
+          setTexteColorGeral(stylesObj.ColorGeral);
+          setTexteColorCategoria(stylesObj.ColorCategoria);
+          setTexteColorNome(stylesObj.ColorNome);
+          setTexteColorDescricao(stylesObj.ColorDescricao);
+          setTexteColorSub(stylesObj.ColorSub);
+          setTexteColorPreco(stylesObj.ColorPreco);
+          setFonteGeral(stylesObj.fonteGeral);
+          setFonteCategoria(stylesObj.fonteCategoria);
+          setFonteNome(stylesObj.fonteNome);
+          setFonteDescricao(stylesObj.fonteDescricao);
+          setFonteSub(stylesObj.fonteSub);
+          setFontePreco(stylesObj.fontePreco);
+        } else {
+          setTexteColorCategoria(stylesObj.ColorCategoria);
+          setTexteColorGeral(stylesObj.ColorGeral);
+          setTexteColorNome(stylesObj.ColorNome);
+          setTexteColorDescricao(stylesObj.ColorDescricao);
+          setTexteColorSub(stylesObj.ColorSub);
+          setTexteColorPreco(stylesObj.ColorPreco);
+          setFonteGeral(stylesObj.fonteGeral);
+          setFonteCategoria(stylesObj.fonteCategoria);
+          setFonteNome(stylesObj.fonteNome);
+          setFonteDescricao(stylesObj.fonteDescricao);
+          setFonteSub(stylesObj.fonteSub);
+          setFontePreco(stylesObj.fontePreco);
+        }
+      }
+
       setBorderColor(stylesObj.borderColor || "black");
       setTema(stylesObj.tema);
     }
   }, [styles.styles, atualizar]);
 
   const fetchData = async () => {
-    const styles = `{"backgrondColor":"linear-gradient(90deg,${fundobgColor1} 0%,${fundobgColor2} 100%)","colorText":"${textbgColor}", "tema":"${Tema}", "borderColor":"${BorderbgColor}"} `;
+    const styles = `{"backgrondColor":"linear-gradient(90deg,${fundobgColor1} 0%,${fundobgColor2} 100%)","colorText":"${textbgColor}", "tema":"${Tema}", "borderColor":"${BorderbgColor}" , "fonteGeral":"${textbgFonteGeral}", "fonteCategoria":"${textbgFonteCategoria}", "fonteNome":"${textbgFonteNome}", "fonteDescricao":"${textbgFonteDescricao}", "fonteSub":"${textbgFonteSub}", "fontePreco":"${textbgFontePreco}","ColorGeral": "${textbgColorGeral}", "ColorCategoria":"${textbgColorCategoria}", "ColorNome":"${textbgColorNome}", "ColorDescricao":"${textbgColorDescricao}", "ColorSub":"${textbgColorSub}", "ColorPreco":"${textbgColorPreco}"}`;
 
     const data = {
       company: CompanyName.replace(/%20/g, " "),
@@ -106,6 +158,7 @@ const SlideRenderer = (atualizar) => {
       window.location.reload();
     }, 2000);
   };
+
   const fundobgColor1 = useMemo(
     () =>
       typeof fundoColor1 === "string" ? fundoColor1 : fundoColor1.toHexString(),
@@ -121,6 +174,93 @@ const SlideRenderer = (atualizar) => {
     () => (typeof textColor === "string" ? textColor : textColor.toHexString()),
     [textColor]
   );
+
+  const textbgColorGeral = useMemo(
+    () =>
+      typeof texteColorGeral === "string"
+        ? texteColorGeral
+        : texteColorGeral.toHexString(),
+    [texteColorGeral]
+  );
+
+  const textbgColorCategoria = useMemo(
+    () =>
+      typeof texteColorCategoria === "string"
+        ? texteColorCategoria
+        : texteColorCategoria.toHexString(),
+    [texteColorCategoria]
+  );
+
+  const textbgColorNome = useMemo(
+    () =>
+      typeof texteColorNome === "string"
+        ? texteColorNome
+        : texteColorNome.toHexString(),
+    [texteColorNome]
+  );
+
+  const textbgColorDescricao = useMemo(
+    () =>
+      typeof texteColorDescricao === "string"
+        ? texteColorDescricao
+        : texteColorDescricao.toHexString(),
+    [texteColorDescricao]
+  );
+
+  const textbgColorSub = useMemo(
+    () =>
+      typeof texteColorSub === "string"
+        ? texteColorSub
+        : texteColorSub.toHexString(),
+    [texteColorSub]
+  );
+
+  const textbgColorPreco = useMemo(
+    () =>
+      typeof texteColorPreco === "string"
+        ? texteColorPreco
+        : texteColorPreco.toHexString(),
+    [texteColorPreco]
+  );
+
+  const textbgFonteGeral = useMemo(
+    () =>
+      typeof fonteGeral === "string" ? fonteGeral : fonteGeral.toHexString(),
+    [fonteGeral]
+  );
+
+  const textbgFonteCategoria = useMemo(
+    () =>
+      typeof fonteCategoria === "string"
+        ? fonteCategoria
+        : fonteCategoria.toHexString(),
+    [fonteCategoria]
+  );
+
+  const textbgFonteNome = useMemo(
+    () => (typeof fonteNome === "string" ? fonteNome : fonteNome.toHexString()),
+    [fonteNome]
+  );
+
+  const textbgFonteDescricao = useMemo(
+    () =>
+      typeof fonteDescricao === "string"
+        ? fonteDescricao
+        : fonteDescricao.toHexString(),
+    [fonteDescricao]
+  );
+
+  const textbgFonteSub = useMemo(
+    () => (typeof fonteSub === "string" ? fonteSub : fonteSub.toHexString()),
+    [fonteSub]
+  );
+
+  const textbgFontePreco = useMemo(
+    () =>
+      typeof fontePreco === "string" ? fontePreco : fontePreco.toHexString(),
+    [fontePreco]
+  );
+
   const BorderbgColor = useMemo(
     () =>
       typeof BorderColor === "string" ? BorderColor : BorderColor.toHexString(),
@@ -131,6 +271,114 @@ const SlideRenderer = (atualizar) => {
     () => (typeof Tema === "string" ? Tema : Tema.toHexString()),
     [Tema]
   );
+
+  const salveStyleFonte = async (fonte, e) => {
+    switch (fonte.title) {
+      case "Geral":
+        setFonteGeral(e);
+        setFonteCategoria(e);
+        setFonteNome(e);
+        setFonteDescricao(e);
+        setFonteSub(e);
+        setFontePreco(e);
+        break;
+      case "Categoria":
+        setFonteCategoria(e);
+        break;
+      case "Nome":
+        setFonteNome(e);
+        break;
+      case "Descrição":
+        setFonteDescricao(e);
+        break;
+      case "Sub":
+        setFonteSub(e);
+        break;
+      case "Preço":
+        setFontePreco(e);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const SelectFont = (fonte) => {
+    return (
+      <div style={{ marginTop: 20 }}>
+        <text
+          className="text"
+          style={{
+            fontSize: 20,
+            marginTop: 16,
+            fontWeight: "bold",
+            paddingRight: 10,
+          }}
+        >
+          {fonte.title}
+        </text>
+        <Select
+          value={fonte.value}
+          onChange={(e) => salveStyleFonte(fonte, e)}
+          style={{ width: 250 }}
+        >
+          <Select.Option value="Arial">
+            <text style={{ fontFamily: "Arial", fontSize: 25 }}>Arial</text>
+          </Select.Option>
+          <Select.Option value="Georgia">
+            <text className="georgia-font" style={{ fontSize: 25 }}>
+              Georgia
+            </text>
+          </Select.Option>
+          <Select.Option value="Times New Roman">
+            <text style={{ fontFamily: "Times New Roman", fontSize: 25 }}>
+              Times New Roman
+            </text>
+          </Select.Option>
+          <Select.Option value="greek-freak-font">
+            <text className="greek-freak-font" style={{ fontSize: 25 }}>
+              Greek Freak
+            </text>
+          </Select.Option>
+          <Select.Option value="luckiest-guy-font">
+            <text className="luckiest-guy-font" style={{ fontSize: 25 }}>
+              Luckiest Guy
+            </text>
+          </Select.Option>
+          <Select.Option value="creepster-font">
+            <text className="creepster-font" style={{ fontSize: 25 }}>
+              Creepster
+            </text>
+          </Select.Option>
+          <Select.Option value="monoton-font">
+            <text className="monoton-font" style={{ fontSize: 25 }}>
+              Monoton
+            </text>
+          </Select.Option>
+          <Select.Option value="press-start-font">
+            <text className="press-start-font" style={{ fontSize: 25 }}>
+              Press Start
+            </text>
+          </Select.Option>
+          <Select.Option value="rubik-bubbles-font">
+            <text className="rubik-bubbles-font" style={{ fontSize: 25 }}>
+              Rubik Bubbles
+            </text>
+          </Select.Option>
+          <Select.Option value="sacramento-font">
+            <text className="sacramento-font" style={{ fontSize: 25 }}>
+              Sacramento
+            </text>
+          </Select.Option>
+          <Select.Option value="shojumaru-font">
+            <text className="shojumaru-font" style={{ fontSize: 25 }}>
+              Shojumaru
+            </text>
+          </Select.Option>
+        </Select>
+      </div>
+    );
+  };
+
   const FundoStyle = {
     marginTop: 16,
     background:
@@ -164,24 +412,17 @@ const SlideRenderer = (atualizar) => {
     border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
   };
 
-  const TextStyle = {
-    marginTop: 16,
-    background:
-      "linear-gradient(90deg, " +
-      fundobgColor1 +
-      " 0%, " +
-      fundobgColor2 +
-      " 100%)",
-    display: "flex",
-    alignItems: "center",
-    fontSize: 50,
-    cursor: "pointer",
-    color: textbgColor,
-    border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
-    borderRadius: 10,
-  };
   const TextStyle2 = {
     color: textbgColor,
+  };
+
+  const GeralColor = (e) => {
+    setTexteColorCategoria(e);
+    setTexteColorNome(e);
+    setTexteColorDescricao(e);
+    setTexteColorSub(e);
+    setTexteColorPreco(e);
+    setTexteColorGeral(e);
   };
 
   const onPreview = async (file) => {
@@ -298,12 +539,180 @@ const SlideRenderer = (atualizar) => {
     },
     {
       key: "3",
-      label: "Cor do Texto",
+      label: "Texto",
       children: (
         <div>
-          <ColorPicker value={textColor} onChange={setTextColor}>
-            <p style={TextStyle}>Texto do Site</p>
+          <ColorPicker value={texteColorGeral} onChange={(e) => GeralColor(e)}>
+            <text
+              style={{
+                color: `${textbgColorGeral}`,
+                marginTop: 16,
+                background:
+                  "linear-gradient(90deg, " +
+                  fundobgColor1 +
+                  " 0%, " +
+                  fundobgColor2 +
+                  " 100%)",
+                display: "flex",
+                alignItems: "center",
+                fontSize: 50,
+                cursor: "pointer",
+                border:
+                  textbgColor === "#ffffff"
+                    ? "solid 1px #000000"
+                    : "solid 1px red",
+                borderRadius: 10,
+              }}
+              className={`${textbgFonteGeral}`}
+            >
+              Geral
+            </text>
           </ColorPicker>
+          <SelectFont value={fonteGeral} title="Geral" />
+          <Divider />
+          <ColorPicker value={fonteCategoria} onChange={setTexteColorCategoria}>
+            <text
+              style={{
+                color: `${textbgColorCategoria}`,
+                marginTop: 16,
+                background:
+                  "linear-gradient(90deg, " +
+                  fundobgColor1 +
+                  " 0%, " +
+                  fundobgColor2 +
+                  " 100%)",
+                display: "flex",
+                alignItems: "center",
+                fontSize: 50,
+                cursor: "pointer",
+                border:
+                  textbgColor === "#ffffff"
+                    ? "solid 1px #000000"
+                    : "solid 1px red",
+                borderRadius: 10,
+              }}
+              className={`${textbgFonteCategoria}`}
+            >
+              Categoria
+            </text>
+          </ColorPicker>
+          <SelectFont value={fonteCategoria} title="Categoria" />
+          <Divider />
+          <ColorPicker value={textbgColorNome} onChange={setTexteColorNome}>
+            <text
+              style={{
+                color: `${textbgColorNome}`,
+                marginTop: 16,
+                background:
+                  "linear-gradient(90deg, " +
+                  fundobgColor1 +
+                  " 0%, " +
+                  fundobgColor2 +
+                  " 100%)",
+                display: "flex",
+                alignItems: "center",
+                fontSize: 50,
+                cursor: "pointer",
+                border:
+                  textbgColor === "#ffffff"
+                    ? "solid 1px #000000"
+                    : "solid 1px red",
+                borderRadius: 10,
+              }}
+              className={`${textbgFonteNome}`}
+            >
+              Nome
+            </text>
+          </ColorPicker>
+          <SelectFont value={fonteNome} title="Nome" />
+          <Divider />
+
+          <ColorPicker
+            value={textbgColorDescricao}
+            onChange={setTexteColorDescricao}
+          >
+            <text
+              style={{
+                color: `${textbgColorDescricao}`,
+                marginTop: 16,
+                background:
+                  "linear-gradient(90deg, " +
+                  fundobgColor1 +
+                  " 0%, " +
+                  fundobgColor2 +
+                  " 100%)",
+                display: "flex",
+                alignItems: "center",
+                fontSize: 50,
+                cursor: "pointer",
+                border:
+                  textbgColor === "#ffffff"
+                    ? "solid 1px #000000"
+                    : "solid 1px red",
+                borderRadius: 10,
+              }}
+              className={`${textbgFonteDescricao}`}
+            >
+              Descrição
+            </text>
+          </ColorPicker>
+          <SelectFont value={fonteDescricao} title="Descrição" />
+          <Divider />
+          <ColorPicker value={textbgColorSub} onChange={setTexteColorSub}>
+            <text
+              style={{
+                color: `${textbgColorSub}`,
+                marginTop: 16,
+                background:
+                  "linear-gradient(90deg, " +
+                  fundobgColor1 +
+                  " 0%, " +
+                  fundobgColor2 +
+                  " 100%)",
+                display: "flex",
+                alignItems: "center",
+                fontSize: 50,
+                cursor: "pointer",
+                border:
+                  textbgColor === "#ffffff"
+                    ? "solid 1px #000000"
+                    : "solid 1px red",
+                borderRadius: 10,
+              }}
+              className={`${textbgFonteSub}`}
+            >
+              Sub
+            </text>
+          </ColorPicker>
+          <SelectFont value={fonteSub} title="Sub" />
+          <Divider />
+          <ColorPicker value={textbgColorPreco} onChange={setTexteColorPreco}>
+            <text
+              style={{
+                color: `${textbgColorPreco}`,
+                marginTop: 16,
+                background:
+                  "linear-gradient(90deg, " +
+                  fundobgColor1 +
+                  " 0%, " +
+                  fundobgColor2 +
+                  " 100%)",
+                display: "flex",
+                alignItems: "center",
+                fontSize: 50,
+                cursor: "pointer",
+                border:
+                  textbgColor === "#ffffff"
+                    ? "solid 1px #000000"
+                    : "solid 1px red",
+                borderRadius: 10,
+              }}
+              className={`${textbgFontePreco}`}
+            >
+              Preço $
+            </text>
+          </ColorPicker>
+          <SelectFont value={fontePreco} title="Preço" />
         </div>
       ),
     },
@@ -564,7 +973,14 @@ const SlideRenderer = (atualizar) => {
                         flexWrap: "wrap",
                         textAlign: "center",
                       }}
-                      header={<text style={TextStyle2}>Categoria</text>}
+                      header={
+                        <text
+                          className={` ${textbgFonteCategoria}`}
+                          style={{ color: `${textbgColorCategoria}` }}
+                        >
+                          Categoria
+                        </text>
+                      }
                     >
                       <div
                         key={2}
@@ -593,13 +1009,13 @@ const SlideRenderer = (atualizar) => {
                                 }}
                               >
                                 <p
-                                  className="p_1 name georgia-font"
-                                  style={TextStyle2}
+                                  className={`p_1 name ${textbgFonteNome}`}
+                                  style={{ color: `${textbgColorNome}` }}
                                 >
-                                  Prato
+                                  Item
                                 </p>
                                 <p
-                                  className="name georgia-font"
+                                  className="name"
                                   style={{
                                     backgroundColor: "#FFFFFF70",
                                     display: "flex",
@@ -619,14 +1035,17 @@ const SlideRenderer = (atualizar) => {
                                 </p>
                               </div>
 
-                              <div className="flex" style={TextStyle2}>
-                                <div className="sub" style={TextStyle2}>
+                              <div className="flex">
+                                <div
+                                  className={`sub ${textbgFonteSub}`}
+                                  style={{ color: `${textbgColorSub}` }}
+                                >
                                   Subtitulo
                                 </div>
                               </div>
                               <div
-                                className="description2Teste"
-                                style={TextStyle2}
+                                className={`description2Teste ${textbgFonteDescricao}`}
+                                style={{ color: `${textbgColorDescricao}` }}
                               >
                                 Descrição
                               </div>
@@ -640,8 +1059,8 @@ const SlideRenderer = (atualizar) => {
                               }}
                             >
                               <p
-                                className="p_1 price georgia-bold-font"
-                                style={TextStyle2}
+                                className={`p_1 preco ${textbgFontePreco}`}
+                                style={{ color: `${textbgColorPreco}` }}
                               >
                                 R$ 00,00
                               </p>

@@ -35,7 +35,6 @@ export default function Category() {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [active, setActive] = useState(true);
-  console.log("🚀 ~ Category ~ active:", active);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);

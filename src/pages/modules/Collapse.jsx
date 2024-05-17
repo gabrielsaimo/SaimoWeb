@@ -50,9 +50,31 @@ const CollapseMenu = () => {
     const cardapioCollection = await getCategoty(idcompany, Company);
     setCardapioCategory(cardapioCollection);
   };
+
   const styleText = {
     color: styles.colorText,
   };
+
+  const ColorCategoria = styles.ColorCategoria
+    ? styles.ColorCategoria
+    : styleText.color;
+  const ColorDescricao = styles.ColorDescricao
+    ? styles.ColorDescricao
+    : styleText;
+  const ColorGeral = styles.ColorGeral ? styles.ColorGeral : styleText;
+  const ColorNome = styles.ColorNome ? styles.ColorNome : styleText;
+  const ColorPreco = styles.ColorPreco ? styles.ColorPreco : styleText;
+  const ColorSub = styles.ColorSub ? styles.ColorSub : styleText;
+  const fonteCategoria = styles.fonteCategoria
+    ? styles.fonteCategoria
+    : "Arial";
+  const fonteDescricao = styles.fonteDescricao
+    ? styles.fonteDescricao
+    : "Arial";
+  const fonteGeral = styles.fonteGeral ? styles.fonteGeral : "Arial";
+  const fonteNome = styles.fonteNome ? styles.fonteNome : "Arial";
+  const fontePreco = styles.fontePreco ? styles.fontePreco : "Arial";
+  const fonteSub = styles.fonteSub ? styles.fonteSub : "Arial";
 
   const searchNameCardapio = (text) => {
     if (text === "") {
@@ -175,8 +197,9 @@ const CollapseMenu = () => {
                   >
                     <Panel
                       id={item1.name}
+                      className={`${fonteCategoria}`}
                       style={{
-                        color: styles.colorText,
+                        color: ColorCategoria,
                         fontWeight: "bold",
                         backgroundImage: `url(${
                           styles.tema == "Black"
@@ -197,7 +220,12 @@ const CollapseMenu = () => {
                         flexWrap: "wrap",
                       }}
                       header={
-                        <text style={{ color: styles.colorText }}>
+                        <text
+                          className={`${fonteCategoria}`}
+                          style={{
+                            color: ColorCategoria,
+                          }}
+                        >
                           {item1.name}
                         </text>
                       }
@@ -220,8 +248,10 @@ const CollapseMenu = () => {
                               >
                                 <div>
                                   <p
-                                    className="p_1 name georgia-font"
-                                    style={styleText}
+                                    className={`p_1 name ${fonteNome}`}
+                                    style={{
+                                      color: ColorNome,
+                                    }}
                                   >
                                     {categoria.name}
                                   </p>
@@ -244,20 +274,27 @@ const CollapseMenu = () => {
                                 </div>
 
                                 <div
-                                  className="flex"
+                                  className={`flex ${fonteDescricao}`}
                                   style={{
-                                    color: styles.colorText,
+                                    color: ColorDescricao,
                                     marginTop: 15,
                                   }}
                                 >
                                   {categoria.description.length > 25 && (
                                     <>
-                                      <div className="sub" style={styleText}>
+                                      <div
+                                        className={`sub ${fonteSub}`}
+                                        style={{
+                                          color: ColorSub,
+                                        }}
+                                      >
                                         {categoria.sub}
                                       </div>
                                       <div
-                                        className="description"
-                                        style={styleText}
+                                        className={`description ${fonteDescricao}`}
+                                        style={{
+                                          color: ColorDescricao,
+                                        }}
                                       >
                                         {categoria.description}
                                       </div>
@@ -265,12 +302,17 @@ const CollapseMenu = () => {
                                   )}
                                   {categoria.description.length <= 25 && (
                                     <>
-                                      <div className="sub" style={styleText}>
+                                      <div
+                                        className={`sub ${fonteSub}`}
+                                        style={{
+                                          color: ColorSub,
+                                        }}
+                                      >
                                         {categoria.sub}
                                       </div>
                                       <div
                                         className="description2"
-                                        style={styleText}
+                                        style={{ color: ColorDescricao }}
                                       >
                                         {categoria.description}
                                       </div>
@@ -287,8 +329,10 @@ const CollapseMenu = () => {
                                 }}
                               >
                                 <p
-                                  className="p_1 price georgia-bold-font"
-                                  style={styleText}
+                                  className={`p_1 price ${fontePreco}`}
+                                  style={{
+                                    color: ColorPreco,
+                                  }}
                                 >
                                   {`R$ ${
                                     categoria.price % 1 !== 0
@@ -327,7 +371,6 @@ const CollapseMenu = () => {
               width: 300,
               marginBottom: 10,
               borderRadius: 10,
-              borderColor: styles.colorText,
               marginTop: 50,
             }}
             placeholder="Pesquisar"
@@ -356,7 +399,11 @@ const CollapseMenu = () => {
           key: `${index}`,
           title: (
             <text
-              style={{ color: styles.colorText, fontWeight: "bold" }}
+              className={`${fonteNome}`}
+              style={{
+                color: ColorNome,
+                fontWeight: "bold",
+              }}
             >{`${item.name}`}</text>
           ),
         }))}

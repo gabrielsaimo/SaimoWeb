@@ -137,13 +137,89 @@
   src: url("../fonts/georgia-bold.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Creepster-Regular";
+  src: url("../fonts/Creepster-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Greek-Freak";
+  src: url("../fonts/Greek-Freak.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "LuckiestGuy-Regular";
+  src: url("../fonts/LuckiestGuy-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Merienda-VariableFont_wght";
+  src: url("../fonts/Merienda-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Monoton-Regular";
+  src: url("../fonts/Monoton-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PressStart2p-Regular";
+  src: url("../fonts/PressStart2P-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "RubikBubbles-Regular";
+  src: url("../fonts/RubikBubbles-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Sacramento-Regular";
+  src: url("../fonts/Sacramento-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Shojumaru-Regular";
+  src: url("../fonts/Shojumaru-Regular.ttf") format("truetype");
+}
 .georgia-font,
 .georgia-bold-font {
   font-family: "Georgia", serif;
 }
 
-.georgia-bold-font {
-  font-family: "Georgia-bold", serif;
+.creepster-font {
+  font-family: "Creepster-Regular", serif;
+}
+
+.greek-freak-font {
+  font-family: "Greek-Freak", serif;
+}
+
+.luckiest-guy-font {
+  font-family: "LuckiestGuy-Regular", serif;
+}
+
+.merienda-font {
+  font-family: "Merienda-VariableFont_wght", serif;
+}
+
+.monoton-font {
+  font-family: "Monoton-Regular", serif;
+}
+
+.press-start-font {
+  font-family: "PressStart2p-Regular", serif;
+}
+
+.rubik-bubbles-font {
+  font-family: "RubikBubbles-Regular", serif;
+}
+
+.sacramento-font {
+  font-family: "Sacramento-Regular", serif;
+}
+
+.shojumaru-font {
+  font-family: "Shojumaru-Regular", serif;
 }
 
 img.ant-image-img {

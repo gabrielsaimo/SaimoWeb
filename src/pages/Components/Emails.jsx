@@ -49,7 +49,6 @@ const Emails = () => {
   };
 
   const confirmDeleteEmail = async (record) => {
-    console.log("🚀 ~ confirmDeleteEmail ~ body:");
     const body = {
       id: record.id,
       active: false,

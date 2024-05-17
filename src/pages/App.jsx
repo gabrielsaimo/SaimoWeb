@@ -6,7 +6,7 @@ import "../css/App.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Footer from "./modules/Footer";
 import SlideRenderer from "./Components/slide";
-import { getImgLogo } from "../services/config";
+import { getImgLogoPublic } from "../services/config";
 import { getStyles } from "../services/user.ws";
 const CollapseMenu = lazy(() => import("./modules/Collapse"));
 const CompanyName = window.location.href.split("/").pop();
@@ -31,7 +31,7 @@ function App() {
     setContar(contar + 1);
   };
   const getImgLogos = async (idcompany) => {
-    const img = await getImgLogo(idcompany);
+    const img = await getImgLogoPublic(idcompany);
     if (img.length > 0) setLogo(img[0].imagem);
   };
 
