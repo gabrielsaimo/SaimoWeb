@@ -358,26 +358,31 @@ const CollapseMenu = () => {
 
   return (
     <div style={{ margin: 5 }}>
-      <Affix offsetTop={10}>
-        <div
-          style={{
-            background: styles.backgrondColor,
-            borderRadius: 30,
-          }}
-        >
-          <Input
-            type="text"
-            style={{
-              width: 300,
-              marginBottom: 10,
-              borderRadius: 10,
-              marginTop: 50,
-            }}
-            placeholder="Pesquisar"
-            onChange={(e) => searchNameCardapio(e.target.value)}
-          />
-        </div>
-      </Affix>
+      <Suspense fallback={<Spin />}>
+        {cardapioCategory.length > 0 && (
+          <Affix offsetTop={10}>
+            <div
+              style={{
+                background: styles.backgrondColor,
+                borderRadius: 30,
+              }}
+            >
+              <Input
+                type="text"
+                style={{
+                  width: 300,
+                  marginBottom: 10,
+                  borderRadius: 10,
+                  marginTop: 50,
+                }}
+                placeholder="Pesquisar"
+                onChange={(e) => searchNameCardapio(e.target.value)}
+              />
+            </div>
+          </Affix>
+        )}
+      </Suspense>
+
       <Anchor
         affix={true}
         direction="horizontal"
@@ -408,7 +413,6 @@ const CollapseMenu = () => {
           ),
         }))}
       />
-
       {renderCardapioItems()}
     </div>
   );
