@@ -17,12 +17,12 @@ function Polices() {
       >
         <p style={{ fontWeight: "bold" }}>
           Informações sobre Proteção e Uso de Dados dos Clientes e Visitantes
-          dos Sites da Plataforma MenuDigital. www.saimo-web.vercel.app
+          dos Sites da Plataforma MenuDigital. menu-digital.vercel.app
         </p>
         <p>
           Essa Política de Privacidade, informa como nossa empresa coleta,
           utiliza, armazena, trata e protege suas informações pessoais. Quando
-          você visita e utiliza o website www.saimo-web.vercel.app, você aceita e
+          você visita e utiliza o website menu-digital.vercel.app, você aceita e
           concorda com os Termos e Condições dessa Política de Privacidade.
         </p>
         <Card
@@ -39,10 +39,10 @@ function Polices() {
           </p>
           <p>
             Esta Política de Privacidade aplica-se a todos os usuários e
-            visitantes do website www.saimo-web.vercel.app ou páginas
-            associadas, devidamente inscrita no CNPJ sob o n°
-            47.357.026/0001-55, situado na Rua Benjamin Alves Santos 2034,
-            Bairro Saraiva, Uberlândia (MG), Cep 38408-376,
+            visitantes do website menu-digital.vercel.app ou páginas associadas,
+            devidamente inscrita no CNPJ sob o n° 47.357.026/0001-55, situado na
+            Rua Orlando Calisto, 92, Bairro Parque Independencia, São Paulo (SP), Cep
+            03236-000,
           </p>
           <p>
             O presente documento foi elaborado em conformidade com a Lei Geral
@@ -62,11 +62,11 @@ function Polices() {
             outros.
           </p>
           <p>
-            O uso dos sites da Plataforma MenuDigital pressupõe a aceitação deste
-            Acordo de Privacidade. A Plataforma MenuDigital reserva-se ao direito
-            de alterar este acordo sem aviso prévio. Deste modo, recomendamos
-            que consulte esta página com regularidade de forma a estar sempre
-            atualizado.
+            O uso dos sites da Plataforma MenuDigital pressupõe a aceitação
+            deste Acordo de Privacidade. A Plataforma MenuDigital reserva-se ao
+            direito de alterar este acordo sem aviso prévio. Deste modo,
+            recomendamos que consulte esta página com regularidade de forma a
+            estar sempre atualizado.
           </p>
           <p>
             Tal como outros websites, coletamos e utilizamos informação contida
