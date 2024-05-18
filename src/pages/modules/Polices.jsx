@@ -35,7 +35,7 @@ function Polices() {
             ajudar a tornar a sua visita no nosso site o mais produtiva e
             agradável possível. A garantia da confidencialidade dos dados
             pessoais dos utilizadores do nosso site é importante para a
-            Plataforma Saimo-web.
+            Plataforma Menu Digital.
           </p>
           <p>
             Esta Política de Privacidade aplica-se a todos os usuários e
