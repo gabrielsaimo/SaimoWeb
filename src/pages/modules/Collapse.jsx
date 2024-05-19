@@ -404,9 +404,9 @@ const CollapseMenu = () => {
           key: `${index}`,
           title: (
             <text
-              className={`${fonteNome}`}
+              className={`${fonteCategoria}`}
               style={{
-                color: ColorNome,
+                color: ColorCategoria,
                 fontWeight: "bold",
               }}
             >{`${item.name}`}</text>
