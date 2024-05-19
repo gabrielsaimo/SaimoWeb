@@ -10,6 +10,7 @@ import {
   Affix,
   Input,
   Divider,
+  Anchor,
 } from "antd";
 import "../../css/LayoutSite.css";
 import logo from "../../assets/logo.webp";
@@ -405,7 +406,7 @@ const SlideRenderer = (atualizar) => {
       " 0%, " +
       fundobgColor2 +
       " 100%)",
-    width: 334,
+    minWidth: 334,
     height: 600,
     borderRadius: 10,
     color: textbgColor,
@@ -917,20 +918,59 @@ const SlideRenderer = (atualizar) => {
                       }}
                     />
                   )}
-                  <div className="shearch">
-                    <Input
-                      type="text"
-                      readOnly
+                  <Affix offsetTop={10}>
+                    <div
                       style={{
-                        width: 300,
-                        marginBottom: 10,
-                        borderRadius: 10,
-                        borderColor: BorderbgColor,
-                        color: TextStyle2,
+                        background: styles.backgrondColor,
+                        borderRadius: 30,
                       }}
-                      placeholder="Pesquisar"
-                    />
-                  </div>
+                    >
+                      <Input
+                        type="text"
+                        style={{
+                          width: 300,
+                          marginBottom: 10,
+                          borderRadius: 10,
+                          marginTop: 50,
+                        }}
+                        placeholder="Pesquisar"
+                        readOnly={true}
+                      />
+                    </div>
+                  </Affix>
+
+                  <Anchor
+                    affix={true}
+                    direction="horizontal"
+                    defaultActiveKey={["1"]}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      background: styles.backgrondColor,
+                      width: "100%",
+                      zIndex: 10,
+                      padding: 10,
+                    }}
+                    replace
+                    items={[
+                      {
+                        title: (
+                          <text
+                            className={`${textbgFonteCategoria}`}
+                            style={{
+                              color: `${textbgColorCategoria}`,
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Categoria
+                          </text>
+                        ),
+                        href: "categoria",
+                        key: "1",
+                      },
+                    ]}
+                  />
                   <Collapse
                     bordered={false}
                     header={<p style={TextStyle2}>Catégoria</p>}
@@ -946,7 +986,7 @@ const SlideRenderer = (atualizar) => {
                     )}
                     style={{
                       background: "transparent",
-                      width: 334,
+                      minWidth: 334,
                     }}
                   >
                     <Panel
@@ -975,6 +1015,7 @@ const SlideRenderer = (atualizar) => {
                       }}
                       header={
                         <text
+                          id="categoria"
                           className={` ${textbgFonteCategoria}`}
                           style={{ color: `${textbgColorCategoria}` }}
                         >
@@ -1012,30 +1053,29 @@ const SlideRenderer = (atualizar) => {
                                   className={`p_1 name ${textbgFonteNome}`}
                                   style={{ color: `${textbgColorNome}` }}
                                 >
-                                  Item
-                                </p>
-                                <p
-                                  className="name"
-                                  style={{
-                                    backgroundColor: "#FFFFFF70",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    width: 40,
-                                    textAlign: "center",
-                                    height: 20,
-                                    fontSize: 12,
-                                    padding: 5,
-                                    color: textbgColor,
-                                    borderRadius: 10,
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  N° 1
+                                  Item 001
                                 </p>
                               </div>
-
-                              <div className="flex">
+                              <p
+                                className="name"
+                                style={{
+                                  backgroundColor: "#FFFFFF70",
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                  width: 40,
+                                  textAlign: "center",
+                                  height: 20,
+                                  fontSize: 12,
+                                  padding: 5,
+                                  color: textbgColor,
+                                  borderRadius: 10,
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                N° 1
+                              </p>
+                              <div className="flex" style={{ marginTop: 30 }}>
                                 <div
                                   className={`sub ${textbgFonteSub}`}
                                   style={{ color: `${textbgColorSub}` }}
@@ -1053,7 +1093,7 @@ const SlideRenderer = (atualizar) => {
                             <div
                               style={{
                                 display: "flex",
-                                justifyContent: "start",
+                                justifyContent: "end",
                                 minWidth: "100%",
                                 alignItems: "flex-end",
                               }}

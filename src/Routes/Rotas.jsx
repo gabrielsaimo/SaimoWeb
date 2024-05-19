@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import App from "../pages/App";
 import Garçom from "../pages/modules/Garçom";
 import Cozinha from "../pages/modules/Cozinha";
 import Bar from "../pages/modules/BarMan";
@@ -15,6 +14,8 @@ import Register from "../pages/modules/Register";
 import Delivery from "../pages/modules/Delivery";
 import Company from "../pages/modules/Company";
 import UserHome from "../pages/modules/UserHome";
+import Cardapio from "../pages/modules/Cardapio";
+import Catalogo from "../pages/modules/Catalogo";
 
 export default function Rotas() {
   return (
@@ -28,8 +29,8 @@ export default function Rotas() {
       <Route path="/Company" element={<Company />} />
       <Route path="/Dashboard/:CompanyParams" element={<MenuDashboard />} />
       <Route path="/Garçom/:Company" element={<Garçom />} />
-      <Route path="/Catalogo/:idcompany/:Company" element={<App />} />
-      <Route path="/Cardapio/:idcompany/:Company" element={<App />} />
+      <Route path="/Catalogo/:idcompany/:Company" element={<Catalogo />} />
+      <Route path="/Cardapio/:idcompany/:Company" element={<Cardapio />} />
       <Route path="/privacy-policy" element={<Polices />} />
       <Route path="/*" element={<Error404 />} />
       <Route path="*" element={<Error404 />} />

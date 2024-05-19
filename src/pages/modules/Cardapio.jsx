@@ -1,17 +1,17 @@
 import React, { useState, Suspense, lazy, useEffect } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Affix, FloatButton, Space, Spin } from "antd";
+import { FloatButton, Space, Spin } from "antd";
 import { useParams } from "react-router-dom";
-import "../css/App.css";
+import "../../css/App.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Footer from "./modules/Footer";
-import SlideRenderer from "./Components/slide";
-import { getImgLogoPublic } from "../services/config";
-import { getStyles } from "../services/user.ws";
-const CollapseMenu = lazy(() => import("./modules/Collapse"));
+import Footer from "./Footer";
+import SlideRenderer from "../Components/slide";
+import { getImgLogoPublic } from "../../services/config";
+import { getStyles } from "../../services/user.ws";
+const CollapseMenu = lazy(() => import("./Collapse"));
 const CompanyName = window.location.href.split("/").pop();
 
-function App() {
+function Cardapio() {
   const { idcompany, Company } = useParams();
   const [contar, setContar] = useState(0);
   const [logo, setLogo] = useState(null);
@@ -72,4 +72,4 @@ function App() {
   );
 }
 
-export default App;
+export default Cardapio;
