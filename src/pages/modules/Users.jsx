@@ -16,8 +16,10 @@ import {
   getUsers,
   postUserAdm,
   putUser,
+  admProfile,
   deleteUser,
   GetAdmProfile,
+  getListUser,
 } from "../../services/user.ws";
 import { DeleteOutlined, CloseOutlined } from "@ant-design/icons";
 export default function Users(atualizar) {
@@ -31,6 +33,10 @@ export default function Users(atualizar) {
   const [Company] = useState(
     JSON.parse(localStorage.getItem("companySelectd")).company
   );
+  const [Companys] = useState(
+    JSON.parse(localStorage.getItem("dateUser")).user_profile_json
+  );
+
   const [id] = useState(JSON.parse(localStorage.getItem("dateUser")).id);
   const [CompanyList, setCompanyList] = useState();
   const [idcompany] = useState(
@@ -47,6 +53,10 @@ export default function Users(atualizar) {
     getUsers(idcompany).then((users) => {
       if (users.length === 0) return message.error("Nenhum usuário encontrado");
       setData(users);
+      getListUser(
+        Companys.map((company) => `${company.idcompany}`).join("-"),
+        users.map((company) => `${company.id}`).join("-")
+      );
     });
   };
 
@@ -54,10 +64,10 @@ export default function Users(atualizar) {
     onDelete(data);
   };
 
-  const onDelete = (data) => {
-    deleteUser(data.id);
+  const onDelete = async (data) => {
+    await deleteUser(data.id, idcompany);
     setActive(!active);
-    gtUser();
+    window.location.reload();
   };
 
   const getProfilesList = async () => {
@@ -75,7 +85,7 @@ export default function Users(atualizar) {
     };
     postUserAdm(body);
     setActive(!active);
-    gtUser();
+    window.location.reload();
   };
   const onChangeCategory = (value, data) => {
     data.user_profile_json.forEach((company) => {
@@ -101,7 +111,7 @@ export default function Users(atualizar) {
     setSelectedCompanies([...selectedCompanies, value]);
   };
   const [form] = Form.useForm();
-  const Novo = () => {
+  const Novo = async () => {
     setShowModal(false);
     const body = {
       id: data.length + 1 + Math.floor(Math.random() * 100000000),
@@ -111,14 +121,21 @@ export default function Users(atualizar) {
       categoria: categoria,
       active: true,
       idcompany: idcompany,
-      company: Company,
     };
-    putUser(body);
+    const resp = await putUser(body);
+    const userProfile = {
+      id_user: resp[0].id,
+      idcompany: idcompany,
+      company: Company,
+      category: categoria,
+    };
+
+    await admProfile(userProfile);
     setName("");
     setEmail("");
     setCategoria(null);
     setActive(!active);
-    gtUser();
+    window.location.reload();
   };
   const cancelar = () => {
     setName("");
@@ -184,35 +201,24 @@ export default function Users(atualizar) {
       dataIndex: "id",
       key: "id",
       render: (_, data) => (
-        <>
-          <Button
-            style={{ backgroundColor: "green" }}
-            onClick={() => {
-              ModalShow(_);
-            }}
-          >
-            Editar
+        <Popconfirm
+          title="Tem certeza que deseja excluir esse Usuario?"
+          onConfirm={() => confirmDelete(data)}
+          okText="Excluir"
+          okButtonProps={{ danger: true }}
+          cancelText="Cancelar"
+        >
+          <Button style={{ backgroundColor: "red" }}>
+            <DeleteOutlined
+              size={24}
+              style={{
+                borderRadius: 5,
+                padding: 5,
+                color: "#fff",
+              }}
+            />
           </Button>
-
-          <Popconfirm
-            title="Tem certeza que deseja excluir esse Usuario?"
-            onConfirm={() => confirmDelete(data)}
-            okText="Excluir"
-            okButtonProps={{ danger: true }}
-            cancelText="Cancelar"
-          >
-            <Button style={{ backgroundColor: "red" }}>
-              <DeleteOutlined
-                size={24}
-                style={{
-                  borderRadius: 5,
-                  padding: 5,
-                  color: "#fff",
-                }}
-              />
-            </Button>
-          </Popconfirm>
-        </>
+        </Popconfirm>
       ),
     },
   ];
