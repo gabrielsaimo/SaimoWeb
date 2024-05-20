@@ -213,7 +213,7 @@ const CollapseMenu = () => {
                             : temaBlack
                         })`,
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "200px 90px",
+                        backgroundSize: "315px 90px",
                         minWidth: 360,
                         backgroundPositionX: "50%",
                         backgroundPositionY: -8,
