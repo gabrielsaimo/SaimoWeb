@@ -10,7 +10,7 @@
   border-radius: 10px;
   margin: 2px 0px 25px;
   padding: 5px;
-  max-width: 300px;
+  max-width: 370px;
   min-width: 230px;
   width: 100%;
 }
@@ -168,11 +168,6 @@
 }
 
 @font-face {
-  font-family: "RubikBubbles-Regular";
-  src: url("../fonts/RubikBubbles-Regular.ttf") format("truetype");
-}
-
-@font-face {
   font-family: "Sacramento-Regular";
   src: url("../fonts/Sacramento-Regular.ttf") format("truetype");
 }
@@ -180,6 +175,26 @@
 @font-face {
   font-family: "Shojumaru-Regular";
   src: url("../fonts/Shojumaru-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "AmaticSC-Regular";
+  src: url("../fonts/AmaticSC-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Danfo-Regular";
+  src: url("../fonts/Danfo-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "IndieFlower-Regular";
+  src: url("../fonts/IndieFlower-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Jacquard24-Regular";
+  src: url("../fonts/Jacquard24-Regular.ttf") format("truetype");
 }
 .georgia-font,
 .georgia-bold-font {
@@ -210,10 +225,6 @@
   font-family: "PressStart2p-Regular", serif;
 }
 
-.rubik-bubbles-font {
-  font-family: "RubikBubbles-Regular", serif;
-}
-
 .sacramento-font {
   font-family: "Sacramento-Regular", serif;
 }
@@ -222,6 +233,27 @@
   font-family: "Shojumaru-Regular", serif;
 }
 
+.amatic-font {
+  font-family: "AmaticSC-Regular", serif;
+}
+
+.danfo-font {
+  font-family: "Danfo-Regular", serif;
+}
+
+.indie-flower-font {
+  font-family: "IndieFlower-Regular", serif;
+}
+
+.jacquard-font {
+  font-family: "Jacquard24-Regular", serif;
+}
+
+
 img.ant-image-img {
   border-radius: 10px;
+}
+
+.ant-collapse-header {
+  align-items: center !important;
 }

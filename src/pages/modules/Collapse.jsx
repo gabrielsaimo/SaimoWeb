@@ -213,7 +213,7 @@ const CollapseMenu = () => {
                             : temaBlack
                         })`,
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: 150,
+                        backgroundSize: "200px 90px",
                         minWidth: 360,
                         backgroundPositionX: "50%",
                         backgroundPositionY: -8,
@@ -224,6 +224,7 @@ const CollapseMenu = () => {
                           className={`${fonteCategoria}`}
                           style={{
                             color: ColorCategoria,
+                            fontSize: 30,
                           }}
                         >
                           {item1.name}
