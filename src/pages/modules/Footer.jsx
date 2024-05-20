@@ -20,7 +20,7 @@ const Footer = () => {
         height: 50,
         color: "#FFF",
         fontSize: 12,
-        zIndex: 1,
+        zIndex: 5,
       }}
     >
       <p>Copyrights © 2024 Menu Digital </p>
