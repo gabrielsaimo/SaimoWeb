@@ -42,8 +42,11 @@ export const postUserAdm = async (data: User): Promise<User> => {
   return response.data;
 };
 
-export const deleteUser = async (id: number): Promise<void> => {
-  await api.delete<User>(`/user/${id}`);
+export const deleteUser = async (
+  id: number,
+  idcompany: number
+): Promise<void> => {
+  await api.delete<User>(`/user/${id}/${idcompany}`);
 };
 
 export const postStyles = async (data: any): Promise<any> => {
@@ -118,5 +121,15 @@ export const postEmail = async (data: any): Promise<any> => {
 
 export const deleteCompany = async (id: number): Promise<any> => {
   const response = await api.delete<any>("/user/company/" + id);
+  return response.data;
+};
+
+export const getListUser = async (
+  compnays: any,
+  id_users: any
+): Promise<any> => {
+  const response = await api.get<any>(
+    `/user/listUser/${compnays}/${id_users}`
+  );
   return response.data;
 };
