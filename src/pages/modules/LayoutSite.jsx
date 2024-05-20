@@ -360,11 +360,6 @@ const SlideRenderer = (atualizar) => {
               Press Start
             </text>
           </Select.Option>
-          <Select.Option value="rubik-bubbles-font">
-            <text className="rubik-bubbles-font" style={{ fontSize: 25 }}>
-              Rubik Bubbles
-            </text>
-          </Select.Option>
           <Select.Option value="sacramento-font">
             <text className="sacramento-font" style={{ fontSize: 25 }}>
               Sacramento
@@ -373,6 +368,26 @@ const SlideRenderer = (atualizar) => {
           <Select.Option value="shojumaru-font">
             <text className="shojumaru-font" style={{ fontSize: 25 }}>
               Shojumaru
+            </text>
+          </Select.Option>
+          <Select.Option value="amatic-font">
+            <text className="amatic-font" style={{ fontSize: 25 }}>
+              AmaticSC
+            </text>
+          </Select.Option>
+          <Select.Option value="danfo-font">
+            <text className="danfo-font" style={{ fontSize: 25 }}>
+              Danfo
+            </text>
+          </Select.Option>
+          <Select.Option value="indie-flower-font">
+            <text className="indie-flower-font" style={{ fontSize: 25 }}>
+              IndieFlower
+            </text>
+          </Select.Option>
+          <Select.Option value="jacquard-font">
+            <text className="jacquard-font" style={{ fontSize: 25 }}>
+              Jacquard24
             </text>
           </Select.Option>
         </Select>
@@ -406,8 +421,7 @@ const SlideRenderer = (atualizar) => {
       " 0%, " +
       fundobgColor2 +
       " 100%)",
-    minWidth: 334,
-    height: 600,
+    minWidth: 400,
     borderRadius: 10,
     color: textbgColor,
     border: textbgColor === "#ffffff" ? "solid 1px #000000" : "solid 1px red",
@@ -918,29 +932,28 @@ const SlideRenderer = (atualizar) => {
                       }}
                     />
                   )}
-                  <Affix offsetTop={10}>
-                    <div
+
+                  <div
+                    style={{
+                      background: styles.backgrondColor,
+                      borderRadius: 30,
+                    }}
+                  >
+                    <Input
+                      type="text"
                       style={{
-                        background: styles.backgrondColor,
-                        borderRadius: 30,
+                        width: 300,
+                        marginBottom: 10,
+                        borderRadius: 10,
+                        marginTop: 50,
                       }}
-                    >
-                      <Input
-                        type="text"
-                        style={{
-                          width: 300,
-                          marginBottom: 10,
-                          borderRadius: 10,
-                          marginTop: 50,
-                        }}
-                        placeholder="Pesquisar"
-                        readOnly={true}
-                      />
-                    </div>
-                  </Affix>
+                      placeholder="Pesquisar"
+                      readOnly={true}
+                    />
+                  </div>
 
                   <Anchor
-                    affix={true}
+                    affix={false}
                     direction="horizontal"
                     defaultActiveKey={["1"]}
                     style={{
@@ -973,7 +986,7 @@ const SlideRenderer = (atualizar) => {
                   />
                   <Collapse
                     bordered={false}
-                    header={<p style={TextStyle2}>Catégoria</p>}
+                    header="This is panel header 1"
                     easing="ease-in-out"
                     waitForAnimate={true}
                     defaultActiveKey={Array.from({ length: 1 }, (_, i) =>
@@ -1006,7 +1019,7 @@ const SlideRenderer = (atualizar) => {
                             : temaBlack
                         })`,
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: 150,
+                        backgroundSize: "200px 90px",
                         minWidth: 334,
                         backgroundPositionX: "50%",
                         backgroundPositionY: -8,
@@ -1017,7 +1030,12 @@ const SlideRenderer = (atualizar) => {
                         <text
                           id="categoria"
                           className={` ${textbgFonteCategoria}`}
-                          style={{ color: `${textbgColorCategoria}` }}
+                          style={{
+                            color: `${textbgColorCategoria}`,
+                            height: 100,
+                            fontSize: 30,
+                            fontWeight: "bold",
+                          }}
                         >
                           Categoria
                         </text>
@@ -1042,7 +1060,7 @@ const SlideRenderer = (atualizar) => {
                           />
 
                           <div className="flex">
-                            <div style={{ width: "100%", display: "contents" }}>
+                            <div style={{ width: "100%", display: "block" }}>
                               <div
                                 style={{
                                   display: "flex",
@@ -1056,25 +1074,27 @@ const SlideRenderer = (atualizar) => {
                                   Item 001
                                 </p>
                               </div>
-                              <p
-                                className="name"
-                                style={{
-                                  backgroundColor: "#FFFFFF70",
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  width: 40,
-                                  textAlign: "center",
-                                  height: 20,
-                                  fontSize: 12,
-                                  padding: 5,
-                                  color: textbgColor,
-                                  borderRadius: 10,
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                N° 1
-                              </p>
+                              <div>
+                                <p
+                                  className="name"
+                                  style={{
+                                    backgroundColor: "#FFFFFF70",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    width: 40,
+                                    textAlign: "center",
+                                    height: 20,
+                                    fontSize: 12,
+                                    padding: 5,
+                                    color: textbgColor,
+                                    borderRadius: 10,
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  N° 1
+                                </p>
+                              </div>
                               <div className="flex" style={{ marginTop: 30 }}>
                                 <div
                                   className={`sub ${textbgFonteSub}`}
