@@ -12,6 +12,7 @@ import temaBlack from "../../assets/tinta.webp";
 import temaWhite from "../../assets/tinta_white.png";
 import temaBlue from "../../assets/tinta_blue.png";
 import temaBrown from "../../assets/tinta_brown.png";
+import currency_BRL from "../Components/CurrencyBRL";
 const { Panel } = Collapse;
 const LazyLoadedImage = lazy(() =>
   import("antd").then((module) => ({ default: module.Image }))
@@ -335,11 +336,7 @@ const CollapseMenu = () => {
                                     color: ColorPreco,
                                   }}
                                 >
-                                  {`R$ ${
-                                    categoria.price % 1 !== 0
-                                      ? categoria.price.replace(".", ",")
-                                      : categoria.price + ",00"
-                                  }`}
+                                  {currency_BRL(categoria.price)}
                                 </p>
                               </div>
                             </div>
