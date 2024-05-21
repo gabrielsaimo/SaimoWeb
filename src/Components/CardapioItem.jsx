@@ -88,11 +88,7 @@ const CardapioItem = ({
                           className="p_1 price georgia-bold-font"
                           style={styleText}
                         >
-                          {`R$ ${
-                            categoria.price % 1 !== 0
-                              ? categoria.price.replace(".", ",")
-                              : categoria.price + ",00"
-                          }`}
+                          {`R$ ${currency_BRL(categoria.price)}`}
                         </p>
                       </div>
                     </div>
