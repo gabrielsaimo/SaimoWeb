@@ -376,11 +376,11 @@ export default function Dashboard({ atualizar, user, company }) {
 
   const columns = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
+      title: "Ordem",
+      dataIndex: "number",
+      key: "number",
       sorter: {
-        compare: (a, b) => a.id - b.id,
+        compare: (a, b) => a.number - b.number,
       },
     },
     {
