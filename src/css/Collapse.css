@@ -8,7 +8,7 @@
 }
 .border_test {
   border-radius: 10px;
-  margin: 2px 0px 25px;
+  margin: 2px -30px 25px;
   padding: 5px;
   max-width: 370px;
   min-width: 230px;
@@ -248,7 +248,6 @@
 .jacquard-font {
   font-family: "Jacquard24-Regular", serif;
 }
-
 
 img.ant-image-img {
   border-radius: 10px;
