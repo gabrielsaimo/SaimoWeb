@@ -128,8 +128,6 @@ export const getListUser = async (
   compnays: any,
   id_users: any
 ): Promise<any> => {
-  const response = await api.get<any>(
-    `/user/listUser/${compnays}/${id_users}`
-  );
+  const response = await api.get<any>(`/user/listUser/${compnays}/${id_users}`);
   return response.data;
 };
