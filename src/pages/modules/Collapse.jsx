@@ -1,5 +1,14 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from "react";
-import { Collapse, Carousel, Spin, Image, Input, Anchor, Affix } from "antd";
+import {
+  Collapse,
+  Carousel,
+  Spin,
+  Image,
+  Input,
+  Anchor,
+  Affix,
+  message,
+} from "antd";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CaretRightOutlined } from "@ant-design/icons";
 import LazyLoad from "react-lazyload";
@@ -21,7 +30,7 @@ const LazyLoadedImage = lazy(() =>
 const CollapseMenu = () => {
   // get params from url
   const { idcompany, Company } = useParams();
-  const CompanyName = window.location.href.split("/").pop();
+  const CompanyName = window.location.href.split("#")[0].split("/").pop();
   const [cardapio, setCardapio] = useState([]);
   const [cardapioCategory, setCardapioCategory] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
@@ -29,7 +38,7 @@ const CollapseMenu = () => {
   const [newCardapio, setNewCardapio] = useState([]);
 
   const getStylesUser = async () => {
-    const resp = await getStyles(CompanyName, idcompany);
+    const resp = await getStyles(Company, idcompany);
     setStyles(JSON.parse(resp[0].styles));
   };
   useEffect(() => {
@@ -394,9 +403,6 @@ const CollapseMenu = () => {
           padding: 10,
         }}
         replace
-        onChange={(e) => {
-          console.log(e);
-        }}
         items={cardapioCategory.map((item, index) => ({
           href: `#${item.name}`,
           key: `${index}`,
