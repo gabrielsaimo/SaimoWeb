@@ -7,7 +7,7 @@ import {
   FieldTimeOutlined,
   ShoppingOutlined,
 } from "@ant-design/icons";
-import { getImgLogo } from "../../services/config";
+import { getImgLogoPublic } from "../../services/config";
 
 function UseHome() {
   const [language, setLanguage] = useState(localStorage.getItem("i18nextLng"));
@@ -72,7 +72,7 @@ function UseHome() {
   }, []);
 
   const getImgLogos = async () => {
-    const img = await getImgLogo(idcompany);
+    const img = await getImgLogoPublic(idcompany);
     if (img[0]) {
       setImgSrc(img[0]);
     }
