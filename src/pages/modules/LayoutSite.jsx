@@ -44,12 +44,12 @@ const SlideRenderer = (atualizar) => {
   const [texteColorSub, setTexteColorSub] = useState("#1677ff");
   const [texteColorPreco, setTexteColorPreco] = useState("#1677ff");
 
-  const [fonteGeral, setFonteGeral] = useState("Georgia");
-  const [fonteCategoria, setFonteCategoria] = useState("Georgia");
-  const [fonteNome, setFonteNome] = useState("Georgia");
-  const [fonteDescricao, setFonteDescricao] = useState("Georgia");
-  const [fonteSub, setFonteSub] = useState("Georgia");
-  const [fontePreco, setFontePreco] = useState("Georgia");
+  const [fonteGeral, setFonteGeral] = useState("georgia-font");
+  const [fonteCategoria, setFonteCategoria] = useState("georgia-font");
+  const [fonteNome, setFonteNome] = useState("georgia-font");
+  const [fonteDescricao, setFonteDescricao] = useState("georgia-font");
+  const [fonteSub, setFonteSub] = useState("georgia-font");
+  const [fontePreco, setFontePreco] = useState("georgia-font");
 
   const [BorderColor, setBorderColor] = useState("#1677ff");
   const [Tema, setTema] = useState("");
@@ -325,14 +325,9 @@ const SlideRenderer = (atualizar) => {
           <Select.Option value="Arial">
             <text style={{ fontFamily: "Arial", fontSize: 25 }}>Arial</text>
           </Select.Option>
-          <Select.Option value="Georgia">
+          <Select.Option value="georgia-font">
             <text className="georgia-font" style={{ fontSize: 25 }}>
               Georgia
-            </text>
-          </Select.Option>
-          <Select.Option value="Times New Roman">
-            <text style={{ fontFamily: "Times New Roman", fontSize: 25 }}>
-              Times New Roman
             </text>
           </Select.Option>
           <Select.Option value="greek-freak-font">

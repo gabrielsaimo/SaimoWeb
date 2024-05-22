@@ -44,12 +44,12 @@ const CollapseMenu = () => {
 
   const getCardapios = async () => {
     const cardapioCollection = await getCardapio(idcompany, Company);
-    setCardapio(cardapioCollection);
+    setCardapio(cardapioCollection.sort((a, b) => a.number - b.number));
   };
 
   const getCardapioCategory = async () => {
     const cardapioCollection = await getCategoty(idcompany, Company);
-    setCardapioCategory(cardapioCollection);
+    setCardapioCategory(cardapioCollection.sort((a, b) => a.order - b.order));
   };
 
   const styleText = {

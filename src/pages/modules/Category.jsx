@@ -150,8 +150,8 @@ export default function Category() {
   const columns = [
     {
       title: "Ordem",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "order",
+      key: "order",
       sorter: (a, b) => a.id - b.id,
     },
     {
