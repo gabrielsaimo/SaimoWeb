@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  Divider,
   Form,
   Input,
   Modal,
@@ -22,6 +23,7 @@ import {
   getListUser,
 } from "../../services/user.ws";
 import { DeleteOutlined, CloseOutlined } from "@ant-design/icons";
+
 export default function Users(atualizar) {
   const [data, setData] = useState([]);
   const [active, setActive] = useState(false);
@@ -30,6 +32,9 @@ export default function Users(atualizar) {
   const [email, setEmail] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalEdit, setModalEdit] = useState(false);
+  const [modalList, setModalList] = useState(false);
+  const [listUserData, setListUserData] = useState([]);
+  const [colaborador, setColaborador] = useState();
   const [Company] = useState(
     JSON.parse(localStorage.getItem("companySelectd")).company
   );
@@ -49,14 +54,20 @@ export default function Users(atualizar) {
     getProfilesList();
   }, [active, atualizar]);
 
-  const gtUser = () => {
-    getUsers(idcompany).then((users) => {
+  const gtUser = async () => {
+    await getUsers(idcompany).then((users) => {
       if (users.length === 0) return message.error("Nenhum usuário encontrado");
       setData(users);
-      getListUser(
-        Companys.map((company) => `${company.idcompany}`).join("-"),
-        users.map((company) => `${company.id}`).join("-")
-      );
+      getList(users);
+    });
+  };
+
+  const getList = async (users) => {
+    await getListUser(
+      Companys.map((company) => `${company.idcompany}`).join("-"),
+      users.map((company) => `${company.id}`).join("-")
+    ).then((resp) => {
+      setListUserData(resp);
     });
   };
 
@@ -143,6 +154,22 @@ export default function Users(atualizar) {
     setCategoria(null);
     setShowModal(false);
   };
+
+  const alocar = async (data) => {
+    const userProfile = {
+      id_user: data.id,
+      idcompany: idcompany,
+      company: Company,
+      category: data.categoria,
+    };
+
+    await admProfile(userProfile);
+    setName("");
+    setEmail("");
+    setCategoria(null);
+    setActive(!active);
+    window.location.reload();
+  };
   const [selectedCompanies, setSelectedCompanies] = useState([]);
 
   const columns = [
@@ -222,10 +249,65 @@ export default function Users(atualizar) {
       ),
     },
   ];
+
+  const columnsList = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Nome",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Empresa",
+      dataIndex: "idcompany",
+      key: "idcompany",
+      render: (_, data) =>
+        CompanyList?.map((company) => {
+          if (company.idcompany === _)
+            return (
+              <p key={company.idcompany} style={{ margin: 0 }}>
+                {company.company}
+              </p>
+            );
+        }),
+    },
+    {
+      title: "Ações",
+      dataIndex: "id",
+      key: "id",
+      render: (_, data) => (
+        <Button
+          type="primary"
+          onClick={() => {
+            alocar(data);
+          }}
+        >
+          Alocar
+        </Button>
+      ),
+    },
+  ];
   return (
     <Card className="background-page" style={{ minHeight: "90vh" }}>
       <Button type="primary" onClick={() => setShowModal(true)}>
         Novo
+      </Button>
+
+      <Button
+        type="primary"
+        style={{ marginLeft: 30 }}
+        onClick={() => setModalList(true)}
+      >
+        Alocar
       </Button>
       <Table columns={columns} dataSource={data} />
       <Modal
@@ -263,6 +345,16 @@ export default function Users(atualizar) {
           </Select>
         </Space>
       </Modal>
+      <Modal
+        title="Alocar"
+        open={modalList}
+        onCancel={() => setModalList(false)}
+        width={600}
+      >
+        <h1>Alocar Usuario</h1>
+        <Table columns={columnsList} dataSource={listUserData} />
+      </Modal>
+
       <Modal
         title="Basic Modal"
         open={modalEdit}

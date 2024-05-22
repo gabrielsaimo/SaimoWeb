@@ -322,7 +322,16 @@ export default function Company({ config }) {
           <Input
             style={{ width: 200 }}
             type="text"
-            onChange={(e) => setCompanyName(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/[^a-zA-Z0-9 ]/g.test(value)) {
+                message.error(
+                  "Caracteres especiais e acentos não são permitidos."
+                );
+                return;
+              }
+              setCompanyName(value);
+            }}
           />
         </div>
         <div
