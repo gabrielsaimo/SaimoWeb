@@ -9,7 +9,6 @@ import SlideRenderer from "../Components/slide";
 import { getImgLogoPublic } from "../../services/config";
 import { getStyles } from "../../services/user.ws";
 const CollapseMenu = lazy(() => import("./Collapse"));
-const CompanyName = window.location.href.split("/").pop();
 
 function Cardapio() {
   const { idcompany, Company } = useParams();
@@ -23,7 +22,7 @@ function Cardapio() {
   }, []);
 
   const getStylesUser = async () => {
-    const resp = await getStyles(CompanyName, idcompany);
+    const resp = await getStyles(Company, idcompany);
     setStyles(JSON.parse(resp[0].styles));
   };
 
