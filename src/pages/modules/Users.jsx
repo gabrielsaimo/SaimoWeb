@@ -23,7 +23,8 @@ import {
   getListUser,
 } from "../../services/user.ws";
 import { DeleteOutlined, CloseOutlined } from "@ant-design/icons";
-
+import { postEmail } from "../../services/email.ws";
+import Email_AddUser from "../Templates/Emails/AddUser/email_addUser";
 export default function Users(atualizar) {
   const [data, setData] = useState([]);
   const [active, setActive] = useState(false);
@@ -128,12 +129,21 @@ export default function Users(atualizar) {
       id: data.length + 1 + Math.floor(Math.random() * 100000000),
       name: name,
       email: email,
-      password: Company + "@" + name,
+      password: "Mudar@" + name,
       categoria: categoria,
       active: true,
       idcompany: idcompany,
     };
     const resp = await putUser(body);
+
+    const emailAddUser = Email_AddUser(body);
+    const emailCliente = {
+      destinatario: values.email,
+      assunto: "Acesso Liberado!",
+      corpo: emailAddUser,
+    };
+
+    await postEmail(emailCliente);
     const userProfile = {
       id_user: resp[0].id,
       idcompany: idcompany,
