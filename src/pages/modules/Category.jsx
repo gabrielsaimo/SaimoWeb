@@ -4,6 +4,7 @@ import {
   Card,
   Col,
   Input,
+  InputNumber,
   message,
   Modal,
   Popconfirm,
@@ -33,6 +34,7 @@ export default function Category() {
   const [cardapioCategory, setCardapioCategory] = useState([]);
   const [action, setAction] = useState(false);
   const [id, setId] = useState("");
+  const [order, setOrder] = useState(0);
   const [name, setName] = useState("");
   const [active, setActive] = useState(true);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
@@ -82,17 +84,17 @@ export default function Category() {
   async function handleSave() {
     try {
       if (selectedTaskId) {
-        await postCategoty({ id, name, active, company: Company });
+        await postCategoty({ id, name, order, active, company: Company });
         message.success("Item atualizado com sucesso!");
       } else {
         await putCategoty({
           id:
             cardapioCategory.length + 1 + Math.floor(Math.random() * 100000000),
           name,
+          order,
           active,
           idcompany: JSON.parse(localStorage.getItem("companySelectd"))
             .idcompany,
-          company: Company,
         });
         setTimeout(() => {
           message.success("Categoria salva com sucesso!");
@@ -138,7 +140,7 @@ export default function Category() {
     setSelectedTaskId(null);
     setId("");
     setName("");
-    setActive(1);
+    setActive(true);
   }
 
   function closeModal() {
@@ -259,6 +261,22 @@ export default function Category() {
           <Col span={12}>
             <div style={{ display: "flex", alignItems: "baseline" }}>
               <Typography.Title level={5} style={{ width: 170 }}>
+                Ordem
+              </Typography.Title>
+              <InputNumber
+                style={{ width: 350, margin: "10px 0" }}
+                size="large"
+                min={0}
+                changeOnWheel
+                type="number"
+                placeholder="Ordem"
+                value={order}
+                onChange={(e) => setOrder(e)}
+              />
+            </div>
+
+            <div style={{ display: "flex", alignItems: "baseline" }}>
+              <Typography.Title level={5} style={{ width: 170 }}>
                 Nome
               </Typography.Title>
 
@@ -266,9 +284,7 @@ export default function Category() {
                 style={{ width: 350, margin: "10px 0" }}
                 size="large"
                 placeholder="Nome"
-                value={
-                  name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
-                }
+                value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
