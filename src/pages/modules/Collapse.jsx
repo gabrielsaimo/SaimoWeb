@@ -1,14 +1,5 @@
 import React, { useEffect, useState, useMemo, lazy, Suspense } from "react";
-import {
-  Collapse,
-  Carousel,
-  Spin,
-  Image,
-  Input,
-  Anchor,
-  Affix,
-  message,
-} from "antd";
+import { Collapse, Carousel, Spin, Image, Input, Anchor, Affix } from "antd";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CaretRightOutlined } from "@ant-design/icons";
 import LazyLoad from "react-lazyload";
@@ -28,9 +19,8 @@ const LazyLoadedImage = lazy(() =>
 );
 
 const CollapseMenu = () => {
-  // get params from url
   const { idcompany, Company } = useParams();
-  const CompanyName = window.location.href.split("#")[0].split("/").pop();
+
   const [cardapio, setCardapio] = useState([]);
   const [cardapioCategory, setCardapioCategory] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);

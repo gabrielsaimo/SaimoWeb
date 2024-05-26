@@ -46,7 +46,8 @@ export const deleteUser = async (
   id: number,
   idcompany: number
 ): Promise<void> => {
-  await api.delete<User>(`/user/${id}/${idcompany}`);
+  await api.delete<User>(`/user/deleteAdmProfile/${id}/${idcompany}`);
+  await api.delete<User>(`/user/${id}`);
 };
 
 export const postStyles = async (data: any): Promise<any> => {

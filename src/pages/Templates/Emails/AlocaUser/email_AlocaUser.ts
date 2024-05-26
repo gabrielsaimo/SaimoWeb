@@ -6,7 +6,7 @@ const Email_AddUser = (values: any) => {
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         />
-        <title>Usuario Criado</title>
+        <title>Acesso a ${values.company} Liberado</title>
         <style>
           * {
             margin: 0;
@@ -55,27 +55,12 @@ const Email_AddUser = (values: any) => {
       </head>
       <body>
         <div class="container">
-          <h1>Seu User foi criado com sucesso!</h1>
+          <h1> Acesso a ${values.Company} Liberado! </h1>
           <p>
             Olá ${values.name}, 
             <br>
-            <br>
-            agora você pode acessar o sistema de cardápio digital da empresa ${values.companyName} e começar a cadastrar os produtos e categorias que desejar.
-            <br>
-            
-            <br>
             <div>
-            <br>
-            <br>
-            <H1>Seus dados de acesso são:</H1>
-            <br>
-            <br>
-            <H2>Email: </H2>
-            <H3>${values.email}</H3>
-            <br>
-            <H2>Senha: </H2>
-            <H3>${values.password}</H3>
-            <br>
+            <H1>Agora você tem acesso ao sistema de cardápio digital da empresa ${values.Company}.</H1>
             <br>
             <br>
             <p style="text-align: center">

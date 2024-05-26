@@ -25,6 +25,7 @@ import {
 import { DeleteOutlined, CloseOutlined } from "@ant-design/icons";
 import { postEmail } from "../../services/email.ws";
 import Email_AddUser from "../Templates/Emails/AddUser/email_addUser";
+import Email_AlocarUser from "../Templates/Emails/AlocaUser/email_AlocaUser";
 export default function Users(atualizar) {
   const [data, setData] = useState([]);
   const [active, setActive] = useState(false);
@@ -35,7 +36,6 @@ export default function Users(atualizar) {
   const [modalEdit, setModalEdit] = useState(false);
   const [modalList, setModalList] = useState(false);
   const [listUserData, setListUserData] = useState([]);
-  const [colaborador, setColaborador] = useState();
   const [Company] = useState(
     JSON.parse(localStorage.getItem("companySelectd")).company
   );
@@ -133,12 +133,15 @@ export default function Users(atualizar) {
       categoria: categoria,
       active: true,
       idcompany: idcompany,
+      company: Company,
     };
     const resp = await putUser(body);
 
+    if (resp[0].id === undefined)
+      return message.error("Erro ao adicionar usuário");
     const emailAddUser = Email_AddUser(body);
     const emailCliente = {
-      destinatario: values.email,
+      destinatario: email,
       assunto: "Acesso Liberado!",
       corpo: emailAddUser,
     };
@@ -171,9 +174,21 @@ export default function Users(atualizar) {
       idcompany: idcompany,
       company: Company,
       category: data.categoria,
+      name: data.name,
     };
 
     await admProfile(userProfile);
+
+    const Email_Alocar = Email_AlocarUser(data);
+
+    const emailCliente = {
+      destinatario: data.email,
+      assunto: "Acesso Liberado!",
+      corpo: Email_Alocar,
+    };
+
+    await postEmail(emailCliente);
+
     setName("");
     setEmail("");
     setCategoria(null);
