@@ -1,12 +1,11 @@
-const Email_AddUser = (values: any) => {
-  return `<html lang="pt-br">
+<html lang="pt-br">
       <head>
         <meta charset="UTF-8" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         />
-        <title>Usuario Criado</title>
+        <title>Acesso a Teste Liberado</title>
         <style>
           * {
             margin: 0;
@@ -55,27 +54,13 @@ const Email_AddUser = (values: any) => {
       </head>
       <body>
         <div class="container">
-          <h1>Seu User foi criado com sucesso!</h1>
+          <h1> Acesso a Teste Liberado! </h1>
           <p>
-            Olá ${values.name}, 
+            Olá Teste, 
             <br>
+            <img src="https://i.ibb.co/7zvZbJy/Logo.png" alt="Logo" border="0" width="100%">
             <br>
-            agora você pode acessar o sistema de cardápio digital da empresa ${values.companyName} e começar a cadastrar os produtos e categorias que desejar.
-            <br>
-            
-            <br>
-            <div>
-            <br>
-            <br>
-            <H1>Seus dados de acesso são:</H1>
-            <br>
-            <br>
-            <H2>Email: </H2>
-            <H3>${values.email}</H3>
-            <br>
-            <H2>Senha: </H2>
-            <H3>${values.password}</H3>
-            <br>
+            <H1>Agora você tem acesso ao sistema de cardápio digital da empresa Teste.</H1>
             <br>
             <br>
             <p style="text-align: center">
@@ -84,7 +69,4 @@ const Email_AddUser = (values: any) => {
           </p>
         </div>
       </body>
-      </html>`;
-};
-
-export default Email_AddUser;
+      </html>

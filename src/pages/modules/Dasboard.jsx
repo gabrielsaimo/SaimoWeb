@@ -49,7 +49,6 @@ import {
   putCardapio,
 } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
-
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
   const cachedData = localStorage.getItem("dateUser");
@@ -207,7 +206,7 @@ export default function Dashboard({ atualizar, user, company }) {
       return message.warning("Nenhum Item Encontrado");
 
     const cardapios = cardapioCollection;
-    setCardapio(cardapios.sort((a, b) => a.id - b.id));
+    setCardapio(cardapios.sort((a, b) => a.number - b.number));
   };
 
   const getCardapiocategory = async () => {
@@ -220,7 +219,7 @@ export default function Dashboard({ atualizar, user, company }) {
 
     const categoty = cardapioCollection;
 
-    setCardapioCategory(categoty.sort((a, b) => a.id - b.id));
+    setCardapioCategory(categoty.sort((a, b) => a.order - b.order));
   };
   async function confirmDelete(record) {
     await deleteCardapio(record);
@@ -258,6 +257,7 @@ export default function Dashboard({ atualizar, user, company }) {
       setSearchData(array);
     }
   }
+
   function handleClickEdit(task) {
     setSelectedTaskId(task.id);
     setId(task.id);
@@ -582,14 +582,25 @@ export default function Dashboard({ atualizar, user, company }) {
 
   function handleChangeStatus(e) {
     const { value } = e.target;
+
     if (value === filteredStatus) {
       setFilteredStatus(null);
+      localStorage.removeItem("filteredStatus");
     } else {
       setFilteredStatus(value);
+      localStorage.setItem("filteredStatus", value);
     }
   }
+
+  useEffect(() => {
+    if (localStorage.getItem("filteredStatus")) {
+      setFilteredStatus(localStorage.getItem("filteredStatus"));
+    }
+  }, []);
+
   function handleRemoveStatus() {
     setFilteredStatus(null);
+    localStorage.removeItem("filteredStatus");
   }
 
   const [openPop, setOpenPop] = useState(false);

@@ -2,9 +2,11 @@ import axios from "axios";
 import { message } from "antd";
 
 const bearerToken = localStorage.getItem("access_token");
-
+const Link = window.location.href;
 const api = axios.create({
-  baseURL: "https://saimo-back.vercel.app/",
+  baseURL: Link.includes("localhost")
+    ? "http://localhost:3001/"
+    : "https://saimo-back.vercel.app/",
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${bearerToken}`.replace(/['"]+/g, ""),
