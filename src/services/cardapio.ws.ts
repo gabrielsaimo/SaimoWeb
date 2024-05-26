@@ -11,8 +11,9 @@ interface Cardapio {
 
 export const getCardapio = async (
   idcompany: number,
-  Company: any
+  Company: string
 ): Promise<Cardapio[]> => {
+  console.log('aaaaaaa',idcompany, Company);
   const response = await api.get<Cardapio[]>(
     `/cardapio/${idcompany}/${Company}`
   );

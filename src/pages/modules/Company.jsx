@@ -86,10 +86,7 @@ export default function Company({ config }) {
   const CompanySelectd = async (company, imgLogo) => {
     localStorage.setItem("companySelectd", JSON.stringify(company));
     localStorage.setItem("companyLogo", JSON.stringify(imgLogo));
-    localStorage.setItem(
-      "CompanyLogoPNG",
-      atob(JSON.parse(JSON.stringify(imgLogo)))
-    );
+    localStorage.removeItem("filteredStatus");
     localStorage.setItem("LastPage", "1");
     await getStyle(company);
     if (company.active === false) {

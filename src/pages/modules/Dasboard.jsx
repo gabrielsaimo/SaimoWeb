@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  Suspense,
+  lazy,
+} from "react";
 import {
   Button,
   Card,
@@ -22,6 +29,7 @@ import {
   Popover,
   Switch,
   QRCode,
+  Spin,
 } from "antd";
 import "firebase/database";
 import ImgCrop from "antd-img-crop";
@@ -49,6 +57,11 @@ import {
   putCardapio,
 } from "../../services/cardapio.ws";
 import { getCategoty } from "../../services/category.ws";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+const LazyLoadedImage = lazy(() =>
+  import("antd").then((module) => ({ default: module.Image }))
+);
 const { Option } = Select;
 export default function Dashboard({ atualizar, user, company }) {
   const cachedData = localStorage.getItem("dateUser");
@@ -66,7 +79,7 @@ export default function Dashboard({ atualizar, user, company }) {
   if (!validaEmpresa) {
     return (window.location.href = "/Login/error");
   }
-
+  const queryClient = useQueryClient();
   const imgCache = localStorage.getItem("companyLogo");
   const [fileList, setFileList] = useState([]);
   const [cardapio, setCardapio] = useState([]);
@@ -101,6 +114,108 @@ export default function Dashboard({ atualizar, user, company }) {
   const [coint, setCoint] = useState(0);
   const [open, setOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState([]);
+  const {
+    isLoading: isLoadingCategory,
+    error: errorCategory,
+    data: dataCategory,
+  } = useQuery({
+    queryKey: "getCategory",
+    queryFn: () => getCategoty(companySelectd.idcompany, company),
+  });
+
+  const {
+    isLoading: isLoadingCardapio,
+    error: errorCardapio,
+    data: dataCardapio,
+  } = useQuery({
+    queryKey: ["getCardapio"],
+    queryFn: () => getCardapio(companySelectd.idcompany, company),
+  });
+
+  const { mutateAsync: postCardapioFn } = useMutation({
+    mutationFn: postCardapio,
+    onSuccess: (_, variables) => {
+      queryClient.setQueryData(["getCardapio"], (Data) => {
+        return Data.map((item) =>
+          item.id === variables.id
+            ? {
+                id: variables.id,
+                name: variables.name,
+                price: variables.price,
+                description: variables.description,
+                sub: variables.sub,
+                active: variables.active,
+                imagem: variables.imagem,
+                highlight: variables.highlight,
+                category: variables.category,
+                number: variables.number,
+                update_at: variables.update_at,
+                update_by: variables.update_by,
+                idcompany: variables.idcompany,
+                company: company,
+              }
+            : item
+        );
+      });
+      filterTable();
+    },
+  });
+
+  const { mutateAsync: putCardapioFn } = useMutation({
+    mutationFn: putCardapio,
+    onSuccess: (_, variables) => {
+      queryClient.setQueryData(["getCardapio"], (Data) => {
+        return [
+          ...Data,
+          {
+            id: variables.id,
+            name: variables.name,
+            price: variables.price,
+            description: variables.description,
+            sub: variables.sub,
+            active: variables.active,
+            imagem: variables.imagem,
+            highlight: variables.highlight,
+            category: variables.category,
+            number: variables.number,
+            update_at: variables.update_at,
+            update_by: variables.update_by,
+            idcompany: variables.idcompany,
+            company: company,
+          },
+        ];
+      });
+      filterTable();
+    },
+  });
+
+  const { mutateAsync: deleteCardapioFn } = useMutation({
+    mutationFn: deleteCardapio,
+    onSuccess: (_, variables) => {
+      queryClient.setQueryData(["getCardapio"], (Data) => {
+        return Data.filter((item) => item.id !== variables.id);
+      });
+      filterTable();
+    },
+  });
+
+  useEffect(() => {
+    if (
+      dataCardapio?.length > 0 &&
+      dataCategory?.length > 0 &&
+      !isLoadingCardapio &&
+      !isLoadingCategory
+    )
+      filterTable();
+  }, [
+    isLoadingCardapio,
+    isLoadingCategory,
+    filteredStatus,
+    search,
+    dataCardapio,
+    dataCategory,
+  ]);
+
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     setCoint(coint + 1);
@@ -189,57 +304,24 @@ export default function Dashboard({ atualizar, user, company }) {
       target: () => ref5.current,
     },
   ];
-  useEffect(() => {
-    getCardapiocategory();
-    gtCardapio();
-  }, [actionCardapio, atualizar, uptela]);
-  useEffect(() => {
-    filterTable();
-  }, [search, cardapio, filteredStatus, uptela]);
 
-  const gtCardapio = async () => {
-    const cardapioCollection = await getCardapio(
-      companySelectd.idcompany,
-      company
-    );
-    if (cardapioCollection.length === 0)
-      return message.warning("Nenhum Item Encontrado");
-
-    const cardapios = cardapioCollection;
-    setCardapio(cardapios.sort((a, b) => a.number - b.number));
-  };
-
-  const getCardapiocategory = async () => {
-    const cardapioCollection = await getCategoty(
-      companySelectd.idcompany,
-      company
-    );
-    if (cardapioCollection.length === 0)
-      return message.warning("Nenhuma Categoria Encontrada");
-
-    const categoty = cardapioCollection;
-
-    setCardapioCategory(categoty.sort((a, b) => a.order - b.order));
-  };
   async function confirmDelete(record) {
-    await deleteCardapio(record);
+    await deleteCardapioFn(record);
     message.success("Item deletado com sucesso!");
-    gtCardapio();
     setActionCardapio(!actionCardapio);
   }
 
   async function confirmDeleteImg(record) {
     await DeleteImg(record.id, record.idreq);
     message.success("Imagem deletada com sucesso!");
-    gtCardapio();
     setActionCardapio(!actionCardapio);
   }
 
   function filterTable() {
     if (!search && !filteredStatus) {
-      setSearchData(cardapio);
+      setSearchData(dataCardapio);
     } else {
-      const array = cardapio.filter(
+      const array = dataCardapio.filter(
         (record) =>
           (!filteredStatus ||
             (record["category"] &&
@@ -278,49 +360,54 @@ export default function Dashboard({ atualizar, user, company }) {
   }
   async function handleSave() {
     if (selectedTaskId) {
-      await postCardapio({
-        id,
-        name,
-        price,
-        description,
-        sub,
-        active,
-        imagem: imgByte,
-        highlight,
-        category,
-        number,
-        update_at: new Date(),
-        update_by: JSON.parse(cachedData).name,
-        idcompany: companySelectd.idcompany,
-        company: company,
-      });
-      message.success("Item atualizado com sucesso!");
+      try {
+        await postCardapioFn({
+          id,
+          name,
+          price,
+          description,
+          sub,
+          active,
+          imagem: imgByte,
+          highlight,
+          category,
+          number,
+          update_at: new Date(),
+          update_by: JSON.parse(cachedData).name,
+          idcompany: companySelectd.idcompany,
+          company: company,
+        });
+        message.success("Item atualizado com sucesso!");
+      } catch (error) {
+        message.error("Erro ao atualizar item!");
+      }
     } else {
-      await putCardapio({
-        id: cardapio.length + 1 + Math.floor(Math.random() * 100000000),
-        name,
-        price,
-        description,
-        sub,
-        active,
-        imagem: imgByte,
-        highlight,
-        category,
-        number,
-        update_at: new Date(),
-        update_by: JSON.parse(cachedData).name,
-        idcompany: companySelectd.idcompany,
-        company: company,
-      });
-      message.success("Item salvo com sucesso!");
+      try {
+        await putCardapioFn({
+          id: dataCardapio.length + 1 + Math.floor(Math.random() * 100000000),
+          name,
+          price,
+          description,
+          sub,
+          active,
+          imagem: imgByte,
+          highlight,
+          category,
+          number,
+          update_at: new Date(),
+          update_by: JSON.parse(cachedData).name,
+          idcompany: companySelectd.idcompany,
+          company: company,
+        });
+        message.success("Item salvo com sucesso!");
+      } catch (error) {
+        message.error("Erro ao salvar item!");
+      }
     }
     setActionCardapio(!actionCardapio);
-    gtCardapio();
     closeModal();
     clearSelecteds();
     setUptela(!uptela);
-
-    window.location.reload();
   }
 
   function disableSave() {
@@ -356,14 +443,12 @@ export default function Dashboard({ atualizar, user, company }) {
 
   function closeModalCategory() {
     setModalCategory(false);
-    getCardapio(companySelectd.idcompany, companySelectd.company);
-    getCardapiocategory(companySelectd.idcompany, companySelectd.company);
   }
 
   const memoizedImgSrc = useMemo(() => {
-    if (cardapio.length > 0 && imgSrc.length === 0) {
+    if (dataCardapio?.length > 0 && imgSrc.length === 0) {
       const images = [];
-      cardapio.forEach(async (item) => {
+      dataCardapio?.forEach(async (item) => {
         if (!item.ids) return;
         const img = await getImgCardapio(item.id, item.ids);
         setImgSrc((prevImgSrc) => [...prevImgSrc, img]);
@@ -372,7 +457,7 @@ export default function Dashboard({ atualizar, user, company }) {
       return images;
     }
     return imgSrc;
-  }, [cardapio, imgSrc]);
+  }, [dataCardapio, imgSrc]);
 
   const columns = [
     {
@@ -464,7 +549,7 @@ export default function Dashboard({ atualizar, user, company }) {
       render: (_, text) => {
         return memoizedImgSrc.map((img1, index) => (
           <div className="img" key={index}>
-            {img1.map((img, index) => renderImageCarousel(img, index, text.id))}
+            {renderImageCarousel(img1, index, text.id)}
           </div>
         ));
       },
@@ -538,40 +623,53 @@ export default function Dashboard({ atualizar, user, company }) {
     },
   ];
 
-  const renderImageCarousel = (img, index, id) => {
-    if (img.idreq && index === 0 && img.idreq === id) {
-      return (
-        <LazyLoad key={index} height={200} offset={100}>
-          <Carousel
-            autoplay={true}
-            showArrows={true}
-            dotPosition="bottom"
-            style={{
-              width: 100,
-              minWidth: "100px",
-              color: "#fff",
-            }}
-          >
-            <div key={index}>
-              <Image
-                src={atob(img.imagem)}
-                style={{
-                  borderRadius: 10,
-                  color: "#fff",
-                  objectFit: "fill",
-                  minWidth: "100px",
-                }}
-                alt="img"
-                width={100}
-              />
-            </div>
-          </Carousel>
+  const renderImageCarousel = (img, index, id) =>
+    img[0]?.idreq === id && (
+      <div className="img" key={index} style={{ zIndex: 5 }}>
+        <LazyLoad key={index} offset={100}>
+          <Image.PreviewGroup>
+            <Carousel
+              autoplay={true}
+              autoplaySpeed={2000}
+              showArrows={true}
+              Swiping={true}
+              draggable={true}
+              effect="fade"
+              dotPosition="bottom"
+              style={{
+                width: 100,
+                maxWidth: 100,
+                minWidth: "100px",
+                color: "#fff",
+              }}
+            >
+              {img
+                .filter((img1) => img1.idreq && img1.idreq === id)
+                .map((img1, index) => (
+                  <Suspense key={index} fallback={<Spin />}>
+                    <div style={{ width: 100, maxWidth: 100 }}>
+                      <LazyLoadedImage
+                        src={atob(img1.imagem)}
+                        key={index}
+                        style={{
+                          borderRadius: 10,
+                          color: "#fff",
+                          minWidth: "100px",
+                          objectFit: "cover",
+                        }}
+                        alt="img"
+                        objectFit="cover"
+                        width={100}
+                        loading="lazy"
+                      />
+                    </div>
+                  </Suspense>
+                ))}
+            </Carousel>
+          </Image.PreviewGroup>
         </LazyLoad>
-      );
-    }
-    // Se img não for uma matriz válida, retorne algo apropriado, como uma mensagem de erro ou componente vazio
-    return null;
-  };
+      </div>
+    );
 
   const DeleteImage = async (id) => {
     await DeleteImg(id);
@@ -806,7 +904,7 @@ export default function Dashboard({ atualizar, user, company }) {
                   }}
                 >
                   <Radio.Group buttonStyle="solid" value={filteredStatus}>
-                    {cardapioCategory.map((category, index) => (
+                    {dataCategory?.map((category, index) => (
                       <Radio.Button
                         key={index}
                         onClick={handleChangeStatus}
@@ -840,7 +938,7 @@ export default function Dashboard({ atualizar, user, company }) {
         <Table
           dataSource={searchData}
           columns={columns}
-          footer={() => "Total de itens: " + searchData.length}
+          footer={() => "Total de itens: " + searchData?.length}
           size="small"
           sticky={{
             offsetHeader: 0,
@@ -1080,7 +1178,7 @@ export default function Dashboard({ atualizar, user, company }) {
                 onChange={(value) => setCategory(value)}
                 value={category}
               >
-                {cardapioCategory.map((category, index) => (
+                {dataCategory?.map((category, index) => (
                   <Option key={index} value={category.name}>
                     {category.name}
                   </Option>
