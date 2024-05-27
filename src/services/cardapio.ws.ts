@@ -55,6 +55,7 @@ export const DeleteImg = async (id: number, Company: number): Promise<any> => {
   return response.data;
 };
 export const destaques = async (Company: any): Promise<Cardapio[]> => {
+  console.log("🚀 ~ destaques ~ Company:", Company)
   const response = await api.get<Cardapio[]>(`/cardapio/destaques/${Company}`);
   return response.data;
 };

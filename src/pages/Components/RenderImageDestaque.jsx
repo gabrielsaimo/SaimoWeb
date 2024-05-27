@@ -25,9 +25,9 @@ const carouselStyle = {
   color: "#fff",
 };
 
-const RenderImageDestaque = (img, index, id) =>
-  img[0]?.idreq === id ? (
-    <div className="img" style={{ zIndex: 5 }} key={id}>
+const RenderImageDestaque = (img, index, item) =>
+  img[0].idreq === item.id ? (
+    <div className="img" style={{ zIndex: 5 }}>
       <LazyLoad height={200} offset={100}>
         <Image.PreviewGroup preview={false}>
           <Carousel
@@ -42,10 +42,29 @@ const RenderImageDestaque = (img, index, id) =>
             style={carouselStyle}
           >
             {img
-              .filter((img1) => img1.idreq && img1.idreq === id)
+              .filter((img1) => img1.idreq && img1.idreq === item.id)
               .map((img1) => (
                 <Suspense fallback={<Spin />}>
                   <div style={divStyle}>
+                    <p
+                      className="name georgia-font"
+                      style={{
+                        backgroundColor: "#FFFFFFce",
+                        width: 40,
+                        textAlign: "center",
+                        height: 20,
+                        fontSize: 12,
+                        padding: 5,
+                        borderRadius: 10,
+                        fontWeight: "bold",
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                        zIndex: 99,
+                      }}
+                    >
+                      N° {item.number}
+                    </p>
                     <LazyLoadedImage
                       preview={false}
                       src={atob(img1.imagem)}
