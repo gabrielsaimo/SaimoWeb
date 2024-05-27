@@ -1,17 +1,17 @@
-import { Button, Divider, Form, Input, message } from "antd";
+import { Button, Divider, Form, Input, Modal, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../services/user.ws";
 import { useParams } from "react-router-dom";
 import "../../css/Login.css";
+import Cookies from "js-cookie";
 const Login = () => {
   const [visible, setVisible] = useState(false);
+  const [modal, setModal] = useState(false);
   const { msn } = useParams();
   useEffect(() => {
     if (msn === "error") {
       message.error("Usuário sem permissão", 5);
       localStorage.removeItem("dateUser");
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("token");
     } else if (msn === "logout") {
       message.success("Usuário deslogado", 5);
       localStorage.clear();
@@ -20,6 +20,21 @@ const Login = () => {
       localStorage.clear();
     }
   }, [msn]);
+
+  useEffect(() => {
+    const cookie = Cookies.get("acceptsCookies");
+    if (!cookie) {
+      setModal(true);
+    }
+  }, []);
+
+  const handleOk = () => {
+    Cookies.set("acceptsCookies", "true");
+    setModal(false);
+  };
+  const handleCancel = () => {
+    setModal(false);
+  };
 
   const [password, setPassword] = useState("");
 
@@ -39,10 +54,8 @@ const Login = () => {
 
     if (UserCollection.user.length > 0) {
       localStorage.setItem("dateUser", JSON.stringify(UserCollection.user[0]));
-      localStorage.setItem(
-        "access_token",
-        JSON.stringify(UserCollection.access_token)
-      );
+
+      Cookies.set("token", UserCollection.access_token, { expires: 1 });
 
       if (UserCollection.user[0].active === false) {
         message.error("Usuário desativado");
@@ -132,6 +145,19 @@ const Login = () => {
           Esqueci a senha
         </Button>
       </div>
+      <Modal
+        title="Política de Privacidade e Cookies"
+        open={modal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="Aceitar"
+        cancelText="Recusar"
+      >
+        <p>Aceita os nossos termos e condições?</p>
+        <Button type="link" href="/privacy-policy">
+          Ver Política de Privacidade
+        </Button>
+      </Modal>
     </div>
   );
 };
