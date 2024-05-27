@@ -341,11 +341,14 @@ const Home = () => {
                   title={
                     <div style={{ textAlign: "center" }}>
                       <h2 data-atropos-offset={"-2"} className="title">
-                        Plano de R$30
+                        Plano Mensal
                       </h2>
-                      <h4 data-atropos-offset={"6"} className="title">
-                        Anual (R$360)
-                      </h4>
+                      <h3 data-atropos-offset={"-2"} className="title">
+                        R$80
+                      </h3>
+                      <h5 data-atropos-offset={"6"} className="title">
+                        Anual (R$800)
+                      </h5>
                     </div>
                   }
                   data-atropos-offset={"-4"}
@@ -391,11 +394,14 @@ const Home = () => {
                   title={
                     <div style={{ textAlign: "center" }}>
                       <h2 data-atropos-offset={"-2"} className="title">
-                        Plano de R$45
+                        Plano Mensal
                       </h2>
-                      <h4 data-atropos-offset={"6"} className="title">
-                        Anual (R$540)
-                      </h4>
+                      <h3 data-atropos-offset={"-2"} className="title">
+                        R$100
+                      </h3>
+                      <h5 data-atropos-offset={"6"} className="title">
+                        Anual (R$999)
+                      </h5>
                     </div>
                   }
                   data-atropos-offset={"-4"}
@@ -441,11 +447,14 @@ const Home = () => {
                   title={
                     <div style={{ textAlign: "center" }}>
                       <h2 data-atropos-offset={"-2"} className="title">
-                        Plano de R$60
+                        Plano Mensal
                       </h2>
-                      <h4 data-atropos-offset={"6"} className="title">
-                        Anual (R$720)
-                      </h4>
+                      <h3 data-atropos-offset={"-2"} className="title">
+                        R$120
+                      </h3>
+                      <h5 data-atropos-offset={"6"} className="title">
+                        Anual (R$1.200)
+                      </h5>
                     </div>
                   }
                   data-atropos-offset={"-4"}
