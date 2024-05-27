@@ -256,3 +256,8 @@ img.ant-image-img {
 .ant-collapse-header {
   align-items: center !important;
 }
+
+button.slick-arrow.slick-next,
+button.slick-arrow.slick-prev {
+  z-index: 9999;
+}
