@@ -33,8 +33,8 @@ const RenderImageDestaque = (img, index, item) =>
           <Carousel
             autoplay={true}
             autoplaySpeed={2000}
-            infinite={true}
-            showArrows={true}
+            infinite
+            arrows
             Swiping={true}
             draggable={true}
             effect="fade"

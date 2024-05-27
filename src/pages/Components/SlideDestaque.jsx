@@ -81,6 +81,7 @@ const Destaque = () => {
             overflowY: "hidden",
             scrollbarWidth: "none",
             msOverflowStyle: "none",
+            zIndex: 9,
             marginTop: 20,
           }}
           ref={scrollRef}
@@ -95,7 +96,9 @@ const Destaque = () => {
                     height: 400,
                     color: "#FFF",
                     fontWeight: "bold",
+                    position: "relative",
                     marginInline: 10,
+                    zIndex: 999,
                   }}
                 >
                   <div
@@ -110,26 +113,46 @@ const Destaque = () => {
                         ? RenderImageDestaque(img1, index, item)
                         : null
                     )}
-                  </div>
-                  <div
-                    style={{
-                      position: "relative",
-                      zIndex: 99,
-                      marginTop: -50,
-                      padding: "10px",
-                      backgroundColor: "rgba(0,0,0,0.5)",
-                      borderRadius: "0px 0px 10px 10px",
-                    }}
-                  >
                     <div
                       style={{
-                        fontSize: "1em",
-                        fontWeight: "bold",
+                        position: "relative",
+                        zIndex: 1,
+                        height: 400,
+                        marginTop: -400,
+                        padding: "10px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "#000000,0%",
+                        borderRadius: "0px 0px 10px 10px",
+                      }}
+                    />
+                    <div
+                      style={{
+                        position: "relative",
+                        zIndex: 1,
+                        height: 70,
+                        marginTop: -26,
+                        padding: "10px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        borderRadius: "0px 0px 10px 10px",
                       }}
                     >
-                      {item.name}
+                      <div
+                        style={{
+                          fontSize: "1em",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {item.name}
+                      </div>
+                      <div>{currency_BRL(item.price)}</div>
                     </div>
-                    <div>{currency_BRL(item.price)}</div>
                   </div>
                 </div>
               );
