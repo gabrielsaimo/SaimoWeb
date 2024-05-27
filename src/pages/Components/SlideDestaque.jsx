@@ -55,7 +55,7 @@ const Destaque = () => {
     return () => {
       clearInterval(scrollIntervalRef.current);
     };
-  }, []);
+  }, [destaques]);
   if (isLoading) {
     if (destaques.length === 0 || imgSrc.length === 0) {
       return null;
@@ -107,7 +107,7 @@ const Destaque = () => {
                   >
                     {imgSrc.map((img1, index) =>
                       img1 !== undefined
-                        ? RenderImageDestaque(img1, index, item.id)
+                        ? RenderImageDestaque(img1, index, item)
                         : null
                     )}
                   </div>

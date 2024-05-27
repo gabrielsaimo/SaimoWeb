@@ -121,7 +121,7 @@ const CollapseMenu = () => {
             <Carousel
               autoplay={true}
               autoplaySpeed={2000}
-              showArrows={true}
+              arrows
               Swiping={true}
               draggable={true}
               effect="fade"

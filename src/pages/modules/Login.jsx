@@ -11,12 +11,15 @@ const Login = () => {
   useEffect(() => {
     if (msn === "error") {
       message.error("Usuário sem permissão", 5);
-      localStorage.removeItem("dateUser");
+      localStorage.clear();
+      Cookies.remove("token");
     } else if (msn === "logout") {
       message.success("Usuário deslogado", 5);
+      Cookies.remove("token");
       localStorage.clear();
     } else if (msn === "token") {
       message.success("Token expirado", 5);
+      Cookies.remove("token");
       localStorage.clear();
     }
   }, [msn]);
