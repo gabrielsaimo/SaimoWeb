@@ -1,7 +1,8 @@
 import axios from "axios";
+import Cookies from 'js-cookie';
 import { message } from "antd";
 
-const bearerToken = localStorage.getItem("access_token");
+const bearerToken = Cookies.get("token");
 const Link = window.location.href;
 const api = axios.create({
   baseURL: Link.includes("localhost")
