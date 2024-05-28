@@ -44,7 +44,7 @@
 
 .name {
   color: var(--primary-color);
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   margin-left: 1vw;
   margin-top: 0;
@@ -54,6 +54,7 @@
 .price {
   color: var(--primary-color);
   font-weight: bold;
+  margin-right: 15px;
   font-size: 16px;
 }
 
@@ -71,7 +72,7 @@
 .description {
   color: var(--primary-color);
   font-weight: bold;
-  margin-left: 6px;
+  margin-right: 15px;
   font-size: 12px;
   text-align: start;
   overflow-y: auto;
@@ -80,14 +81,14 @@
 .description2 {
   color: var(--primary-color);
   font-weight: bold;
-  margin-left: 6px;
+  margin-right: 15px;
   font-size: 12px;
   text-align: start;
 }
 .description2Teste {
   color: var(--primary-color);
   font-weight: bold;
-  margin-left: 6px;
+  margin-right: 15px;
   font-size: 12px;
   text-align: end;
 }
