@@ -1,31 +1,43 @@
 # Create React App
 
-This directory is a brief example of a [Create React App](https://github.com/facebook/create-react-app) site that can be deployed to Vercel with zero configuration.
+Este diretório é um breve exemplo de um site [Create React App](https://github.com/facebook/create-react-app) que pode ser implantado na Vercel com zero configuração.
 
-## Deploy Your Own
+## Implante o Seu Próprio
 
-Deploy your own Create React App project with Vercel.
+Implante seu próprio projeto Create React App com a Vercel.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/create-react-app&template=create-react-app)
+[![Implante com Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/create-react-app&template=create-react-app)
 
-_Live Example: https://create-react-template.vercel.app/_
+_Exemplo ao Vivo: https://create-react-template.vercel.app/_
 
-## Available Scripts
+## Scripts Disponíveis
 
-In the project directory, you can run:
+No diretório do projeto, você pode executar:
 
 ### `npm start`
 
-Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Executa o aplicativo no modo de desenvolvimento. Abra [http://localhost:3000](http://localhost:3000) para visualizá-lo no seu navegador.
 
-The page will reload when you make changes. You may also see any lint errors in the console.
+A página será recarregada quando você fizer alterações. Você também pode ver erros de lint no console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Inicia o executor de teste no modo de observação interativo. Veja a seção sobre [executando testes](https://facebook.github.io/create-react-app/docs/running-tests) para mais informações.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.
+Constrói o aplicativo para produção na pasta `build`.
 
-It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
+Ele agrupa corretamente o React no modo de produção e otimiza a construção para o melhor desempenho. A construção é minificada e os nomes dos arquivos incluem os hashes.
+
+## Métricas de Qualidade
+
+Acompanhe a qualidade do código com métricas fornecidas pelo SonarQube:
+
+- **Portão de Qualidade:** [![Portão de Qualidade](http://localhost:9000/api/project_badges/quality_gate?project=MenuDigital_Front&token=sqb_afd8a3a07f8e72352ebd6fac1a2a887992ed637b)](http://localhost:9000/dashboard?id=MenuDigital_Front)
+
+- **Linhas de Código:** [![Linhas de Código](http://localhost:9000/api/project_badges/measure?project=MenuDigital_Front&metric=ncloc&token=sqb_afd8a3a07f8e72352ebd6fac1a2a887992ed637b)](http://localhost:9000/dashboard?id=MenuDigital_Front)
+
+- **Classificação de Manutenibilidade:** [![Classificação de Manutenibilidade](http://localhost:9000/api/project_badges/measure?project=MenuDigital_Front&metric=sqale_rating&token=sqb_afd8a3a07f8e72352ebd6fac1a2a887992ed637b)](http://localhost:9000/dashboard?id=MenuDigital_Front)
+
+- **Status do Portão de Qualidade:** [![Status do Portão de Qualidade](http://localhost:9000/api/project_badges/measure?project=MenuDigital_Front&metric=alert_status&token=sqb_afd8a3a07f8e72352ebd6fac1a2a887992ed637b)](http://localhost:9000/dashboard?id=MenuDigital_Front)
