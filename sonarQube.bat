@@ -1,0 +1,1 @@
+sonar-scanner.bat -D"sonar.projectKey=MenuDigital_Front" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.login=sqp_d7b36134a50d26a0b806501759fe645906deadda"
