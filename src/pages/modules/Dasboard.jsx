@@ -30,6 +30,7 @@ import {
   Switch,
   QRCode,
   Spin,
+  Segmented,
 } from "antd";
 import "firebase/database";
 import ImgCrop from "antd-img-crop";
@@ -59,6 +60,14 @@ import {
 import { getCategoty } from "../../services/category.ws";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
+function doDownload(url, fileName) {
+  const a = document.createElement("a");
+  a.download = fileName;
+  a.href = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 const LazyLoadedImage = lazy(() =>
   import("antd").then((module) => ({ default: module.Image }))
 );
@@ -81,6 +90,7 @@ export default function Dashboard({ atualizar, user, company }) {
   }
   const queryClient = useQueryClient();
   const imgCache = localStorage.getItem("companyLogo");
+  const [renderType, setRenderType] = useState("svg");
   const [fileList, setFileList] = useState([]);
   const [cardapio, setCardapio] = useState([]);
   const [modalNewAction, setModalNewAction] = useState(false);
@@ -752,6 +762,16 @@ export default function Dashboard({ atualizar, user, company }) {
     }
   };
 
+  const downloadSvgQRCode = () => {
+    const svg = document.getElementById("myqrcode")?.querySelector("svg");
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([svgData], {
+      type: "image/svg+xml;charset=utf-8",
+    });
+    const url = URL.createObjectURL(blob);
+    doDownload(url, `QRCode_${company}.svg`);
+  };
+
   return (
     <div className="background-page" style={{ minHeight: "90vh" }}>
       <Row gutter={8}>
@@ -796,10 +816,19 @@ export default function Dashboard({ atualizar, user, company }) {
                   justifyContent: "center",
                 }}
               >
+                <Segmented
+                  options={["canvas", "svg"]}
+                  style={{
+                    color: "#000000",
+                  }}
+                  value={renderType}
+                  onChange={(val) => setRenderType(val)}
+                />
                 {imgCache !== "undefined" ? (
                   <div id="myqrcode">
                     <QRCode
                       errorLevel="H"
+                      type={renderType}
                       value={`https://menu-digital.vercel.app/home/${companySelectd.idcompany}/${company}`}
                       icon={atob(JSON.parse(imgCache)) || null}
                       size={400}
@@ -816,7 +845,12 @@ export default function Dashboard({ atualizar, user, company }) {
                   </div>
                 )}
                 <Divider />
-                <Button type="primary" onClick={downloadQRCode}>
+                <Button
+                  type="primary"
+                  onClick={
+                    renderType === "canvas" ? downloadQRCode : downloadSvgQRCode
+                  }
+                >
                   Baixar QRCode
                 </Button>
               </div>
